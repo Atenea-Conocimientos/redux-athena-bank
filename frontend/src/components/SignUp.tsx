@@ -1,4 +1,5 @@
 import React, { useState, ChangeEvent, FormEvent } from 'react';
+import { useNavigate, Link as RouterLink } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
 import {
   Box,
@@ -35,6 +36,7 @@ const SignUp: React.FC = () => {
     setForm({ ...form, [e.target.name]: e.target.value });
 
   const { enqueueSnackbar } = useSnackbar();
+  const navigate = useNavigate();
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -53,6 +55,7 @@ const SignUp: React.FC = () => {
       if (res.ok) {
         enqueueSnackbar('Signup successful!', { variant: 'success' });
         setForm({ firstName: '', lastName: '', email: '', password: '' });
+        navigate('/login');
       } else {
         enqueueSnackbar(data.message || 'Signup failed', { variant: 'error' });
       }
@@ -219,6 +222,12 @@ const SignUp: React.FC = () => {
             </Button>
           </form>
         </Paper>
+        <Box mt={2} textAlign="center">
+          <Typography variant="body2">
+            Already have an account?{' '}
+            <RouterLink to="/login">Login</RouterLink>
+          </Typography>
+        </Box>
       </Box>
     </Box>
   );
