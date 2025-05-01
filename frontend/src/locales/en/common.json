@@ -1,0 +1,9 @@
+{
+  "welcome": "Sign Up",
+  "description": "This is a React app with Material-UI, Redux Toolkit, and i18n",
+  "firstName": "First name",
+  "lastName": "Last name",
+  "email": "Email",
+  "password": "Password",
+  "signUp": "Sign Up"
+}
