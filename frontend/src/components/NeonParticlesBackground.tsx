@@ -67,4 +67,5 @@ const NeonParticlesBackground = () => {
   );
 };
 
-export default NeonParticlesBackground;
+import React from 'react';
+export default React.memo(NeonParticlesBackground);
