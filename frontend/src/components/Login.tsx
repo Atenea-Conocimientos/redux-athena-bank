@@ -37,7 +37,7 @@ const Login: React.FC = () => {
       const data = await res.json();
       if (res.ok) {
         enqueueSnackbar('Login successful!', { variant: 'success' });
-        // Redirect or update auth state here
+        navigate('/dashboard');
       } else {
         enqueueSnackbar(data.message || 'Login failed', { variant: 'error' });
       }
