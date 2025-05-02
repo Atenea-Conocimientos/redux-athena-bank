@@ -1,10 +1,243 @@
 import React from 'react';
-import { Box, Typography, Paper, Button, List, ListItem } from '@mui/material';
-import NeonParticlesBackground from './NeonParticlesBackground';
-import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
+import {
+  Box,
+  Typography,
+  Paper,
+  Button,
+  List,
+  ListItem,
+} from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
+import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
+import { useSnackbar } from 'notistack';
 
+import CreateAccountModal from './CreateAccountModal';
+import TopUpModal from './TopUpModal';
+import TransferModal from './TransferModal';
+import FreezeAccountModal from './FreezeAccountModal';
+import NeonParticlesBackground from './NeonParticlesBackground';
+
+/** ------------------------------------------------------------------
+ *  Types
+ * -----------------------------------------------------------------*/
+interface Account {
+  type: 'debit' | 'credit' | 'savings' | 'checking';
+  last4: string;
+  name: string;
+  color: string;
+  frozen: boolean;
+}
+
+/** ------------------------------------------------------------------
+ *  Helpers
+ * -----------------------------------------------------------------*/
+const gradientByType: Record<Account['type'], string> = {
+  debit: 'linear-gradient(120deg, #6C63FF 60%, #1BFFFF 100%)', // blue / purple
+  credit: 'linear-gradient(120deg, #D4145A 60%, #FBB03B 100%)', // pink / orange
+  savings: 'linear-gradient(120deg, #11998e 60%, #38ef7d 100%)', // green / teal
+  checking: 'linear-gradient(120deg, #FF512F 60%, #F09819 100%)', // red / orange
+};
+
+const randomLast4 = () => Math.floor(1000 + Math.random() * 9000).toString();
+
+/** ------------------------------------------------------------------
+ *  Dashboard component
+ * -----------------------------------------------------------------*/
 const Dashboard: React.FC = () => {
+  const { enqueueSnackbar } = useSnackbar();
+
+  /** ------------------------------------------------------
+   *  Local state
+   * -----------------------------------------------------*/
+  const [accounts, setAccounts] = React.useState<Account[]>([
+    {
+      type: 'debit',
+      last4: '7526',
+      name: 'Charles Arnett',
+      color: gradientByType.debit,
+      frozen: false,
+    },
+  ]);
+
+  const [modalOpen, setModalOpen] = React.useState(false);
+  const [topUpModalOpen, setTopUpModalOpen] = React.useState(false);
+  const [transferModalOpen, setTransferModalOpen] = React.useState(false);
+  const [freezeModalOpen, setFreezeModalOpen] = React.useState(false);
+  const [selectedAccount, setSelectedAccount] = React.useState<Account | null>(null);
+
+  /** ------------------------------------------------------
+   *  Handlers
+   * -----------------------------------------------------*/
+  const handleAddAccount = (payload: { type: Account['type']; amount: number }) => {
+    setAccounts(prev => [
+      ...prev,
+      {
+        type: payload.type,
+        last4: randomLast4(),
+        name: 'Nueva Cuenta',
+        color: gradientByType[payload.type],
+        frozen: false,
+      },
+    ]);
+    setModalOpen(false);
+    enqueueSnackbar('¡Cuenta creada exitosamente!', { variant: 'success' });
+  };
+
+  const handleTopUp = (_last4: string, _amount: number) => {
+    // TODO: update account balance in future
+    setTopUpModalOpen(false);
+    enqueueSnackbar('¡Fondos agregados exitosamente!', { variant: 'success' });
+  };
+
+  const handleTransfer = (_originLast4: string, recipientEmail: string) => {
+    setTransferModalOpen(false);
+    enqueueSnackbar(`Transferencia enviada a ${recipientEmail}`, { variant: 'success' });
+  };
+
+  const handleFreezeToggle = () => {
+    if (!selectedAccount) return;
+
+    setAccounts(prev =>
+      prev.map(acc =>
+        acc.last4 === selectedAccount.last4 ? { ...acc, frozen: !acc.frozen } : acc,
+      ),
+    );
+
+    setFreezeModalOpen(false);
+    enqueueSnackbar(
+      selectedAccount.frozen ? 'Cuenta descongelada ☀️' : 'Cuenta congelada ❄️',
+      { variant: 'info' },
+    );
+  };
+
+  /** ------------------------------------------------------------------
+   *  Render helpers
+   * -----------------------------------------------------------------*/
+  const AccountCard: React.FC<{ account: Account }> = ({ account }) => (
+    <Paper
+      elevation={6}
+      sx={{
+        background: account.color,
+        borderRadius: 4,
+        minWidth: 260,
+        maxWidth: 320,
+        p: 3,
+        color: '#fff',
+        boxShadow: '0 4px 32px #1BFFFF44',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+        position: 'relative',
+      }}
+    >
+      {/* Freeze / unfreeze */}
+      <Button
+        size="small"
+        variant={account.frozen ? 'outlined' : 'contained'}
+        color={account.frozen ? 'warning' : 'primary'}
+        sx={{
+  position: 'absolute',
+  top: 12,
+  right: 12,
+  zIndex: 2,
+  fontSize: 12,
+  px: 1.5,
+  py: 0.5,
+  minWidth: 0,
+  ...(account.frozen && {
+    background: '#fff',
+    color: '#222E50', // dark text for contrast
+    border: '1.5px solid #A6B1E1',
+    '&:hover': {
+      background: '#f5f5f5',
+      color: '#222E50',
+    },
+  }),
+}}
+        onClick={() => {
+          setSelectedAccount(account);
+          setFreezeModalOpen(true);
+        }}
+      >
+        {account.frozen ? 'Descongelar' : 'Congelar'}
+      </Button>
+
+      {/* Card header */}
+      <Box display="flex" alignItems="center" gap={1} mb={2}>
+        <Box
+          sx={{
+            width: 32,
+            height: 24,
+            borderRadius: '4px',
+            background: 'linear-gradient(120deg, #fff 60%, #1BFFFF 100%)',
+            boxShadow: '0 0 8px #1BFFFF99',
+            mr: 1,
+          }}
+        />
+        <Typography variant="subtitle2" fontWeight={600} color="#fff" letterSpacing={2}>
+          {account.type.charAt(0).toUpperCase() + account.type.slice(1)}
+        </Typography>
+      </Box>
+
+      {/* Card body */}
+      <Typography
+        variant="h6"
+        fontWeight={700}
+        letterSpacing={2}
+        sx={{ mb: 1, fontFamily: 'monospace', userSelect: 'none' }}
+      >
+        •••• {account.last4}
+      </Typography>
+      <Typography variant="body2" color="#A6B1E1" fontWeight={500}>
+        {account.name}
+      </Typography>
+    </Paper>
+  );
+
+  const AddAccountCard: React.FC = () => (
+    <Paper
+      elevation={0}
+      sx={{
+        minWidth: 260,
+        maxWidth: 320,
+        p: 3,
+        border: '2px dashed #A6B1E1',
+        borderRadius: 4,
+        background: 'rgba(24,28,47,0.4)',
+        color: '#A6B1E1',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        opacity: 0.7,
+        cursor: 'pointer',
+        gap: 2,
+        transition: 'opacity 0.2s',
+        '&:hover': { opacity: 1 },
+      }}
+      onClick={() => setModalOpen(true)}
+    >
+      <Box
+        sx={{
+          width: 40,
+          height: 40,
+          borderRadius: '50%',
+          border: '2px dashed #A6B1E1',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          mb: 1,
+        }}
+      >
+        <span style={{ fontSize: 28, color: '#A6B1E1' }}>+</span>
+      </Box>
+      <Typography fontWeight={600}>Agregar cuenta</Typography>
+    </Paper>
+  );
+
+  /** ------------------------------------------------------------------
+   *  JSX
+   * -----------------------------------------------------------------*/
   return (
     <Box
       minHeight="100vh"
@@ -14,11 +247,12 @@ const Dashboard: React.FC = () => {
       position="relative"
       sx={{ background: 'linear-gradient(90deg, #2E3192 0%, #1BFFFF 100%)', overflow: 'hidden' }}
     >
-      {/* Header/Navbar */}
+      {/* ----------------------------------------------------------------------
+       *  Header / Navbar
+       * --------------------------------------------------------------------*/}
       <Box
         component="header"
         width="100%"
-        maxWidth="100vw"
         sx={{
           px: { xs: 2, sm: 4 },
           py: 2,
@@ -29,8 +263,6 @@ const Dashboard: React.FC = () => {
           borderBottom: '1.5px solid rgba(44,255,255,0.08)',
           zIndex: 2,
           position: 'relative',
-          overflowX: 'hidden',
-          boxSizing: 'border-box',
         }}
       >
         <Box display="flex" alignItems="center" gap={1}>
@@ -40,16 +272,26 @@ const Dashboard: React.FC = () => {
           </Typography>
         </Box>
         <Box display="flex" gap={4}>
-          <RouterLink to="/" style={{ color: '#1BFFFF', textDecoration: 'none', fontWeight: 500 }}>Home</RouterLink>
-          <RouterLink to="/about" style={{ color: '#1BFFFF', textDecoration: 'none', fontWeight: 500 }}>About</RouterLink>
-          <RouterLink to="/contact" style={{ color: '#1BFFFF', textDecoration: 'none', fontWeight: 500 }}>Contact</RouterLink>
+          <RouterLink to="/" style={{ color: '#1BFFFF', textDecoration: 'none', fontWeight: 500 }}>
+            Home
+          </RouterLink>
+          <RouterLink to="/about" style={{ color: '#1BFFFF', textDecoration: 'none', fontWeight: 500 }}>
+            About
+          </RouterLink>
+          <RouterLink to="/contact" style={{ color: '#1BFFFF', textDecoration: 'none', fontWeight: 500 }}>
+            Contact
+          </RouterLink>
         </Box>
       </Box>
-      {/* Background */}
+
+      {/* Decorative background */}
       <Box position="absolute" top={0} left={0} width="100%" height="100%" zIndex={0}>
         <NeonParticlesBackground />
       </Box>
-      {/* Centered Dashboard Card */}
+
+      {/* ----------------------------------------------------------------------
+       *  Content Wrapper
+       * --------------------------------------------------------------------*/}
       <Box
         position="relative"
         zIndex={1}
@@ -57,146 +299,67 @@ const Dashboard: React.FC = () => {
         alignItems="center"
         justifyContent="center"
         flex={1}
-        width="100vw"
-        minHeight="calc(100vh - 80px)"
+        width="100%"
       >
         <Paper
           elevation={8}
           sx={{
             p: 4,
-            minWidth: 500,
+            width: '100%',
             maxWidth: 700,
             mx: 2,
             background: 'rgba(18, 22, 39, 0.97)',
             borderRadius: 4,
-            boxShadow:
-              '0 0 32px 8px #1BFFFF55, 0 0 0 1.5px #1BFFFF44, 0 8px 32px #000',
+            boxShadow: '0 0 32px 8px #1BFFFF55, 0 0 0 1.5px #1BFFFF44, 0 8px 32px #000',
             color: '#fff',
             border: '1.5px solid #222E50',
           }}
         >
-          <Typography variant="h4" align="left" fontWeight={700} mb={3}>
+          {/* ------------------------------------------------------------
+           *  Balance
+           * -----------------------------------------------------------*/}
+          <Typography variant="h4" fontWeight={700} mb={3}>
             Dashboard
           </Typography>
-          {/* Total Balance Card */}
-          <Box mb={4}>
-            <Paper
-              elevation={0}
-              sx={{
-                background: 'linear-gradient(90deg, #1BFFFF22 0%, #2E319222 100%)',
-                borderRadius: 3,
-                p: 3,
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'flex-start',
-                boxShadow: '0 0 24px 4px #1BFFFF55',
-                mb: 2,
-              }}
+
+          <Paper
+            elevation={0}
+            sx={{
+              background: 'linear-gradient(90deg, #1BFFFF22 0%, #2E319222 100%)',
+              borderRadius: 3,
+              p: 3,
+              mb: 4,
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'flex-start',
+              boxShadow: '0 0 24px 4px #1BFFFF55',
+            }}
+          >
+            <Typography variant="subtitle2" color="#A6B1E1" fontWeight={500} mb={0.5}>
+              Saldo total
+            </Typography>
+            <Typography
+              variant="h3"
+              fontWeight={700}
+              sx={{ color: '#1BFFFF', textShadow: '0 0 12px #1BFFFF88', letterSpacing: 1 }}
             >
-              <Typography variant="subtitle2" color="#A6B1E1" fontWeight={500} mb={0.5}>
-                Total Balance
-              </Typography>
-              <Typography
-                variant="h3"
-                fontWeight={700}
-                sx={{
-                  color: '#1BFFFF',
-                  textShadow: '0 0 12px #1BFFFF88',
-                  letterSpacing: 1,
-                }}
-              >
-                $12,345.67
-              </Typography>
-            </Paper>
+              $12,345.67
+            </Typography>
+          </Paper>
+
+          {/* ------------------------------------------------------------
+           *  Accounts grid
+           * -----------------------------------------------------------*/}
+          <Box mb={4} display="flex" flexWrap="wrap" gap={3}>
+            {accounts.map(acc => (
+              <AccountCard key={acc.last4} account={acc} />
+            ))}
+            {accounts.length < 4 && <AddAccountCard />}
           </Box>
-          {/* Account Cards Row */}
-          <Box mb={4}>
-            <Box display="flex" gap={3} flexWrap="nowrap">
-              {/* Active Account Card */}
-              <Paper
-                elevation={6}
-                sx={{
-                  background: 'linear-gradient(120deg, #2E3192 60%, #1BFFFF 100%)',
-                  borderRadius: 4,
-                  minWidth: 260,
-                  maxWidth: 320,
-                  p: 3,
-                  color: '#fff',
-                  boxShadow: '0 4px 32px #1BFFFF44',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  justifyContent: 'space-between',
-                  position: 'relative',
-                }}
-              >
-                <Box display="flex" alignItems="center" gap={1} mb={2}>
-                  <Box
-                    sx={{
-                      width: 32,
-                      height: 24,
-                      borderRadius: '4px',
-                      background: 'linear-gradient(120deg, #fff 60%, #1BFFFF 100%)',
-                      boxShadow: '0 0 8px #1BFFFF99',
-                      mr: 1,
-                    }}
-                  />
-                  <Typography variant="subtitle2" fontWeight={600} color="#fff" letterSpacing={2}>
-                    Bank
-                  </Typography>
-                </Box>
-                <Typography
-                  variant="h6"
-                  fontWeight={700}
-                  letterSpacing={2}
-                  sx={{ mb: 1, fontFamily: 'monospace', userSelect: 'none' }}
-                >
-                  •••• 7526
-                </Typography>
-                <Typography variant="body2" color="#A6B1E1" fontWeight={500}>
-                  Charles Arnett
-                </Typography>
-              </Paper>
-              {/* Add Account Card */}
-              <Paper
-                elevation={0}
-                sx={{
-                  minWidth: 260,
-                  maxWidth: 320,
-                  p: 3,
-                  border: '2px dashed #A6B1E1',
-                  borderRadius: 4,
-                  background: 'rgba(24,28,47,0.4)',
-                  color: '#A6B1E1',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  opacity: 0.7,
-                  cursor: 'not-allowed',
-                  gap: 2,
-                }}
-              >
-                <Box
-                  sx={{
-                    width: 40,
-                    height: 40,
-                    borderRadius: '50%',
-                    border: '2px dashed #A6B1E1',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    mb: 1,
-                  }}
-                >
-                  <span style={{ fontSize: 28, color: '#A6B1E1' }}>+</span>
-                </Box>
-                <Typography fontWeight={600} sx={{ color: '#A6B1E1' }}>
-                  Add Account
-                </Typography>
-              </Paper>
-            </Box>
-          </Box>
-          {/* Dashboard Action Buttons */}
+
+          {/* ------------------------------------------------------------
+           *  Action buttons
+           * -----------------------------------------------------------*/}
           <Box display="flex" justifyContent="center" gap={3} mb={3}>
             <Button
               variant="contained"
@@ -211,12 +374,11 @@ const Dashboard: React.FC = () => {
                 boxShadow: '0 0 12px #1BFFFF66',
                 textTransform: 'none',
                 letterSpacing: 1,
-                '&:hover': {
-                  background: 'linear-gradient(90deg, #1BFFFF 0%, #2E3192 100%)',
-                },
+                '&:hover': { background: 'linear-gradient(90deg, #1BFFFF 0%, #2E3192 100%)' },
               }}
+              onClick={() => setTopUpModalOpen(true)}
             >
-              Top Up
+              Agregar fondos
             </Button>
             <Button
               variant="outlined"
@@ -230,79 +392,50 @@ const Dashboard: React.FC = () => {
                 borderRadius: 2,
                 textTransform: 'none',
                 letterSpacing: 1,
-                '&:hover': {
-                  borderColor: '#2E3192',
-                  background: 'rgba(27,255,255,0.08)',
-                },
+                '&:hover': { borderColor: '#2E3192', background: 'rgba(27,255,255,0.08)' },
               }}
+              onClick={() => setTransferModalOpen(true)}
             >
-              Transfer
+              Enviar
             </Button>
           </Box>
-          {/* Transaction List */}
+
+          {/* ------------------------------------------------------------
+           *  Transactions list (static placeholder)
+           * -----------------------------------------------------------*/}
           <Box mt={3}>
-            <Typography variant="h6" fontWeight={700} color="#fff" mb={2}>
+            <Typography variant="h6" fontWeight={700} mb={2}>
               Lista de transacciones
             </Typography>
-            {(() => {
-              const transactions = [
-                {
-                  date: '02/05/2025',
-                  description: 'Pago luz',
-                  type: 'expense',
-                  amount: '- $80.00',
-                },
-                {
-                  date: '01/05/2025',
-                  description: 'Transferencia recibida',
-                  type: 'income',
-                  amount: '+ $1,000.00',
-                },
-                {
-                  date: '30/04/2025',
-                  description: 'Pago supermercado',
-                  type: 'expense',
-                  amount: '- $250.50',
-                },
-                {
-                  date: '29/04/2025',
-                  description: 'Depósito',
-                  type: 'income',
-                  amount: '+ $500.00',
-                },
-                {
-                  date: '28/04/2025',
-                  description: 'Cuenta abierta',
-                  type: 'special',
-                  amount: 'Evento',
-                },
-                {
-                  date: '27/04/2025',
-                  description: 'Pago Netflix',
-                  type: 'expense',
-                  amount: '- $15.00',
-                },
-              ];
-              const getColor = (type: string) =>
-                type === 'income' ? '#00e676' : type === 'expense' ? '#ff1744' : '#FFD600';
-              return (
-                <List sx={{ width: '100%', bgcolor: 'transparent', p: 0 }}>
-                  {transactions.slice(0, 5).map((tx, idx) => (
-                    <ListItem
-                      key={idx}
-                      sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', px: 0 }}
-                    >
-                      <Box>
-                        <Typography fontWeight={600} color="#A6B1E1">{tx.date}</Typography>
-                        <Typography variant="body2" color={tx.type === 'special' ? '#FFD600' : '#fff'}>{tx.description}</Typography>
-                      </Box>
-                      <Typography fontWeight={700} sx={{ color: getColor(tx.type), fontFamily: 'monospace', fontSize: 18 }}>{tx.amount}</Typography>
-                    </ListItem>
-                  ))}
-                </List>
-              );
-            })()}
+            <List sx={{ width: '100%', bgcolor: 'transparent', p: 0 }}>
+              <ListItem sx={{ display: 'flex', justifyContent: 'space-between', px: 0 }}>
+                <Box>
+                  <Typography fontWeight={600} color="#A6B1E1">
+                    02/05/2025
+                  </Typography>
+                  <Typography variant="body2">Pago luz</Typography>
+                </Box>
+                <Typography fontWeight={700} sx={{ color: '#ff1744', fontFamily: 'monospace', fontSize: 18 }}>
+                  - $80.00
+                </Typography>
+              </ListItem>
+            </List>
           </Box>
+
+          {/* ------------------------------------------------------------
+           *  Modals
+           * -----------------------------------------------------------*/}
+          <CreateAccountModal open={modalOpen} onClose={() => setModalOpen(false)} onCreate={handleAddAccount} />
+          <TopUpModal open={topUpModalOpen} onClose={() => setTopUpModalOpen(false)} onTopUp={handleTopUp} accounts={accounts} />
+          <TransferModal open={transferModalOpen} onClose={() => setTransferModalOpen(false)} onTransfer={handleTransfer} accounts={accounts} />
+          <FreezeAccountModal
+            open={freezeModalOpen && Boolean(selectedAccount)}
+            onClose={() => setFreezeModalOpen(false)}
+            onConfirm={handleFreezeToggle}
+            accountName={selectedAccount?.name || ''}
+            last4={selectedAccount?.last4 || ''}
+            frozen={Boolean(selectedAccount?.frozen)}
+          />
         </Paper>
       </Box>
     </Box>
