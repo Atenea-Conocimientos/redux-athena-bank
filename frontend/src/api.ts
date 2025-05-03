@@ -28,3 +28,22 @@ export async function freezeAccount(token: string, id: string, isFrozen: boolean
 export async function deleteAccount(token: string, id: string): Promise<void> {
   await axios.delete(`${API_BASE}/accounts/${id}`, { headers: { Authorization: `Bearer ${token}` } });
 }
+
+// Add funds to an account
+export async function depositFunds(token: string, accountId: string, amount: number): Promise<Account> {
+  const res = await axios.post(
+    `${API_BASE}/accounts/${accountId}/deposit`,
+    { amount },
+    { headers: { Authorization: `Bearer ${token}` } }
+  );
+  return res.data;
+}
+
+// Transfer funds to another user's first account
+export async function transferFunds(token: string, toEmail: string, amount: number): Promise<void> {
+  await axios.post(
+    `${API_BASE}/transactions/transfer`,
+    { toEmail, amount },
+    { headers: { Authorization: `Bearer ${token}` } }
+  );
+}
