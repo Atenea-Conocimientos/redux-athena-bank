@@ -8,7 +8,7 @@ import {
   Typography,
   Paper,
 } from '@mui/material';
-import { useTranslation } from 'react-i18next';
+import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 
 import NeonParticlesBackground from './NeonParticlesBackground';
 
@@ -23,7 +23,6 @@ interface SignUpForm {
 }
 
 const SignUp: React.FC = () => {
-  const { t } = useTranslation();
   const [form, setForm] = useState<SignUpForm>({
     firstName: '',
     lastName: '',
@@ -53,14 +52,14 @@ const SignUp: React.FC = () => {
       );
       const data = await res.json();
       if (res.ok) {
-        enqueueSnackbar('Signup successful!', { variant: 'success' });
+        enqueueSnackbar('Registro exitoso!', { variant: 'success' });
         setForm({ firstName: '', lastName: '', email: '', password: '' });
         navigate('/login');
       } else {
-        enqueueSnackbar(data.message || 'Signup failed', { variant: 'error' });
+        enqueueSnackbar(data.message || 'Registro fallido', { variant: 'error' });
       }
     } catch {
-      alert('Network error');
+      alert('Error de red');
     } finally {
       setLoading(false);
     }
@@ -90,59 +89,31 @@ const SignUp: React.FC = () => {
       <NeonParticlesBackground />
 
       {/* Header */}
-      <Box
-        sx={{
-          position: 'fixed',
-          top: 0,
-          left: 0,
-          width: '100%',
-          bgcolor: 'rgba(10,12,30,0.85)',
-          borderBottom: '1px solid #22224a',
-          boxShadow: '0 2px 16px #1bffff22',
-          zIndex: 10,
-        }}
-      >
-        <Box
-          sx={{
-            maxWidth: 900,
-            mx: 'auto',
-            px: { xs: 2, sm: 4 },
-            py: 2,
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-          }}
-        >
-          <Box sx={{ display: 'flex', alignItems: 'center' }}>
-            <Box
-              sx={{
-                width: 40,
-                height: 40,
-                borderRadius: '50%',
-                bgcolor: 'rgba(46,49,146,0.9)',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                mr: 2,
-              }}
-            >
-              <Typography color="#1BFFFF" fontWeight={700} fontSize={24}>
-                🧑‍💻
-              </Typography>
-            </Box>
-            <Typography variant="h5" color="#fff" fontWeight={600}>
-              ATENEA BANK
-            </Typography>
-          </Box>
-
-          {/* dummy nav */}
-          <Box sx={{ display: 'flex', gap: 5 }}>
-            {['Home', 'About', 'Contact'].map((item) => (
-              <Typography key={item} color="#1BFFFF" sx={{ cursor: 'pointer' }}>
-                {item}
-              </Typography>
-            ))}
-          </Box>
+      <Box component="header" width="100%" maxWidth="100vw" sx={{
+        px: { xs: 2, sm: 4 },
+        py: 2,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        background: 'rgba(12,10,30,0.85)',
+        borderBottom: '1.5px solid rgba(44,255,255,0.08)',
+        zIndex: 2,
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        overflowX: 'hidden',
+        boxSizing: 'border-box',
+      }}>
+        <Box display="flex" alignItems="center" gap={1}>
+          <AccountBalanceIcon sx={{ color: '#FFD600', fontSize: 32 }} />
+          <Typography variant="h6" fontWeight={700} color="#fff">
+            ATENEA BANK
+          </Typography>
+        </Box>
+        <Box display="flex" gap={4} data-testid="navbar-signup">
+          <RouterLink to="/" data-testid="nav-inicio-signup" style={{ color: '#1BFFFF', textDecoration: 'none', fontWeight: 500 }}>Inicio</RouterLink>
+          <RouterLink to="/about" data-testid="nav-acerca-signup" style={{ color: '#1BFFFF', textDecoration: 'none', fontWeight: 500 }}>Acerca de</RouterLink>
+          <RouterLink to="/contact" data-testid="nav-contacto-signup" style={{ color: '#1BFFFF', textDecoration: 'none', fontWeight: 500 }}>Contacto</RouterLink>
         </Box>
       </Box>
 
@@ -161,16 +132,16 @@ const SignUp: React.FC = () => {
             backdropFilter: 'blur(2px)',
           }}
         >
-          <form onSubmit={handleSubmit} autoComplete="off">
-            <Typography variant="h3" fontWeight={700} color="#fff" mb={4}>
-              {t('welcome', 'Sign Up')}
+          <form onSubmit={handleSubmit} autoComplete="off" data-testid="formulario-registro">
+            <Typography variant="h3" fontWeight={700} color="#fff" mb={4} data-testid="titulo-registro">
+              Registrarse
             </Typography>
 
             {[
-              { name: 'firstName', label: t('firstName', 'First name') },
-              { name: 'lastName', label: t('lastName', 'Last name') },
-              { name: 'email', label: t('email', 'Email') },
-              { name: 'password', label: t('password', 'Password'), type: 'password' },
+              { name: 'firstName', label: 'Nombre' },
+              { name: 'lastName', label: 'Apellido' },
+              { name: 'email', label: 'Correo electrónico' },
+              { name: 'password', label: 'Contraseña', type: 'password' },
             ].map(({ name, label, type }) => (
               <TextField
                 key={name}
@@ -196,6 +167,7 @@ const SignUp: React.FC = () => {
                     boxShadow: '0 0 16px 4px #fff, 0 0 8px #1bffff88',
                   },
                 }}
+                data-testid={`input-${name}-registro`}
               />
             ))}
 
@@ -217,15 +189,16 @@ const SignUp: React.FC = () => {
                   background: 'linear-gradient(90deg,#1BFFFF 0%,#2E3192 100%)',
                 },
               }}
+              data-testid="boton-registrarse"
             >
-              {loading ? t('signingUp', 'Signing Up...') : t('signUp', 'Sign Up')}
+              {loading ? 'Registrando...' : 'Registrarse'}
             </Button>
           </form>
         </Paper>
         <Box mt={2} textAlign="center">
-          <Typography variant="body2">
-            Already have an account?{' '}
-            <RouterLink to="/login">Login</RouterLink>
+          <Typography variant="body2" data-testid="texto-pregunta-cuenta">
+            ¿Ya tienes cuenta?{' '}
+            <RouterLink to="/login" data-testid="link-iniciar-sesion-signup">Iniciar sesión</RouterLink>
           </Typography>
         </Box>
       </Box>

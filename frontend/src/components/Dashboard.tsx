@@ -420,7 +420,7 @@ const Dashboard: React.FC = () => {
            *  Balance
            * -----------------------------------------------------------*/}
           <Typography variant="h4" fontWeight={700} mb={3}>
-            Dashboard
+            Tablero Principal
           </Typography>
 
           <Paper
