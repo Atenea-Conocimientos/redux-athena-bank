@@ -6,6 +6,14 @@ const Transaction = require('../models/Transaction');
 
 const requireUser = require('../requireUser');
 
+// map English account types to Spanish labels
+const typeLabels = {
+  debit: 'débito',
+  credit: 'crédito',
+  savings: 'ahorros',
+  checking: 'corriente'
+};
+
 // GET /api/accounts - Get all accounts for the logged-in user
 router.get('/', requireUser, async (req, res) => {
   try {
@@ -31,6 +39,15 @@ router.post('/', requireUser, async (req, res) => {
       balance: initialAmount || 0,
     });
     await account.save();
+    // Record account opening with initial amount
+    await Transaction.create({
+      user: req.userId,
+      accountId: account._id,
+      amount: initialAmount || 0,
+      type: 'account_opened',
+      direction: 'in',
+      description: `Cuenta de ${typeLabels[type]} creada`
+    });
     res.status(201).json(account);
   } catch (err) {
     res.status(400).json({ message: err.message });
@@ -48,6 +65,14 @@ router.put('/:id/freeze', requireUser, async (req, res) => {
     );
     if (!account) return res.status(404).json({ message: 'Account not found' });
     res.json(account);
+    // Record status change
+    await Transaction.create({
+      user: req.userId,
+      accountId: account._id,
+      type: 'status_change',
+      direction: 'neutral',
+      description: account.frozen ? 'Cuenta congelada' : 'Cuenta activada'
+    });
   } catch (err) {
     res.status(400).json({ message: err.message });
   }
@@ -64,6 +89,7 @@ router.post('/:id/deposit', requireUser, async (req, res) => {
     account.balance += amount;
     await account.save();
     const transaction = new Transaction({
+      user: req.userId,
       accountId: account._id,
       amount,
       type: 'deposit',
@@ -82,6 +108,15 @@ router.delete('/:id', requireUser, async (req, res) => {
   try {
     const account = await Account.findOneAndDelete({ _id: req.params.id, user: req.userId });
     if (!account) return res.status(404).json({ message: 'Account not found' });
+    // Record account closure with remaining balance
+    await Transaction.create({
+      user: req.userId,
+      accountId: account._id,
+      amount: account.balance,
+      type: 'account_closed',
+      direction: 'out',
+      description: `Cuenta de ${typeLabels[account.type]} cerrada`
+    });
     res.json({ message: 'Account deleted' });
   } catch (err) {
     res.status(500).json({ message: err.message });

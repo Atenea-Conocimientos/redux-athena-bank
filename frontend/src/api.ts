@@ -47,3 +47,21 @@ export async function transferFunds(token: string, toEmail: string, amount: numb
     { headers: { Authorization: `Bearer ${token}` } }
   );
 }
+
+// Fetch all transactions for the logged-in user
+export interface Transaction {
+  _id: string;
+  date: string;
+  type: 'transfer' | 'deposit' | 'withdraw' | 'account_opened' | 'account_closed' | 'status_change';
+  amount?: number;
+  description: string;
+  direction: 'in' | 'out' | 'neutral';
+  accountId: string;
+}
+export async function getTransactions(token: string): Promise<Transaction[]> {
+  const res = await axios.get(
+    `${API_BASE}/transactions`,
+    { headers: { Authorization: `Bearer ${token}` } }
+  );
+  return res.data;
+}

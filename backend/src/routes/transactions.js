@@ -25,6 +25,9 @@ router.post('/transfer', requireUser, async (req, res) => {
     if (!recipientAccount) throw { status: 400, message: 'Recipient has no account' };
     if (recipientAccount.frozen) throw { status: 400, message: 'Recipient account is frozen' };
 
+    // fetch sender info
+    const sender = await User.findById(req.userId);
+
     // Apply balances
     senderAccount.balance -= amount;
     recipientAccount.balance += amount;
@@ -33,8 +36,8 @@ router.post('/transfer', requireUser, async (req, res) => {
 
     // Record transactions
     await Transaction.create([
-      { accountId: senderAccount._id, amount, type: 'transfer', direction: 'out', description: `Transfer to ${toEmail}` },
-      { accountId: recipientAccount._id, amount, type: 'transfer', direction: 'in', description: `Transfer from ${req.userId}` }
+      { user: req.userId, accountId: senderAccount._id, amount, type: 'transfer', direction: 'out', description: `Transferencia a ${toEmail}` },
+      { user: recipient._id, accountId: recipientAccount._id, amount, type: 'transfer', direction: 'in', description: `Transferencia de ${sender.email}` }
     ]);
 
     res.json({ message: 'Transfer successful' });
@@ -47,9 +50,8 @@ router.post('/transfer', requireUser, async (req, res) => {
 // GET /api/transactions - Get all transactions for user
 router.get('/', requireUser, async (req, res) => {
   try {
-    const accounts = await Account.find({ user: req.userId }).select('_id');
-    const ids = accounts.map(a => a._id);
-    const txs = await Transaction.find({ accountId: { $in: ids } }).sort({ date: -1 });
+    // Fetch all transactions for this user (including deleted-account events)
+    const txs = await Transaction.find({ user: req.userId }).sort({ date: -1 });
     res.json(txs);
   } catch (err) {
     res.status(500).json({ message: err.message });
