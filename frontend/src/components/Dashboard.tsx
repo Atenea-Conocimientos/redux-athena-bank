@@ -3,14 +3,12 @@ import {
   Box,
   Paper,
   Button,
-  List,
-  ListItem,
 } from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
 import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 import { useSnackbar } from 'notistack';
 import { useAuth } from './AuthContext';
-import { getAccounts, createAccount, freezeAccount, deleteAccount, depositFunds, transferFunds, Account as ApiAccount } from '../api';
+import { getAccounts, createAccount, freezeAccount, deleteAccount, depositFunds, transferFunds, getTransactions, Account as ApiAccount, Transaction } from '../api';
 
 import CreateAccountModal from './CreateAccountModal';
 import TopUpModal from './TopUpModal';
@@ -49,6 +47,7 @@ const Dashboard: React.FC = () => {
    *  Local state
    * -----------------------------------------------------*/
   const [accounts, setAccounts] = React.useState<Account[]>([]);
+  const [transactions, setTransactions] = React.useState<Transaction[]>([]);
 
   const [modalOpen, setModalOpen] = React.useState(false);
   const [topUpModalOpen, setTopUpModalOpen] = React.useState(false);
@@ -74,6 +73,15 @@ const Dashboard: React.FC = () => {
     }
   }, [token]);
 
+  // Fetch transactions
+  React.useEffect(() => {
+    if (token) {
+      getTransactions(token)
+        .then(setTransactions)
+        .catch(() => enqueueSnackbar('Error al obtener transacciones', { variant: 'error' }));
+    }
+  }, [token]);
+
   // Handlers
   const handleAddAccount = async (payload: { type: Account['type']; amount: number }) => {
     if (!token) return;
@@ -82,6 +90,9 @@ const Dashboard: React.FC = () => {
       setAccounts(prev => [...prev, { ...newAcc, color: gradientByType[newAcc.type] }]);
       setModalOpen(false);
       enqueueSnackbar('¡Cuenta creada exitosamente!', { variant: 'success' });
+      // Refresh transactions list
+      const txs = await getTransactions(token);
+      setTransactions(txs);
     } catch {
       enqueueSnackbar('Error al crear cuenta', { variant: 'error' });
     }
@@ -111,6 +122,9 @@ const Dashboard: React.FC = () => {
       await deleteAccount(token, accountToDelete);
       setAccounts(prev => prev.filter(acc => acc._id !== accountToDelete));
       enqueueSnackbar('Cuenta eliminada exitosamente', { variant: 'success' });
+      // Refresh transactions list
+      const txs = await getTransactions(token);
+      setTransactions(txs);
     } catch {
       enqueueSnackbar('Error al eliminar cuenta', { variant: 'error' });
     } finally {
@@ -151,8 +165,10 @@ const Dashboard: React.FC = () => {
       setAccounts(prev => prev.map(a =>
         a._id === acc._id ? { ...a, balance: a.balance - amount } : a
       ));
-      setTransferModalOpen(false);
       enqueueSnackbar(`Transferencia enviada a ${recipientEmail}`, { variant: 'success' });
+      // Refresh transactions list
+      const txs = await getTransactions(token);
+      setTransactions(txs);
     } catch (err) {
       enqueueSnackbar(err.response?.data?.message || 'Error al transferir', { variant: 'error' });
     }
@@ -503,25 +519,36 @@ const Dashboard: React.FC = () => {
           </Box>
 
           {/* ------------------------------------------------------------
-           *  Transactions list (static placeholder)
+           *  Transaction history
            * -----------------------------------------------------------*/}
-          <Box mt={3}>
-            <Typography variant="h6" fontWeight={700} mb={2}>
-              Lista de transacciones
-            </Typography>
-            <List sx={{ width: '100%', bgcolor: 'transparent', p: 0 }}>
-              <ListItem sx={{ display: 'flex', justifyContent: 'space-between', px: 0 }}>
-                <Box>
-                  <Typography fontWeight={600} color="#A6B1E1">
-                    02/05/2025
-                  </Typography>
-                  <Typography variant="body2">Pago luz</Typography>
+          <Box mt={4}>
+            <Typography variant="h5" mb={2}>Lista de transacciones</Typography>
+            {(() => {
+              // group by date
+              const groups: Record<string, Transaction[]> = {};
+              transactions.forEach(tx => {
+                const date = new Date(tx.date).toLocaleDateString('es-ES');
+                groups[date] = groups[date] || [];
+                groups[date].push(tx);
+              });
+              return Object.entries(groups).map(([date, txs]) => (
+                <Box key={date} mb={2}>
+                  <Typography variant="subtitle2" fontWeight={600}>{date}</Typography>
+                  {txs.map(tx => (
+                    <Box key={tx._id} display="flex" justifyContent="space-between" py={0.5}>
+                      <Typography color={tx.direction==='in'? 'success.main': tx.direction==='out'? 'error.main': 'text.secondary'}>
+                        {tx.description}
+                      </Typography>
+                      <Typography color={tx.direction==='in'? 'success.main': tx.direction==='out'? 'error.main': 'text.secondary'}>
+                        {tx.direction==='neutral'
+                          ? '[neutro]'
+                          : `${tx.direction==='in' ? '+ ' : '- '}${tx.amount?.toFixed(2)}`}
+                      </Typography>
+                    </Box>
+                  ))}
                 </Box>
-                <Typography fontWeight={700} sx={{ color: '#ff1744', fontFamily: 'monospace', fontSize: 18 }}>
-                  - $80.00
-                </Typography>
-              </ListItem>
-            </List>
+              ));
+            })()}
           </Box>
 
           {/* ------------------------------------------------------------
