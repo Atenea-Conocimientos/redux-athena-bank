@@ -2,7 +2,6 @@ import React, { useState, ChangeEvent, FormEvent } from 'react';
 import { Box, Button, TextField, Typography, Paper, Link } from '@mui/material';
 import { useSnackbar } from 'notistack';
 import { useNavigate, Link as RouterLink } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
 import { useAuth } from './AuthContext';
 import NeonParticlesBackground from './NeonParticlesBackground';
 import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
@@ -19,7 +18,6 @@ const Login: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const { enqueueSnackbar } = useSnackbar();
   const navigate = useNavigate();
-  const { t } = useTranslation();
   const { setToken } = useAuth();
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -41,13 +39,13 @@ const Login: React.FC = () => {
         if (data.token) {
           setToken(data.token);
         }
-        enqueueSnackbar('Login successful!', { variant: 'success' });
+        enqueueSnackbar('Inicio de sesión exitoso', { variant: 'success' });
         navigate('/dashboard');
       } else {
-        enqueueSnackbar(data.message || 'Login failed', { variant: 'error' });
+        enqueueSnackbar(data.message || 'Error al iniciar sesión', { variant: 'error' });
       }
     } catch {
-      enqueueSnackbar('Network error', { variant: 'error' });
+      enqueueSnackbar('Error de red', { variant: 'error' });
     } finally {
       setLoading(false);
     }
@@ -87,10 +85,10 @@ const Login: React.FC = () => {
             ATENEA BANK
           </Typography>
         </Box>
-        <Box display="flex" gap={4}>
-          <RouterLink to="/" style={{ color: '#1BFFFF', textDecoration: 'none', fontWeight: 500 }}>Home</RouterLink>
-          <RouterLink to="/about" style={{ color: '#1BFFFF', textDecoration: 'none', fontWeight: 500 }}>About</RouterLink>
-          <RouterLink to="/contact" style={{ color: '#1BFFFF', textDecoration: 'none', fontWeight: 500 }}>Contact</RouterLink>
+        <Box display="flex" gap={4} data-testid="navbar-login">
+          <RouterLink to="/" data-testid="nav-inicio-login" style={{ color: '#1BFFFF', textDecoration: 'none', fontWeight: 500 }}>Inicio</RouterLink>
+          <RouterLink to="/about" data-testid="nav-acerca-login" style={{ color: '#1BFFFF', textDecoration: 'none', fontWeight: 500 }}>Acerca de</RouterLink>
+          <RouterLink to="/contact" data-testid="nav-contacto-login" style={{ color: '#1BFFFF', textDecoration: 'none', fontWeight: 500 }}>Contacto</RouterLink>
         </Box>
       </Box>
       {/* Background */}
@@ -123,12 +121,13 @@ const Login: React.FC = () => {
             border: '1.5px solid #222E50',
           }}
         >
-          <Typography variant="h4" align="left" fontWeight={700} mb={3}>
-            {t('Login')}
+          <Typography variant="h4" align="left" fontWeight={700} mb={3} data-testid="titulo-login">
+            Iniciar sesión
           </Typography>
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit} data-testid="formulario-login">
             <TextField
-              label={t('Email')}
+              data-testid="input-correo-login"
+              label="Correo electrónico"
               name="email"
               type="email"
               value={form.email}
@@ -148,7 +147,8 @@ const Login: React.FC = () => {
               InputLabelProps={{ sx: { color: '#A6B1E1' } }}
             />
             <TextField
-              label={t('Password')}
+              data-testid="input-contrasena-login"
+              label="Contraseña"
               name="password"
               type="password"
               value={form.password}
@@ -168,6 +168,7 @@ const Login: React.FC = () => {
               InputLabelProps={{ sx: { color: '#A6B1E1' } }}
             />
             <Button
+              data-testid="boton-login"
               type="submit"
               variant="contained"
               fullWidth
@@ -187,14 +188,14 @@ const Login: React.FC = () => {
               }}
               disabled={loading}
             >
-              {loading ? t('Logging in...') : t('Login')}
+              {loading ? 'Iniciando sesión...' : 'Iniciar sesión'}
             </Button>
           </form>
           <Box mt={3} textAlign="center">
-            <Typography variant="body2" color="#A6B1E1">
-              {t("Don't have an account?")} &nbsp;
-              <Link component={RouterLink} to="/signup" sx={{ color: '#1BFFFF', fontWeight: 600 }}>
-                {t('Sign Up')}
+            <Typography variant="body2" data-testid="texto-pregunta-cuenta-login">
+              ¿No tienes cuenta? &nbsp;
+              <Link component={RouterLink} to="/signup" data-testid="link-registrarse-login" sx={{ color: '#1BFFFF', fontWeight: 600 }}>
+                Registrarse
               </Link>
             </Typography>
           </Box>
