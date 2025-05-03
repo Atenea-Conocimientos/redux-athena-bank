@@ -3,6 +3,7 @@ import { Box, Button, TextField, Typography, Paper, Link } from '@mui/material';
 import { useSnackbar } from 'notistack';
 import { useNavigate, Link as RouterLink } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { useAuth } from './AuthContext';
 import NeonParticlesBackground from './NeonParticlesBackground';
 import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 
@@ -19,6 +20,7 @@ const Login: React.FC = () => {
   const { enqueueSnackbar } = useSnackbar();
   const navigate = useNavigate();
   const { t } = useTranslation();
+  const { setToken } = useAuth();
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -36,6 +38,9 @@ const Login: React.FC = () => {
       });
       const data = await res.json();
       if (res.ok) {
+        if (data.token) {
+          setToken(data.token);
+        }
         enqueueSnackbar('Login successful!', { variant: 'success' });
         navigate('/dashboard');
       } else {

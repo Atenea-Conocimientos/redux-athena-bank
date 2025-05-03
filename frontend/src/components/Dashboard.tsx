@@ -1,7 +1,6 @@
 import React from 'react';
 import {
   Box,
-  Typography,
   Paper,
   Button,
   List,
@@ -10,22 +9,22 @@ import {
 import { Link as RouterLink } from 'react-router-dom';
 import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 import { useSnackbar } from 'notistack';
+import { useAuth } from './AuthContext';
+import { getAccounts, createAccount, freezeAccount, deleteAccount, Account as ApiAccount } from '../api';
 
 import CreateAccountModal from './CreateAccountModal';
 import TopUpModal from './TopUpModal';
 import TransferModal from './TransferModal';
 import FreezeAccountModal from './FreezeAccountModal';
 import NeonParticlesBackground from './NeonParticlesBackground';
+import { Dialog, DialogTitle, DialogContent, DialogActions, Typography, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
 
 /** ------------------------------------------------------------------
  *  Types
  * -----------------------------------------------------------------*/
-interface Account {
-  type: 'debit' | 'credit' | 'savings' | 'checking';
-  last4: string;
-  name: string;
+// Extend API Account to include UI-specific color
+interface Account extends ApiAccount {
   color: string;
-  frozen: boolean;
 }
 
 /** ------------------------------------------------------------------
@@ -49,42 +48,77 @@ const Dashboard: React.FC = () => {
   /** ------------------------------------------------------
    *  Local state
    * -----------------------------------------------------*/
-  const [accounts, setAccounts] = React.useState<Account[]>([
-    {
-      type: 'debit',
-      last4: '7526',
-      name: 'Charles Arnett',
-      color: gradientByType.debit,
-      frozen: false,
-    },
-  ]);
+  const [accounts, setAccounts] = React.useState<Account[]>([]);
 
   const [modalOpen, setModalOpen] = React.useState(false);
   const [topUpModalOpen, setTopUpModalOpen] = React.useState(false);
   const [transferModalOpen, setTransferModalOpen] = React.useState(false);
   const [freezeModalOpen, setFreezeModalOpen] = React.useState(false);
   const [selectedAccount, setSelectedAccount] = React.useState<Account | null>(null);
+  const [deleteModalOpen, setDeleteModalOpen] = React.useState(false);
+  const [accountToDelete, setAccountToDelete] = React.useState<string>('');
 
-  /** ------------------------------------------------------
-   *  Handlers
-   * -----------------------------------------------------*/
-  const handleAddAccount = (payload: { type: Account['type']; amount: number }) => {
-    setAccounts(prev => [
-      ...prev,
-      {
-        type: payload.type,
-        last4: randomLast4(),
-        name: 'Nueva Cuenta',
-        color: gradientByType[payload.type],
-        frozen: false,
-      },
-    ]);
-    setModalOpen(false);
-    enqueueSnackbar('¡Cuenta creada exitosamente!', { variant: 'success' });
+  const { token } = useAuth();
+
+  // Fetch accounts from backend on mount
+  React.useEffect(() => {
+    if (token) {
+      getAccounts(token)
+        .then(apiAccounts => {
+          setAccounts(apiAccounts.map(acc => ({
+            ...acc,
+            color: gradientByType[acc.type],
+          })));
+        })
+        .catch(() => enqueueSnackbar('Error al obtener cuentas', { variant: 'error' }));
+    }
+  }, [token]);
+
+  // Handlers
+  const handleAddAccount = async (payload: { type: Account['type']; amount: number }) => {
+    if (!token) return;
+    try {
+      const newAcc = await createAccount(token, payload.type, payload.amount);
+      setAccounts(prev => [...prev, { ...newAcc, color: gradientByType[newAcc.type] }]);
+      setModalOpen(false);
+      enqueueSnackbar('¡Cuenta creada exitosamente!', { variant: 'success' });
+    } catch {
+      enqueueSnackbar('Error al crear cuenta', { variant: 'error' });
+    }
+  };
+
+  const handleFreezeToggle = async () => {
+    if (!token || !selectedAccount) return;
+    try {
+      const updated = await freezeAccount(token, selectedAccount._id, !selectedAccount.frozen);
+      setAccounts(prev => prev.map(acc => acc._id === updated._id ? { ...updated, color: gradientByType[updated.type] } : acc));
+      setFreezeModalOpen(false);
+      enqueueSnackbar(
+        updated.frozen ? 'Cuenta congelada ❄️' : 'Cuenta descongelada ☀️',
+        { variant: 'info' },
+      );
+    } catch {
+      enqueueSnackbar('Error al congelar/descongelar', { variant: 'error' });
+    }
+  };
+
+  const handleDeleteAccount = async () => {
+    if (!token || !accountToDelete) {
+      enqueueSnackbar('Seleccione una cuenta para eliminar', { variant: 'warning' });
+      return;
+    }
+    try {
+      await deleteAccount(token, accountToDelete);
+      setAccounts(prev => prev.filter(acc => acc._id !== accountToDelete));
+      enqueueSnackbar('Cuenta eliminada exitosamente', { variant: 'success' });
+    } catch {
+      enqueueSnackbar('Error al eliminar cuenta', { variant: 'error' });
+    } finally {
+      setAccountToDelete('');
+    }
   };
 
   const handleTopUp = (_last4: string, _amount: number) => {
-    // TODO: update account balance in future
     setTopUpModalOpen(false);
     enqueueSnackbar('¡Fondos agregados exitosamente!', { variant: 'success' });
   };
@@ -94,21 +128,42 @@ const Dashboard: React.FC = () => {
     enqueueSnackbar(`Transferencia enviada a ${recipientEmail}`, { variant: 'success' });
   };
 
-  const handleFreezeToggle = () => {
-    if (!selectedAccount) return;
-
-    setAccounts(prev =>
-      prev.map(acc =>
-        acc.last4 === selectedAccount.last4 ? { ...acc, frozen: !acc.frozen } : acc,
-      ),
-    );
-
-    setFreezeModalOpen(false);
-    enqueueSnackbar(
-      selectedAccount.frozen ? 'Cuenta descongelada ☀️' : 'Cuenta congelada ❄️',
-      { variant: 'info' },
-    );
-  };
+  // Delete confirmation modal component
+  const DeleteAccountModal: React.FC = () => (
+    <Dialog open={deleteModalOpen} onClose={() => setDeleteModalOpen(false)}>
+      <DialogTitle>Eliminar cuenta</DialogTitle>
+      <DialogContent>
+        <FormControl fullWidth margin="normal">
+          <InputLabel id="delete-select-label">Selecciona cuenta</InputLabel>
+          <Select
+            labelId="delete-select-label"
+            value={accountToDelete}
+            label="Selecciona cuenta"
+            onChange={e => setAccountToDelete(e.target.value)}
+          >
+            {accounts.map(acc => (
+              <MenuItem key={acc._id} value={acc._id}>
+                {acc.name} (••••{acc.last4})
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={() => { setDeleteModalOpen(false); setAccountToDelete(''); }} color="secondary">
+          Cancelar
+        </Button>
+        <Button
+          onClick={() => { handleDeleteAccount(); setDeleteModalOpen(false); }}
+          color="error"
+          variant="contained"
+          disabled={!accountToDelete}
+        >
+          Eliminar
+        </Button>
+      </DialogActions>
+    </Dialog>
+  );
 
   /** ------------------------------------------------------------------
    *  Render helpers
@@ -136,24 +191,24 @@ const Dashboard: React.FC = () => {
         variant={account.frozen ? 'outlined' : 'contained'}
         color={account.frozen ? 'warning' : 'primary'}
         sx={{
-  position: 'absolute',
-  top: 12,
-  right: 12,
-  zIndex: 2,
-  fontSize: 12,
-  px: 1.5,
-  py: 0.5,
-  minWidth: 0,
-  ...(account.frozen && {
-    background: '#fff',
-    color: '#222E50', // dark text for contrast
-    border: '1.5px solid #A6B1E1',
-    '&:hover': {
-      background: '#f5f5f5',
-      color: '#222E50',
-    },
-  }),
-}}
+          position: 'absolute',
+          top: 12,
+          right: 12,
+          zIndex: 2,
+          fontSize: 12,
+          px: 1.5,
+          py: 0.5,
+          minWidth: 0,
+          ...(account.frozen && {
+            background: '#fff',
+            color: '#222E50', // dark text for contrast
+            border: '1.5px solid #A6B1E1',
+            '&:hover': {
+              background: '#f5f5f5',
+              color: '#222E50',
+            },
+          }),
+        }}
         onClick={() => {
           setSelectedAccount(account);
           setFreezeModalOpen(true);
@@ -363,6 +418,23 @@ const Dashboard: React.FC = () => {
           <Box display="flex" justifyContent="center" gap={3} mb={3}>
             <Button
               variant="contained"
+              color="error"
+              sx={{
+                fontWeight: 700,
+                px: 4,
+                py: 1.2,
+                fontSize: 18,
+                borderRadius: 2,
+                textTransform: 'none',
+                letterSpacing: 1,
+                boxShadow: '0 0 12px #ff174455',
+              }}
+              onClick={() => setDeleteModalOpen(true)}
+            >
+              Eliminar
+            </Button>
+            <Button
+              variant="contained"
               sx={{
                 background: 'linear-gradient(90deg, #2E3192 0%, #1BFFFF 100%)',
                 color: '#fff',
@@ -436,6 +508,7 @@ const Dashboard: React.FC = () => {
             last4={selectedAccount?.last4 || ''}
             frozen={Boolean(selectedAccount?.frozen)}
           />
+          <DeleteAccountModal />
         </Paper>
       </Box>
     </Box>

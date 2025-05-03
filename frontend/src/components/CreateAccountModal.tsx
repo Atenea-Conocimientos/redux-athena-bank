@@ -67,13 +67,23 @@ const CreateAccountModal: React.FC<CreateAccountModalProps> = ({ open, onClose, 
         <FormControl fullWidth margin="normal" error={errorType}>
           <InputLabel id="account-type-label">Tipo de cuenta *</InputLabel>
           <Select
+            fullWidth
             labelId="account-type-label"
+            id="account-type"
             value={type}
             label="Tipo de cuenta *"
             onChange={e => setType(e.target.value)}
+            variant="outlined"
+            displayEmpty
+            MenuProps={{ container: document.body }}
           >
+            <MenuItem value="" disabled>
+              <em></em>
+            </MenuItem>
             {accountTypes.map(opt => (
-              <MenuItem key={opt.value} value={opt.value}>{opt.label}</MenuItem>
+              <MenuItem key={opt.value} value={opt.value}>
+                {opt.label}
+              </MenuItem>
             ))}
           </Select>
           {errorType && (
