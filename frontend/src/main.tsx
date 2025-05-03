@@ -6,12 +6,15 @@ import './i18n';
 import './index.css'
 import App from './App.tsx'
 import { NotistackProvider } from './NotistackProvider.tsx';
+import { AuthProvider } from './components/AuthContext';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <Provider store={store}>
       <NotistackProvider>
-        <App />
+        <AuthProvider>
+          <App />
+        </AuthProvider>
       </NotistackProvider>
     </Provider>
   </StrictMode>,
