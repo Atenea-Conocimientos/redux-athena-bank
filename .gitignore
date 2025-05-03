@@ -1,0 +1,11 @@
+# Ignorar archivos de entorno
+backend/.env
+backend/node_modules
+
+# Ignorar archivos de entorno
+frontend/.env
+frontend/node_modules
+
+# Ignorar archivos de entorno
+frontend/src/locales/en/common.json
+frontend/src/locales/es/common.json
