@@ -10,7 +10,7 @@ import { Link as RouterLink } from 'react-router-dom';
 import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 import { useSnackbar } from 'notistack';
 import { useAuth } from './AuthContext';
-import { getAccounts, createAccount, freezeAccount, deleteAccount, Account as ApiAccount } from '../api';
+import { getAccounts, createAccount, freezeAccount, deleteAccount, depositFunds, transferFunds, Account as ApiAccount } from '../api';
 
 import CreateAccountModal from './CreateAccountModal';
 import TopUpModal from './TopUpModal';
@@ -118,14 +118,44 @@ const Dashboard: React.FC = () => {
     }
   };
 
-  const handleTopUp = (_last4: string, _amount: number) => {
-    setTopUpModalOpen(false);
-    enqueueSnackbar('¡Fondos agregados exitosamente!', { variant: 'success' });
+  const handleTopUp = async (last4: string, amount: number) => {
+    if (!token) return;
+    const acc = accounts.find(a => a.last4 === last4);
+    if (!acc) {
+      enqueueSnackbar('Cuenta no encontrada', { variant: 'error' });
+      return;
+    }
+    try {
+      const updated = await depositFunds(token, acc._id, amount);
+      setAccounts(prev => prev.map(a => a._id === updated._id
+        ? { ...updated, color: gradientByType[updated.type] }
+        : a
+      ));
+      setTopUpModalOpen(false);
+      enqueueSnackbar('¡Fondos agregados exitosamente!', { variant: 'success' });
+    } catch {
+      enqueueSnackbar('Error al agregar fondos', { variant: 'error' });
+    }
   };
 
-  const handleTransfer = (_originLast4: string, recipientEmail: string) => {
-    setTransferModalOpen(false);
-    enqueueSnackbar(`Transferencia enviada a ${recipientEmail}`, { variant: 'success' });
+  const handleTransfer = async (originLast4: string, recipientEmail: string, amount: number) => {
+    if (!token) return;
+    const acc = accounts.find(a => a.last4 === originLast4);
+    if (!acc) {
+      enqueueSnackbar('Cuenta no encontrada', { variant: 'error' });
+      return;
+    }
+    try {
+      await transferFunds(token, recipientEmail, amount);
+      // Update local balance
+      setAccounts(prev => prev.map(a =>
+        a._id === acc._id ? { ...a, balance: a.balance - amount } : a
+      ));
+      setTransferModalOpen(false);
+      enqueueSnackbar(`Transferencia enviada a ${recipientEmail}`, { variant: 'success' });
+    } catch (err) {
+      enqueueSnackbar(err.response?.data?.message || 'Error al transferir', { variant: 'error' });
+    }
   };
 
   // Delete confirmation modal component
