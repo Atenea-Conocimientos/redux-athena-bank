@@ -40,9 +40,10 @@ Después de los requisitos, puedes levantar todo el stack sin instalar dependenc
 
 ### Frontend
 1. Renombrar o copiar `.env.example` a `.env` en la carpeta `frontend/`.
-2. Configurar variable en `frontend/.env`:
+2. _Nota: el frontend usa Vite con `import.meta.env.DEV`. No requiere `.env` unless overrides._
+Opcionalmente puedes definir en `.env` de Vite:
    ```env
-   REACT_APP_API_URL=http://localhost:4000/api
+   VITE_API_BASE=http://localhost:4000/api
    ```
 
 ---
@@ -62,7 +63,7 @@ npm run dev     # servidor en http://localhost:4000
 # Frontend (nueva terminal)
 cd ../frontend
 npm install
-npm start       # app en http://localhost:3000
+npm run dev     # app en http://localhost:3000
 ```
 
 ---
@@ -74,6 +75,7 @@ Todas las rutas marcadas requieren el header `Authorization: Bearer <token>` tra
 ### Auth
 - **POST** `/api/auth/register` – Registro de usuario
 - **POST** `/api/auth/login`    – Login y obtención de token JWT
+- **POST** `/api/auth/logout`   – Cierra sesión y limpia cookie JWT
 
 ### Cuentas
 - **GET** `/api/accounts`         – Listar cuentas del usuario
@@ -84,7 +86,7 @@ Todas las rutas marcadas requieren el header `Authorization: Bearer <token>` tra
 
 ### Transacciones
 - **GET** `/api/transactions`                   – Obtener historial de transacciones
-- **POST** `/api/transactions/transfer`         – Transferir fondos entre usuarios (enviar `{ toEmail, amount }`)
+- **POST** `/api/transactions/transfer`         – Transferir fondos desde cuenta (enviar `{ fromAccountId, toEmail, amount }`)
 
 ---
 
