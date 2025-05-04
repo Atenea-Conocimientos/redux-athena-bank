@@ -37,6 +37,14 @@ const gradientByType: Record<Account['type'], string> = {
 
 const randomLast4 = () => Math.floor(1000 + Math.random() * 9000).toString();
 
+// Etiquetas de tipos traducidos a español
+const typeLabels: Record<Account['type'], string> = {
+  debit: 'Débito',
+  credit: 'Crédito',
+  savings: 'Ahorros',
+  checking: 'Corriente',
+};
+
 /** ------------------------------------------------------------------
  *  Dashboard component
  * -----------------------------------------------------------------*/
@@ -60,6 +68,9 @@ const Dashboard: React.FC = () => {
   const [accountToDelete, setAccountToDelete] = React.useState<string>('');
 
   const { token } = useAuth();
+
+  // Suma de todos los balances
+  const totalBalance = accounts.reduce((sum, acc) => sum + acc.balance, 0);
 
   // Fetch accounts from backend on mount
   React.useEffect(() => {
@@ -168,7 +179,7 @@ const Dashboard: React.FC = () => {
       return;
     }
     try {
-      await transferFunds(token, recipientEmail, amount);
+      await transferFunds(token, acc._id, recipientEmail, amount);
       // Update local balance
       setAccounts(prev => prev.map(a =>
         a._id === acc._id ? { ...a, balance: a.balance - amount } : a
@@ -271,7 +282,7 @@ const Dashboard: React.FC = () => {
         {account.frozen ? 'Descongelar' : 'Congelar'}
       </Button>
 
-      {/* Card header */}
+      {/* Card header: mostrar balance */}
       <Box display="flex" alignItems="center" gap={1} mb={2}>
         <Box
           sx={{
@@ -284,7 +295,7 @@ const Dashboard: React.FC = () => {
           }}
         />
         <Typography variant="subtitle2" fontWeight={600} color="#fff" letterSpacing={2}>
-          {account.type.charAt(0).toUpperCase() + account.type.slice(1)}
+          ${account.balance.toFixed(2)}
         </Typography>
       </Box>
 
@@ -297,8 +308,9 @@ const Dashboard: React.FC = () => {
       >
         •••• {account.last4}
       </Typography>
+      {/* Mostrar tipo en español en cuerpo de tarjeta */}
       <Typography variant="body2" color="#A6B1E1" fontWeight={500}>
-        {account.name}
+        {typeLabels[account.type]}
       </Typography>
     </Paper>
   );
@@ -444,7 +456,7 @@ const Dashboard: React.FC = () => {
               fontWeight={700}
               sx={{ color: '#1BFFFF', textShadow: '0 0 12px #1BFFFF88', letterSpacing: 1 }}
             >
-              $12,345.67
+              {totalBalance.toLocaleString('en-US', { style: 'currency', currency: 'USD' })}
             </Typography>
           </Paper>
 

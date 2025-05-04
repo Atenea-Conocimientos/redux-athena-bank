@@ -8,12 +8,12 @@ const requireUser = require('../requireUser');
 // POST /api/transactions/transfer - Transfer funds between users
 router.post('/transfer', requireUser, async (req, res) => {
   try {
-    const { toEmail, amount } = req.body;
-    if (!toEmail || !amount || amount <= 0) {
+    const { fromAccountId, toEmail, amount } = req.body;
+    if (!fromAccountId || !toEmail || !amount || amount <= 0) {
       throw { status: 400, message: 'Invalid transfer data' };
     }
-    // Sender account (first)
-    const senderAccount = await Account.findOne({ user: req.userId });
+    // Sender account by ID
+    const senderAccount = await Account.findOne({ _id: fromAccountId, user: req.userId });
     if (!senderAccount) throw { status: 404, message: 'Sender account not found' };
     if (senderAccount.frozen) throw { status: 400, message: 'Sender account is frozen' };
     if (senderAccount.balance < amount) throw { status: 400, message: 'Insufficient funds' };
