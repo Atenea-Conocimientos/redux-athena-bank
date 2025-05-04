@@ -65,3 +65,12 @@ export async function getTransactions(token: string): Promise<Transaction[]> {
   );
   return res.data;
 }
+
+// Logout del usuario
+export async function logout(): Promise<void> {
+  await axios.post(
+    `${API_BASE}/auth/logout`,
+    {},
+    { withCredentials: true }
+  );
+}
