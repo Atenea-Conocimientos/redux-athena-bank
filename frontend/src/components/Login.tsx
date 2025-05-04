@@ -58,38 +58,17 @@ const Login: React.FC = () => {
       display="flex"
       flexDirection="column"
       position="relative"
-      sx={{ background: gradient, overflow: 'hidden' }}
+      sx={{ background: gradient, overflow: 'hidden', pt: 12 }}
     >
-      {/* Header/Navbar */}
-      <Box
-        component="header"
-        width="100%"
-        maxWidth="100vw"
-        sx={{
-          px: { xs: 2, sm: 4 },
-          py: 2,
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          background: 'rgba(12, 10, 30, 0.85)',
-          borderBottom: '1.5px solid rgba(44,255,255,0.08)',
-          zIndex: 2,
-          position: 'relative',
-          overflowX: 'hidden',
-          boxSizing: 'border-box',
-        }}
-      >
+      {/* Header */}
+      <Box component="header" width="100%" maxWidth="100vw" sx={{
+        px: { xs: 2, sm: 4 }, py: 2, display: 'flex', alignItems: 'center', justifyContent: 'space-between', background: 'rgba(12,10,30,0.85)', borderBottom: '1.5px solid rgba(44,255,255,0.08)', position: 'fixed', top: 0, left: 0, zIndex: 2, boxSizing: 'border-box'
+      }}>
         <Box display="flex" alignItems="center" gap={1}>
           <AccountBalanceIcon sx={{ color: '#FFD600', fontSize: 32 }} />
-          <Typography variant="h6" fontWeight={700} color="#fff">
-            ATENEA BANK
-          </Typography>
+          <Typography variant="h6" fontWeight={700} color="#fff">ATENEA BANK</Typography>
         </Box>
-        <Box display="flex" gap={4} data-testid="navbar-login">
-          <RouterLink to="/" data-testid="nav-inicio-login" style={{ color: '#1BFFFF', textDecoration: 'none', fontWeight: 500 }}>Inicio</RouterLink>
-          <RouterLink to="/about" data-testid="nav-acerca-login" style={{ color: '#1BFFFF', textDecoration: 'none', fontWeight: 500 }}>Acerca de</RouterLink>
-          <RouterLink to="/contact" data-testid="nav-contacto-login" style={{ color: '#1BFFFF', textDecoration: 'none', fontWeight: 500 }}>Contacto</RouterLink>
-        </Box>
+        <Button component={RouterLink} to="/signup" variant="outlined" sx={{ color: '#1BFFFF', borderColor: '#1BFFFF', '&:hover': { background: 'rgba(27,255,255,0.08)' } }} data-testid="boton-signup-header">Crear cuenta</Button>
       </Box>
       {/* Background */}
       <Box position="absolute" top={0} left={0} width="100%" height="100%" zIndex={0}>

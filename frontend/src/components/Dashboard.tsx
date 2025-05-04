@@ -4,11 +4,11 @@ import {
   Paper,
   Button,
 } from '@mui/material';
-import { Link as RouterLink } from 'react-router-dom';
 import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 import { useSnackbar } from 'notistack';
 import { useAuth } from './AuthContext';
-import { getAccounts, createAccount, freezeAccount, deleteAccount, depositFunds, transferFunds, getTransactions, Account as ApiAccount, Transaction } from '../api';
+import { useNavigate } from 'react-router-dom';
+import { getAccounts, createAccount, freezeAccount, deleteAccount, depositFunds, transferFunds, getTransactions, logout, Account as ApiAccount, Transaction } from '../api';
 
 import CreateAccountModal from './CreateAccountModal';
 import TopUpModal from './TopUpModal';
@@ -42,6 +42,8 @@ const randomLast4 = () => Math.floor(1000 + Math.random() * 9000).toString();
  * -----------------------------------------------------------------*/
 const Dashboard: React.FC = () => {
   const { enqueueSnackbar } = useSnackbar();
+  const navigate = useNavigate();
+  const { setToken } = useAuth();
 
   /** ------------------------------------------------------
    *  Local state
@@ -108,6 +110,9 @@ const Dashboard: React.FC = () => {
         updated.frozen ? 'Cuenta congelada ❄️' : 'Cuenta descongelada ☀️',
         { variant: 'info' },
       );
+      // Refrescar solo lista de transacciones tras cambio de estado
+      const txs = await getTransactions(token);
+      setTransactions(txs);
     } catch {
       enqueueSnackbar('Error al congelar/descongelar', { variant: 'error' });
     }
@@ -147,6 +152,9 @@ const Dashboard: React.FC = () => {
       ));
       setTopUpModalOpen(false);
       enqueueSnackbar('¡Fondos agregados exitosamente!', { variant: 'success' });
+      // Refrescar transacciones tras depósito
+      const txs = await getTransactions(token);
+      setTransactions(txs);
     } catch {
       enqueueSnackbar('Error al agregar fondos', { variant: 'error' });
     }
@@ -348,48 +356,39 @@ const Dashboard: React.FC = () => {
       position="relative"
       sx={{ background: 'linear-gradient(90deg, #2E3192 0%, #1BFFFF 100%)', overflow: 'hidden' }}
     >
-      {/* ----------------------------------------------------------------------
-       *  Header / Navbar
-       * --------------------------------------------------------------------*/}
-      <Box
-        component="header"
-        width="100%"
-        sx={{
-          px: { xs: 2, sm: 4 },
-          py: 2,
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          background: 'rgba(12, 10, 30, 0.85)',
-          borderBottom: '1.5px solid rgba(44,255,255,0.08)',
-          zIndex: 2,
-          position: 'relative',
-        }}
-      >
+      {/* Header */}
+      <Box component="header" width="100%" maxWidth="100vw" sx={{
+        px: { xs: 2, sm: 4 },
+        py: 2,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        background: 'rgba(12,10,30,0.85)',
+        borderBottom: '1.5px solid rgba(44,255,255,0.08)',
+        position: 'fixed', top: 0, left: 0,
+        zIndex: 2,
+        boxSizing: 'border-box',
+      }}>
         <Box display="flex" alignItems="center" gap={1}>
           <AccountBalanceIcon sx={{ color: '#FFD600', fontSize: 32 }} />
           <Typography variant="h6" fontWeight={700} color="#fff">
             ATENEA BANK
           </Typography>
         </Box>
-        <Box display="flex" gap={4}>
-          <RouterLink to="/" style={{ color: '#1BFFFF', textDecoration: 'none', fontWeight: 500 }}>
-            Home
-          </RouterLink>
-          <RouterLink to="/about" style={{ color: '#1BFFFF', textDecoration: 'none', fontWeight: 500 }}>
-            About
-          </RouterLink>
-          <RouterLink to="/contact" style={{ color: '#1BFFFF', textDecoration: 'none', fontWeight: 500 }}>
-            Contact
-          </RouterLink>
-        </Box>
+        <Button data-testid="boton-logout" onClick={async () => {
+          try {
+            await logout();
+            enqueueSnackbar('Sesión cerrada correctamente', { variant: 'success' });
+          } catch {
+            enqueueSnackbar('Error al cerrar sesión', { variant: 'error' });
+          }
+          setToken('');
+          navigate('/login');
+        }} variant="outlined" sx={{ color: '#1BFFFF', borderColor: '#1BFFFF', '&:hover': { background: 'rgba(27,255,255,0.08)' } }}>
+          Cerrar sesión
+        </Button>
       </Box>
-
-      {/* Decorative background */}
-      <Box position="absolute" top={0} left={0} width="100%" height="100%" zIndex={0}>
-        <NeonParticlesBackground />
-      </Box>
-
+      <NeonParticlesBackground />
       {/* ----------------------------------------------------------------------
        *  Content Wrapper
        * --------------------------------------------------------------------*/}
@@ -401,6 +400,7 @@ const Dashboard: React.FC = () => {
         justifyContent="center"
         flex={1}
         width="100%"
+        pt={12}
       >
         <Paper
           elevation={8}
@@ -536,13 +536,19 @@ const Dashboard: React.FC = () => {
                   <Typography variant="subtitle2" fontWeight={600}>{date}</Typography>
                   {txs.map(tx => (
                     <Box key={tx._id} display="flex" justifyContent="space-between" py={0.5}>
-                      <Typography color={tx.direction==='in'? 'success.main': tx.direction==='out'? 'error.main': 'text.secondary'}>
-                        {tx.description}
+                      <Typography sx={{ color: tx.direction==='in' || tx.type==='account_opened' ? 'success.main' : tx.direction==='out' || tx.type==='account_closed' ? 'error.main' : '#fff' }}>
+                        {tx.type === 'deposit'
+                          ? `Depósito en cuenta ${accounts.find(a => a._id === tx.accountId)?.last4}`
+                          : tx.type === 'account_opened'
+                            ? `Cuenta activada ${accounts.find(a => a._id === tx.accountId)?.last4}`
+                            : tx.type === 'status_change'
+                              ? `${tx.description} ${accounts.find(a => a._id === tx.accountId)?.last4}`
+                              : tx.description}
                       </Typography>
-                      <Typography color={tx.direction==='in'? 'success.main': tx.direction==='out'? 'error.main': 'text.secondary'}>
-                        {tx.direction==='neutral'
-                          ? '[neutro]'
-                          : `${tx.direction==='in' ? '+ ' : '- '}${tx.amount?.toFixed(2)}`}
+                      <Typography sx={{ color: tx.direction==='in' || tx.type==='account_opened' ? 'success.main' : tx.direction==='out' || tx.type==='account_closed' ? 'error.main' : '#fff' }}>
+                        {tx.direction === 'neutral'
+                          ? ''
+                          : `${tx.direction === 'in' ? '+ ' : '- '}${tx.amount?.toFixed(2)}`}
                       </Typography>
                     </Box>
                   ))}
