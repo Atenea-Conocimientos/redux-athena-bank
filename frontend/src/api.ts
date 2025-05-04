@@ -39,11 +39,11 @@ export async function depositFunds(token: string, accountId: string, amount: num
   return res.data;
 }
 
-// Transfer funds to another user's first account
-export async function transferFunds(token: string, toEmail: string, amount: number): Promise<void> {
+// Transferencia de fondos desde una cuenta específica
+export async function transferFunds(token: string, fromAccountId: string, toEmail: string, amount: number): Promise<void> {
   await axios.post(
     `${API_BASE}/transactions/transfer`,
-    { toEmail, amount },
+    { fromAccountId, toEmail, amount },
     { headers: { Authorization: `Bearer ${token}` } }
   );
 }
