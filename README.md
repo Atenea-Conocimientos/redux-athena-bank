@@ -10,6 +10,8 @@ Aplicación bancaria full-stack que permite gestionar cuentas, registrar transac
 - **npm** o **yarn**
 - **MongoDB** (local o en la nube)
 - **Git** para control de versiones
+- **Docker** y **Docker Compose** instalados y funcionando.
+- Para macOS con chips Apple M1/M2/M3: tener instalada la última versión de Xcode.
 
 ## 🐳 Uso con Docker
 
