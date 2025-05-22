@@ -7,7 +7,7 @@ import {
 import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 import { useSnackbar } from 'notistack';
 import { useAuth } from './AuthContext';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link as RouterLink } from 'react-router-dom';
 import { getAccounts, createAccount, freezeAccount, deleteAccount, depositFunds, transferFunds, getTransactions, logout, Account as ApiAccount, Transaction } from '../api';
 
 import CreateAccountModal from './CreateAccountModal';
@@ -381,7 +381,7 @@ const Dashboard: React.FC = () => {
         zIndex: 2,
         boxSizing: 'border-box',
       }}>
-        <Box display="flex" alignItems="center" gap={1}>
+        <Box component={RouterLink} to="/" data-testid="logo-header-dashboard" display="flex" alignItems="center" gap={1}>
           <AccountBalanceIcon sx={{ color: '#FFD600', fontSize: 32 }} />
           <Typography variant="h6" fontWeight={700} color="#fff">
             ATENEA BANK

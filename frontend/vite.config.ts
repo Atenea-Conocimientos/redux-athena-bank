@@ -8,6 +8,6 @@ export default defineConfig({
     proxy: {
       '/api': 'http://localhost:4000',
     },
-    port: 3000,  // Cambiar el puerto a 3000
+    port: 3000,
   },
 })
