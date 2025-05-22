@@ -93,7 +93,7 @@ const SignUp: React.FC = () => {
       <Box component="header" width="100%" maxWidth="100vw" sx={{
         px: { xs: 2, sm: 4 }, py: 2, display: 'flex', alignItems: 'center', justifyContent: 'space-between', background: 'rgba(12,10,30,0.85)', borderBottom: '1.5px solid rgba(44,255,255,0.08)', position: 'fixed', top: 0, left: 0, zIndex: 2, boxSizing: 'border-box'
       }}>
-        <Box display="flex" alignItems="center" gap={1}>
+        <Box component={RouterLink} to="/" data-testid="logo-header-signup" display="flex" alignItems="center" gap={1}>
           <AccountBalanceIcon sx={{ color: '#FFD600', fontSize: 32 }} />
           <Typography variant="h6" fontWeight={700} color="#fff">ATENEA BANK</Typography>
         </Box>
@@ -138,6 +138,7 @@ const SignUp: React.FC = () => {
                 fullWidth
                 variant="outlined"
                 label={label}
+                data-testid={`input-${name}-registro`}
                 sx={{
                   mb: 3,
                   input: { color: '#fff' },
@@ -152,7 +153,6 @@ const SignUp: React.FC = () => {
                     boxShadow: '0 0 16px 4px #fff, 0 0 8px #1bffff88',
                   },
                 }}
-                data-testid={`input-${name}-registro`}
               />
             ))}
 

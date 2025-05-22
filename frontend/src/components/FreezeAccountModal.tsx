@@ -21,21 +21,21 @@ interface FreezeAccountModalProps {
 const FreezeAccountModal: React.FC<FreezeAccountModalProps> = ({ open, onClose, onConfirm, accountName, last4, frozen }) => {
   return (
     <Dialog open={open} onClose={onClose} maxWidth="xs" fullWidth>
-      <DialogTitle>{frozen ? 'Descongelar cuenta' : 'Congelar cuenta'}</DialogTitle>
+      <DialogTitle data-testid="titulo-modal-congelar-cuenta">{frozen ? 'Descongelar cuenta' : 'Congelar cuenta'}</DialogTitle>
       <DialogContent>
         <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center" mt={2}>
           {/* Optional: Ice/Sun Animation Placeholder */}
           <Box mb={2}>
             {frozen ? (
-              <span style={{ fontSize: 38, color: '#FFD600' }}>☀️</span>
+              <span data-testid="icono-congelar-cuenta" style={{ fontSize: 38, color: '#FFD600' }}>☀️</span>
             ) : (
-              <span style={{ fontSize: 38, color: '#00e6ff' }}>❄️</span>
+              <span data-testid="icono-descongelar-cuenta" style={{ fontSize: 38, color: '#00e6ff' }}>❄️</span>
             )}
           </Box>
-          <Typography variant="h6" fontWeight={700} mb={1}>
+          <Typography data-testid="texto-numero-cuenta" variant="h6" fontWeight={700} mb={1}>
             {accountName} •••• {last4}
           </Typography>
-          <Typography align="center">
+          <Typography data-testid="texto-confirmacion-congelar-cuenta" align="center">
             {frozen
               ? '¿Seguro que querés descongelar esta cuenta?'
               : '¿Seguro que querés congelar esta cuenta?'}
@@ -43,10 +43,10 @@ const FreezeAccountModal: React.FC<FreezeAccountModalProps> = ({ open, onClose, 
         </Box>
       </DialogContent>
       <DialogActions>
-        <Button onClick={onClose} color="secondary">
+        <Button data-testid="boton-cancelar-congelar-cuenta" onClick={onClose} color="secondary">
           Cancelar
         </Button>
-        <Button onClick={onConfirm} variant="contained" color={frozen ? 'warning' : 'primary'}>
+        <Button data-testid="boton-congelar-cuenta" onClick={onConfirm} variant="contained" color={frozen ? 'warning' : 'primary'}>
           {frozen ? 'Descongelar' : 'Congelar'}
         </Button>
       </DialogActions>
