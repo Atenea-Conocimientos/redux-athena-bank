@@ -61,11 +61,11 @@ const CreateAccountModal: React.FC<CreateAccountModalProps> = ({ open, onClose, 
   };
 
   return (
-    <Dialog open={open} onClose={handleClose} maxWidth="xs" fullWidth>
-      <DialogTitle>Crear nueva cuenta</DialogTitle>
+    <Dialog data-testid="modal-crear-cuenta" open={open} onClose={handleClose} maxWidth="xs" fullWidth>
+      <DialogTitle data-testid="titulo-modal-crear-cuenta">Crear nueva cuenta</DialogTitle>
       <DialogContent>
         <FormControl fullWidth margin="normal" error={errorType}>
-          <InputLabel id="account-type-label">Tipo de cuenta *</InputLabel>
+          <InputLabel data-testid="etiqueta-tipo-cuenta" id="account-type-label">Tipo de cuenta *</InputLabel>
           <Select
             fullWidth
             labelId="account-type-label"
@@ -87,10 +87,11 @@ const CreateAccountModal: React.FC<CreateAccountModalProps> = ({ open, onClose, 
             ))}
           </Select>
           {errorType && (
-            <Typography color="error" variant="caption">Tipo de cuenta requerido</Typography>
+            <Typography data-testid="texto-error-tipo-cuenta" color="error" variant="caption">Tipo de cuenta requerido</Typography>
           )}
         </FormControl>
         <TextField
+          data-testid="input-monto-inicial"
           fullWidth
           margin="normal"
           label="Monto inicial *"
@@ -103,10 +104,10 @@ const CreateAccountModal: React.FC<CreateAccountModalProps> = ({ open, onClose, 
         />
       </DialogContent>
       <DialogActions>
-        <Button onClick={handleClose} color="secondary">
+        <Button data-testid="boton-cancelar-crear-cuenta" onClick={handleClose} color="secondary">
           Cancelar
         </Button>
-        <Button onClick={handleCreate} variant="contained" color="primary">
+        <Button data-testid="boton-crear-cuenta" onClick={handleCreate} variant="contained" color="primary">
           Crear cuenta
         </Button>
       </DialogActions>

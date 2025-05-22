@@ -63,11 +63,12 @@ const TopUpModal: React.FC<TopUpModalProps> = ({ open, onClose, onTopUp, account
 
   return (
     <Dialog open={open} onClose={handleClose} maxWidth="xs" fullWidth>
-      <DialogTitle>Agregar fondos</DialogTitle>
+      <DialogTitle data-testid="titulo-modal-agregar-fondos">Agregar fondos</DialogTitle>
       <DialogContent>
         <FormControl fullWidth margin="normal" error={errorAccount}>
-          <InputLabel id="account-select-label">Cuenta *</InputLabel>
+          <InputLabel data-testid="etiqueta-cuenta" id="account-select-label">Cuenta *</InputLabel>
           <Select
+            data-testid="selector-cuenta"
             labelId="account-select-label"
             value={selectedLast4}
             label="Cuenta *"
@@ -80,10 +81,11 @@ const TopUpModal: React.FC<TopUpModalProps> = ({ open, onClose, onTopUp, account
             ))}
           </Select>
           {errorAccount && (
-            <Typography color="error" variant="caption">Selecciona una cuenta válida y activa</Typography>
+            <Typography data-testid="texto-error-cuenta" color="error" variant="caption">Selecciona una cuenta válida y activa</Typography>
           )}
         </FormControl>
         <TextField
+          data-testid="input-monto"
           fullWidth
           margin="normal"
           label="Monto a agregar *"
@@ -96,10 +98,10 @@ const TopUpModal: React.FC<TopUpModalProps> = ({ open, onClose, onTopUp, account
         />
       </DialogContent>
       <DialogActions>
-        <Button onClick={handleClose} color="secondary">
+        <Button data-testid="boton-cancelar-agregar-fondos" onClick={handleClose} color="secondary">
           Cancelar
         </Button>
-        <Button onClick={handleTopUp} variant="contained" color="primary">
+        <Button data-testid="boton-agregar-fondos" onClick={handleTopUp} variant="contained" color="primary">
           Agregar fondos
         </Button>
       </DialogActions>

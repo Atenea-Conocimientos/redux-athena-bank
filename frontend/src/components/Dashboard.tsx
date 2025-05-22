@@ -235,6 +235,7 @@ const Dashboard: React.FC = () => {
    * -----------------------------------------------------------------*/
   const AccountCard: React.FC<{ account: Account }> = ({ account }) => (
     <Paper
+      data-testid="tarjeta-cuenta"
       elevation={6}
       sx={{
         background: account.color,
@@ -252,6 +253,7 @@ const Dashboard: React.FC = () => {
     >
       {/* Freeze / unfreeze */}
       <Button
+        data-testid="boton-congelar-cuenta"
         size="small"
         variant={account.frozen ? 'outlined' : 'contained'}
         color={account.frozen ? 'warning' : 'primary'}
@@ -294,13 +296,14 @@ const Dashboard: React.FC = () => {
             mr: 1,
           }}
         />
-        <Typography variant="subtitle2" fontWeight={600} color="#fff" letterSpacing={2}>
+        <Typography data-testid="saldo-cuenta" variant="subtitle2" fontWeight={600} color="#fff" letterSpacing={2}>
           ${account.balance.toFixed(2)}
         </Typography>
       </Box>
 
       {/* Card body */}
       <Typography
+        data-testid="texto-numero-cuenta"
         variant="h6"
         fontWeight={700}
         letterSpacing={2}
@@ -309,7 +312,7 @@ const Dashboard: React.FC = () => {
         •••• {account.last4}
       </Typography>
       {/* Mostrar tipo en español en cuerpo de tarjeta */}
-      <Typography variant="body2" color="#A6B1E1" fontWeight={500}>
+      <Typography data-testid="tipo-cuenta" variant="body2" color="#A6B1E1" fontWeight={500}>
         {typeLabels[account.type]}
       </Typography>
     </Paper>
@@ -317,6 +320,7 @@ const Dashboard: React.FC = () => {
 
   const AddAccountCard: React.FC = () => (
     <Paper
+      data-testid="tarjeta-agregar-cuenta"
       elevation={0}
       sx={{
         minWidth: 260,
@@ -382,8 +386,8 @@ const Dashboard: React.FC = () => {
         boxSizing: 'border-box',
       }}>
         <Box component={RouterLink} to="/" data-testid="logo-header-dashboard" display="flex" alignItems="center" gap={1}>
-          <AccountBalanceIcon sx={{ color: '#FFD600', fontSize: 32 }} />
-          <Typography variant="h6" fontWeight={700} color="#fff">
+          <AccountBalanceIcon data-testid="logo-header-dashboard-icon" sx={{ color: '#FFD600', fontSize: 32 }} />
+          <Typography data-testid="logo-header-dashboard-text" variant="h6" fontWeight={700} color="#fff">
             ATENEA BANK
           </Typography>
         </Box>
@@ -431,11 +435,12 @@ const Dashboard: React.FC = () => {
           {/* ------------------------------------------------------------
            *  Balance
            * -----------------------------------------------------------*/}
-          <Typography variant="h4" fontWeight={700} mb={3}>
+          <Typography data-testid="titulo-dashboard" variant="h4" fontWeight={700} mb={3}>
             Tablero Principal
           </Typography>
 
           <Paper
+            data-testid="tarjeta-saldo-total"
             elevation={0}
             sx={{
               background: 'linear-gradient(90deg, #1BFFFF22 0%, #2E319222 100%)',
@@ -448,10 +453,11 @@ const Dashboard: React.FC = () => {
               boxShadow: '0 0 24px 4px #1BFFFF55',
             }}
           >
-            <Typography variant="subtitle2" color="#A6B1E1" fontWeight={500} mb={0.5}>
+            <Typography data-testid="saldo-total-dashboard-label" variant="subtitle2" color="#A6B1E1" fontWeight={500} mb={0.5}>
               Saldo total
             </Typography>
             <Typography
+              data-testid="saldo-total-dashboard"
               variant="h3"
               fontWeight={700}
               sx={{ color: '#1BFFFF', textShadow: '0 0 12px #1BFFFF88', letterSpacing: 1 }}
@@ -463,7 +469,7 @@ const Dashboard: React.FC = () => {
           {/* ------------------------------------------------------------
            *  Accounts grid
            * -----------------------------------------------------------*/}
-          <Box mb={4} display="flex" flexWrap="wrap" gap={3}>
+          <Box data-testid="contenedor-cuentas" mb={4} display="flex" flexWrap="wrap" gap={3}>
             {accounts.map(acc => (
               <AccountCard key={acc.last4} account={acc} />
             ))}
@@ -475,6 +481,7 @@ const Dashboard: React.FC = () => {
            * -----------------------------------------------------------*/}
           <Box display="flex" justifyContent="center" gap={3} mb={3}>
             <Button
+              data-testid="boton-eliminar-cuenta"
               variant="contained"
               color="error"
               sx={{
@@ -492,6 +499,7 @@ const Dashboard: React.FC = () => {
               Eliminar
             </Button>
             <Button
+              data-testid="boton-agregar-fondos"
               variant="contained"
               sx={{
                 background: 'linear-gradient(90deg, #2E3192 0%, #1BFFFF 100%)',
@@ -511,6 +519,7 @@ const Dashboard: React.FC = () => {
               Agregar fondos
             </Button>
             <Button
+              data-testid="boton-enviar"
               variant="outlined"
               sx={{
                 color: '#1BFFFF',
@@ -534,7 +543,7 @@ const Dashboard: React.FC = () => {
            *  Transaction history
            * -----------------------------------------------------------*/}
           <Box mt={4}>
-            <Typography variant="h5" mb={2}>Lista de transacciones</Typography>
+            <Typography data-testid="titulo-transacciones" variant="h5" mb={2}>Lista de transacciones</Typography>
             {(() => {
               // group by date
               const groups: Record<string, Transaction[]> = {};
@@ -545,10 +554,10 @@ const Dashboard: React.FC = () => {
               });
               return Object.entries(groups).map(([date, txs]) => (
                 <Box key={date} mb={2}>
-                  <Typography variant="subtitle2" fontWeight={600}>{date}</Typography>
+                  <Typography data-testid="fecha-transaccion" variant="subtitle2" fontWeight={600}>{date}</Typography>
                   {txs.map(tx => (
-                    <Box key={tx._id} display="flex" justifyContent="space-between" py={0.5}>
-                      <Typography sx={{ color: tx.direction==='in' || tx.type==='account_opened' ? 'success.main' : tx.direction==='out' || tx.type==='account_closed' ? 'error.main' : '#fff' }}>
+                    <Box key={tx._id} data-testid="item-transaccion" display="flex" justifyContent="space-between" py={0.5}>
+                      <Typography data-testid="descripcion-transaccion" sx={{ color: tx.direction === 'in' || tx.type === 'account_opened' ? 'success.main' : tx.direction === 'out' || tx.type === 'account_closed' ? 'error.main' : '#fff' }}>
                         {tx.type === 'deposit'
                           ? `Depósito en cuenta ${accounts.find(a => a._id === tx.accountId)?.last4}`
                           : tx.type === 'account_opened'
@@ -557,7 +566,7 @@ const Dashboard: React.FC = () => {
                               ? `${tx.description} ${accounts.find(a => a._id === tx.accountId)?.last4}`
                               : tx.description}
                       </Typography>
-                      <Typography sx={{ color: tx.direction==='in' || tx.type==='account_opened' ? 'success.main' : tx.direction==='out' || tx.type==='account_closed' ? 'error.main' : '#fff' }}>
+                      <Typography data-testid="monto-transaccion" sx={{ color: tx.direction === 'in' || tx.type === 'account_opened' ? 'success.main' : tx.direction === 'out' || tx.type === 'account_closed' ? 'error.main' : '#fff' }}>
                         {tx.direction === 'neutral'
                           ? ''
                           : `${tx.direction === 'in' ? '+ ' : '- '}${tx.amount?.toFixed(2)}`}
