@@ -7,7 +7,8 @@ const TransactionSchema = new mongoose.Schema({
   type: { type: String, enum: ['transfer', 'deposit', 'withdraw', 'account_opened', 'account_closed', 'status_change'], required: true },
   description: { type: String },
   accountId: { type: mongoose.Schema.Types.ObjectId, ref: 'Account', required: true },
-  direction: { type: String, enum: ['in', 'out', 'neutral'], required: true }
+  direction: { type: String, enum: ['in', 'out', 'neutral'], required: true },
+  last4: { type: String } // Optional, for static display of account number
 });
 
 module.exports = mongoose.model('Transaction', TransactionSchema);
