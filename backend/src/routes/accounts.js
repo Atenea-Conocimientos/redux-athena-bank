@@ -46,7 +46,8 @@ router.post('/', requireUser, async (req, res) => {
       amount: initialAmount || 0,
       type: 'account_opened',
       direction: 'in',
-      description: `Cuenta de ${typeLabels[type]} creada`
+      description: `Cuenta de ${typeLabels[type]} creada`,
+      last4: account.last4
     });
     res.status(201).json(account);
   } catch (err) {
@@ -71,7 +72,8 @@ router.put('/:id/freeze', requireUser, async (req, res) => {
       accountId: account._id,
       type: 'status_change',
       direction: 'neutral',
-      description: account.frozen ? 'Cuenta congelada' : 'Cuenta activada'
+      description: account.frozen ? 'Cuenta congelada' : 'Cuenta descongelada',
+      last4: account.last4
     });
   } catch (err) {
     res.status(400).json({ message: err.message });
@@ -115,7 +117,8 @@ router.delete('/:id', requireUser, async (req, res) => {
       amount: account.balance,
       type: 'account_closed',
       direction: 'out',
-      description: `Cuenta de ${typeLabels[account.type]} cerrada`
+      description: `Cuenta de ${typeLabels[account.type]} cerrada`,
+      last4: account.last4
     });
     res.json({ message: 'Account deleted' });
   } catch (err) {

@@ -561,9 +561,11 @@ const Dashboard: React.FC = () => {
                         {tx.type === 'deposit'
                           ? `Depósito en cuenta ${accounts.find(a => a._id === tx.accountId)?.last4}`
                           : tx.type === 'account_opened'
-                            ? `Cuenta activada ${accounts.find(a => a._id === tx.accountId)?.last4}`
+                            ? `Cuenta activada ${tx.last4 ?? accounts.find(a => a._id === tx.accountId)?.last4 ?? ''}`
+                          : tx.type === 'account_closed'
+                            ? `Cuenta de débito cerrada ${tx.last4 ?? accounts.find(a => a._id === tx.accountId)?.last4 ?? ''}`
                             : tx.type === 'status_change'
-                              ? `${tx.description} ${accounts.find(a => a._id === tx.accountId)?.last4}`
+                              ? `${tx.description} ${tx.last4 ?? accounts.find(a => a._id === tx.accountId)?.last4 ?? ''}`
                               : tx.description}
                       </Typography>
                       <Typography data-testid="monto-transaccion" sx={{ color: tx.direction === 'in' || tx.type === 'account_opened' ? 'success.main' : tx.direction === 'out' || tx.type === 'account_closed' ? 'error.main' : '#fff' }}>

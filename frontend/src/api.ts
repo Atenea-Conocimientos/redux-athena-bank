@@ -57,6 +57,7 @@ export interface Transaction {
   description: string;
   direction: 'in' | 'out' | 'neutral';
   accountId: string;
+  last4?: string;
 }
 export async function getTransactions(token: string): Promise<Transaction[]> {
   const res = await axios.get(
