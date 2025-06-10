@@ -16,7 +16,7 @@ import {
 interface CreateAccountModalProps {
   open: boolean;
   onClose: () => void;
-  onCreate: (account: { type: string; amount: number }) => void;
+  onCreate: (account: { type: "debit" | "credit" | "savings" | "checking"; amount: number }) => void;
 }
 
 const accountTypes = [
@@ -46,7 +46,7 @@ const CreateAccountModal: React.FC<CreateAccountModalProps> = ({ open, onClose, 
       valid = false;
     }
     if (valid) {
-      onCreate({ type, amount: numAmount });
+      onCreate({ type: type as "debit" | "credit" | "savings" | "checking", amount: numAmount });
       setType('');
       setAmount('');
     }

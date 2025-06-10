@@ -35,7 +35,7 @@ const gradientByType: Record<Account['type'], string> = {
   checking: 'linear-gradient(120deg, #FF512F 60%, #F09819 100%)', // red / orange
 };
 
-const randomLast4 = () => Math.floor(1000 + Math.random() * 9000).toString();
+
 
 // Etiquetas de tipos traducidos a español
 const typeLabels: Record<Account['type'], string> = {
@@ -189,7 +189,7 @@ const Dashboard: React.FC = () => {
       const txs = await getTransactions(token);
       setTransactions(txs);
     } catch (err) {
-      enqueueSnackbar(err.response?.data?.message || 'Error al transferir', { variant: 'error' });
+      enqueueSnackbar((err as any).response?.data?.message || 'Error al transferir', { variant: 'error' });
     }
   };
 

@@ -12,7 +12,7 @@
     "allowImportingTsExtensions": true,
     "isolatedModules": true,
     "moduleDetection": "force",
-    "noEmit": false,
+    "noEmit": true,
     "noEmitOnError": false,
     "jsx": "react-jsx",
 

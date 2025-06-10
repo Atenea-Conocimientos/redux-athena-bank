@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 import { loadFull } from 'tsparticles';
-import { Engine, Container } from 'tsparticles-engine';
+import { Engine } from 'tsparticles-engine';
 import Particles from 'react-tsparticles';
 
 const NeonParticlesBackground = () => {
