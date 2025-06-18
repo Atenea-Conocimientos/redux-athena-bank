@@ -1,5 +1,5 @@
 import axios from 'axios';
-const API_BASE = import.meta.env.DEV ? 'http://localhost:4000/api' : '/api';
+const API_BASE = '/api';
 
 export interface Account {
   _id: string;
