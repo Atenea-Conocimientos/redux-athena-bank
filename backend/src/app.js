@@ -26,7 +26,7 @@ app.use('/api/transactions', require('./routes/transactions'));
 app.get('/', (req, res) => {
   res.send('API is running');
 });
-app.use('/api/auth', authRoutes); // <-- debe estar montado así
+
 
 
 module.exports = app;

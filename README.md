@@ -10,24 +10,7 @@ Aplicación bancaria full-stack que permite gestionar cuentas, registrar transac
 - **npm** o **yarn**
 - **MongoDB** (local o en la nube)
 - **Git** para control de versiones
-- **Docker** y **Docker Compose** instalados y funcionando.
-- Para macOS con chips Apple M1/M2/M3: tener instalada la última versión de Xcode.
-
-## 🐳 Uso con Docker
-
-Después de los requisitos, puedes levantar todo el stack sin instalar dependencias locales usando Docker y Docker Compose.
-1. Desde la carpeta `backend/`, ejecutar:
-   ```bash
-   docker-compose up -d
-   ```
-2. Esto iniciará:
-   - `mongo`: contenedor de MongoDB
-   - `backend`: servidor Express (usa el `Dockerfile`)
-3. El backend estará disponible en `http://localhost:4000`.
-4. Para detener y eliminar contenedores:
-   ```bash
-   docker-compose down
-   ```
+- Para macOS: tener instalada la última versión de Xcode y las Command Line Tools.
 
 ## 🔧 Configuración de entorno
 
@@ -37,7 +20,7 @@ Después de los requisitos, puedes levantar todo el stack sin instalar dependenc
    ```env
    MONGO_URI=<tu cadena de conexión MongoDB>
    JWT_SECRET=<secreto para JWT>
-   PORT=4000        # opcional (por defecto 4000)
+   PORT=6007        # opcional (por defecto 6007)
    ```
 
 ### Frontend
@@ -45,7 +28,7 @@ Después de los requisitos, puedes levantar todo el stack sin instalar dependenc
 2. _Nota: el frontend usa Vite con `import.meta.env.DEV`. No requiere `.env` unless overrides._
 Opcionalmente puedes definir en `.env` de Vite:
    ```env
-   VITE_API_BASE=http://localhost:4000/api
+   VITE_API_BASE=http://localhost:6007/api
    ```
 
 ---
@@ -60,7 +43,7 @@ cd redux-athena-bank
 # Backend
 cd backend
 npm install
-npm run dev     # servidor en http://localhost:4000
+npm run dev     # servidor en http://localhost:6007
 
 # Frontend (nueva terminal)
 cd ../frontend

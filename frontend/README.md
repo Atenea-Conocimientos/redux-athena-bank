@@ -72,7 +72,7 @@ npm run preview
 ```
 
 ## Notas
-- El frontend espera que el backend esté corriendo en `http://localhost:4000` y exponga la ruta `/api` (ver `vite.config.ts`).
+- El frontend espera que el backend esté corriendo en `http://localhost:6007` y exponga la ruta `/api` (ver `vite.config.ts`).
 - La app soporta internacionalización (i18n) y notificaciones globales.
 - El manejo de autenticación se realiza con un contexto (`AuthContext`).
 - El dashboard permite gestionar cuentas, transferencias, depósitos y más.

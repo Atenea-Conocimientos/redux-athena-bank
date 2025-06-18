@@ -42,7 +42,7 @@ const SignUp: React.FC = () => {
     setLoading(true);
     try {
       const res = await fetch(
-        'http://localhost:4000/api/auth/signup',
+        'http://localhost:6007/api/auth/signup',
         {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },

@@ -1,5 +1,5 @@
 import axios from 'axios';
-const API_BASE = import.meta.env.DEV ? 'http://localhost:4000/api' : '/api';
+const API_BASE = import.meta.env.DEV ? 'http://localhost:6007/api' : '/api';
 export async function getAccounts(token) {
     const res = await axios.get(`${API_BASE}/accounts`, { headers: { Authorization: `Bearer ${token}` } });
     return res.data;
