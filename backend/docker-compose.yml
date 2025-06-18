@@ -23,5 +23,14 @@ services:
       - JWT_SECRET=supersecretkey
     depends_on:
       - mongo
+  frontend:
+    build:
+      context: ../frontend
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+
 volumes:
   mongo_data:
