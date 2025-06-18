@@ -27,6 +27,8 @@ services:
     build:
       context: ../frontend
       dockerfile: Dockerfile
+    ports:
+      - "127.0.0.1:8080:80"
     depends_on:
       - backend
 
