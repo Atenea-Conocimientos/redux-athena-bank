@@ -10,7 +10,9 @@ app.use(cors({
   origin: [
     'http://localhost:3000',
     'http://127.0.0.1:3000',
-    'https://atena-redux.ngrok.app' // Added your ngrok frontend URL
+    'https://atena-redux.ngrok.app', // Kept for ngrok testing
+    'http://atenea.uno',
+    'https://atenea.uno'
   ],
   credentials: true
 }));
