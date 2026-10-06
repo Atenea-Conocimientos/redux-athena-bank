@@ -2,7 +2,7 @@
 
 Entorno: Windows, Node.js 24.14.0, Playwright 1.63.0. Solo laboratorio v2. No se ejecutaron migraciones, cambios en Atenea ni despliegues. La aplicación legacy `backend/` + `frontend/` quedó sin modificaciones.
 
-## Resultados de la entrega
+## Primera entrega (antes de integraciones avanzadas)
 
 - `npm run check`: sintaxis correcta de banco, servidor y aplicación.
 - `npm test`: **18/18** tests de dominio e integración HTTP.
@@ -14,10 +14,26 @@ Entorno: Windows, Node.js 24.14.0, Playwright 1.63.0. Solo laboratorio v2. No se
 
 En las primeras corridas aparecieron defectos de iframe, limpieza del temporizador, superposición de notificaciones y retorno de foco en WebKit. Se corrigió la app y se volvió a correr la suite; no se ocultaron con reintentos ni `force`.
 
+## Ampliación avanzada — misma fecha
+
+- `npm run check`: sintaxis correcta incluyendo mercado, servidor WebSocket y Service Worker.
+- `npm test`: **23/23** pruebas de dominio, HTTP y WebSocket; expiración de sesión aislada, feed público, origen/ruta inválidos, comandos y límite de payload.
+- `npx playwright test`: **150 aprobados, 3 omitidos, 0 fallidos** sin retries locales. Son 38 escenarios × 4 proyectos + 1 setup de salud.
+- Omisiones: HTML5 drag móvil y Service Worker en Firefox/WebKit (las APIs de automatización de workers de Playwright solo soportan Chromium). El mismo escenario offline sí pasa en Chromium y móvil emulado.
+- Nuevos casos: HAR sin cookies, `route.fetch` parametrizado, tasa vencida/contrato inválido, WebSocket real/mock/pass-through, portapapeles, caché offline, sesión vencida y borrador, aislamiento por identidad, logout entre pestañas, descarte voluntario de borrador y respuesta demorada posterior al logout.
+- Revisión de capturas del mercado en escritorio/móvil; axe sin violaciones detectadas en estados evaluados. Se ajustó la especificidad CSS para mantener legibles las tasas y la marca.
+- Regresión visual de dashboard sin actualizar la baseline: **1/1**.
+- Sharding avanzado probado localmente en Chromium, secuencial y no distribuido. No ejecutado en GitHub.
+- `npm audit --omit=dev`: 0 vulnerabilidades reportadas para las dependencias runtime al verificar; esto no es una auditoría de seguridad de la app.
+- Servidor manual reiniciado en 4177 con SQLite existente preservado. Reiniciar revoca las sesiones en memoria, no los datos ficticios.
+
+Se agregó una protección frente a respuestas de una sesión anterior: si cambia la sesión mientras una petición está en vuelo, su respuesta no puede volver a mostrar el diálogo ni datos privados. El caso se reproduce con una respuesta retenida, sin sleeps, y pasa en los cuatro proyectos.
+
 ## Evidencias y reproducción
 
 - `playwright-report/`: reporte HTML local generado por la suite, ignorado por Git.
 - `test-results/`: capturas, CSV y JSON de axe; trazas/vídeo si alguna prueba falla. Ignorado por Git.
+- `test-results/results.json`: reporte estructurado; HAR público adjunto al test correspondiente. `artifacts/shard-*` conserva outputs de las ejecuciones divididas.
 - `lab/visual/dashboard.spec.js-snapshots/dashboard-chromium-win32.png`: baseline de escritorio revisada, versionada.
 - `npm run test:ui`: explorar casos y depurar paso a paso.
 

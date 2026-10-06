@@ -4,7 +4,9 @@ const base = require('./playwright.config');
 module.exports = defineConfig({
   ...base,
   testDir: './lab/visual',
-  projects: [base.projects.find((p) => p.name === 'chromium')],
+  projects: [
+    { ...base.projects.find((p) => p.name === 'chromium'), dependencies: [] },
+  ],
   use: {
     ...base.use,
     viewport: { width: 1440, height: 1100 },

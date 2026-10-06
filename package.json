@@ -14,11 +14,15 @@
     "test:ui": "playwright test --ui",
     "test:report": "playwright show-report",
     "test:visual": "playwright test --config=playwright.visual.config.js",
+    "test:advanced": "playwright test --grep @advanced",
     "test:all-browsers": "playwright test --project=chromium --project=firefox --project=webkit",
-    "check": "node --check lab/bank.cjs && node --check lab/server.cjs && node --check lab/public/app.js"
+    "check": "node --check lab/bank.cjs && node --check lab/server.cjs && node --check lab/market.cjs && node --check lab/public/app.js && node --check lab/public/market.js && node --check lab/public/market-sw.js"
   },
   "devDependencies": {
     "@axe-core/playwright": "4.13.0",
     "@playwright/test": "1.63.0"
+  },
+  "dependencies": {
+    "ws": "8.22.0"
   }
 }

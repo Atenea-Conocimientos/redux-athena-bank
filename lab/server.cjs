@@ -3,6 +3,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 const { randomBytes } = require('node:crypto');
 const { Bank, BankError, DEMO_PASSWORD, PROFILES } = require('./bank.cjs');
+const { rates, attachMarket } = require('./market.cjs');
 
 function createServer({
   filename,
@@ -60,6 +61,8 @@ function createServer({
         throw new BankError('Origen no permitido.', 403);
       const url = new URL(req.url, origin);
       const route = url.pathname;
+      if (route === '/api/market/rates' && req.method === 'GET')
+        return send(res, 200, rates());
       if (route === '/api/health')
         return send(res, 200, {
           status: 'ok',
@@ -74,6 +77,9 @@ function createServer({
           '/style.css': 'style.css',
           '/provider.html': 'provider.html',
           '/provider.js': 'provider.js',
+          '/mercado/': 'market.html',
+          '/mercado/app.js': 'market.js',
+          '/mercado/sw.js': 'market-sw.js',
         };
         const file =
           assets[route] || (route.includes('.') ? null : 'index.html');
@@ -118,6 +124,7 @@ function createServer({
       bank.read(labId);
       if (route === '/api/lab' && req.method === 'GET')
         return send(res, 200, {
+          id: labId,
           profile: bank.read(labId).profile,
           profiles: PROFILES,
         });
@@ -158,6 +165,8 @@ function createServer({
           throw error;
         }
         failures.delete(labId);
+        // Rotate the current browser session instead of leaving an old token valid.
+        sessions.delete(c.athena_session);
         const token = randomBytes(32).toString('hex');
         sessions.set(token, {
           labId,
@@ -183,6 +192,11 @@ function createServer({
           'AUTH_REQUIRED',
         );
       const userId = session.userId;
+      if (route === '/api/lab/session/expire' && req.method === 'POST') {
+        // Local teaching control: expires only the caller, never other users.
+        session.expiresAt = 0;
+        return send(res, 200, { expired: true });
+      }
       if (route === '/api/auth/logout' && req.method === 'POST') {
         sessions.delete(c.athena_session);
         return send(
@@ -303,6 +317,7 @@ function createServer({
     }
   });
   server.bank = bank;
+  attachMarket(server);
   server.on('close', () => bank.close());
   return server;
 }

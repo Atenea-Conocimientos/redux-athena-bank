@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Mercado ficticio · Athena Bank Lab</title>
+    <link rel="stylesheet" href="/style.css" />
+    <script src="/mercado/app.js" defer></script>
+  </head>
+  <body>
+    <a class="skip" href="#main">Saltar al contenido</a>
+    <main id="main" class="market-wrap">
+      <header class="section-bar">
+        <a class="brand" href="/">◈ athena<span class="accent">bank</span></a
+        ><a href="/laboratorio">← Volver al banco</a>
+      </header>
+      <div class="page-title">
+        <p class="eyebrow">INTEGRACIONES / LAB AVANZADO</p>
+        <h1>El mercado no espera.<br />Tu test tampoco debería.</h1>
+        <p>
+          Un proveedor local para explorar HTTP, streaming y caché. Todas las
+          tasas son inventadas; no sirven para operar ni representan precios
+          reales.
+        </p>
+      </div>
+      <p id="network" class="hint" role="status">
+        Con conexión · datos de práctica
+      </p>
+      <div class="two-column">
+        <section class="panel" aria-labelledby="http-title">
+          <p class="eyebrow">01 / REQUEST & REPLAY</p>
+          <h2 id="http-title">Cotizador HTTP</h2>
+          <p>
+            Grabá una respuesta en HAR, reproducila sin el proveedor o alterala
+            para probar sus límites.
+          </p>
+          <label
+            >Moneda ficticia<select id="currency">
+              <option value="USD">USD</option>
+              <option value="EUR">EUR</option>
+            </select></label
+          >
+          <p id="rate-value" class="market-value">—</p>
+          <p id="rate-status" role="status">Cargando tasas…</p>
+          <p id="rate-time" class="subtle"></p>
+          <div class="actions">
+            <button id="refresh-rates" class="primary">Actualizar tasas</button
+            ><button id="copy-rate" class="secondary" disabled>
+              Copiar cotización
+            </button>
+          </div>
+          <p id="copy-status" role="status"></p>
+        </section>
+        <section class="panel" aria-labelledby="stream-title">
+          <p class="eyebrow">02 / WEBSOCKET</p>
+          <h2 id="stream-title">Tasas en vivo</h2>
+          <p>
+            Cada conexión tiene su propia secuencia. Solicitá un evento,
+            interrumpí el canal y recuperá la conexión.
+          </p>
+          <p id="stream-value" class="market-value">—</p>
+          <p id="stream-status" role="status">Desconectado</p>
+          <p id="stream-sequence" class="subtle">Sin eventos recibidos.</p>
+          <div class="actions">
+            <button id="connect-stream" class="primary">Conectar en vivo</button
+            ><button id="next-rate" class="secondary" disabled>
+              Solicitar nueva tasa</button
+            ><button id="cut-stream" class="secondary" disabled>
+              Simular corte
+            </button>
+          </div>
+          <p class="hint">
+            El streaming no crea transferencias ni modifica saldos. La
+            reconexión es manual y comienza una nueva secuencia.
+          </p>
+        </section>
+      </div>
+      <section class="panel offline-panel" aria-labelledby="offline-title">
+        <div>
+          <p class="eyebrow">03 / SERVICE WORKER</p>
+          <h2 id="offline-title">Consultar sin conexión</h2>
+          <p>
+            Guardá esta pantalla y la última respuesta pública. Sin red, los
+            datos se marcan como desactualizados. Nunca se cachean sesiones,
+            cuentas ni operaciones.
+          </p>
+          <p id="cache-status" role="status">Caché no activada.</p>
+        </div>
+        <div class="actions">
+          <button id="enable-cache" class="secondary">
+            Habilitar consulta offline</button
+          ><button id="clear-cache" class="ghost">
+            Borrar caché de mercado
+          </button>
+        </div>
+      </section>
+      <footer>
+        ATHENA BANK LAB · Sin dinero real · Sin servicios externos
+      </footer>
+    </main>
+  </body>
+</html>

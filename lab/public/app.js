@@ -21,7 +21,32 @@ const state = {
   timer: null,
   busy: false,
   fault: false,
+  draft: null,
+  epoch: 0,
 };
+const authChannel = new BroadcastChannel('athena-lab-auth');
+function loseSession(preserveDraft = false) {
+  state.epoch++;
+  if (!preserveDraft) state.draft = null;
+  state.quote = null;
+  closeModal();
+  $('#modal').innerHTML = '';
+  state.data = null;
+  render();
+}
+authChannel.onmessage = (event) => {
+  if (event.data?.labId !== state.lab?.id) return;
+  if (['logout', 'login', 'reset'].includes(event.data?.type)) {
+    if (event.data.type === 'reset') state.lab = null;
+    loseSession();
+    notify(
+      'La sesión cambió en otra pestaña. Volvé a iniciar sesión para continuar.',
+    );
+  }
+};
+function broadcastAuth(type) {
+  authChannel.postMessage({ type, labId: state.lab?.id });
+}
 const statusLabel = {
   pending: 'Pendiente',
   completed: 'Completada',
@@ -134,6 +159,41 @@ const scenes = [
     'fixtures · projects · trace · sharding',
     'https://playwright.dev/docs/test-fixtures',
   ],
+  [
+    '16',
+    'Un proveedor reproducible',
+    'Grabar y reproducir tasas ficticias sin depender de la red.',
+    'HAR · route.fetch · routeFromHAR',
+    'https://playwright.dev/docs/mock',
+  ],
+  [
+    '17',
+    'Un canal en vivo',
+    'Eventos WebSocket, datos inválidos, cortes y reconexión.',
+    'routeWebSocket · frames · events',
+    'https://playwright.dev/docs/mock',
+  ],
+  [
+    '18',
+    'Cuando vuelve la conexión',
+    'Consulta pública offline, caché explícita y datos desactualizados.',
+    'Service Workers · setOffline · fromServiceWorker',
+    'https://playwright.dev/docs/service-workers',
+  ],
+  [
+    '19',
+    'La sesión se terminó',
+    'Recuperar el borrador sin guardar OTP ni enviar operaciones automáticamente.',
+    'API + UI · varias pestañas · aislamiento',
+    'https://playwright.dev/docs/auth',
+  ],
+  [
+    '20',
+    'El navegador también falla',
+    'Portapapeles y geolocalización: éxito, permisos denegados y alternativa manual.',
+    'addInitScript · exposeFunction · POM',
+    'https://playwright.dev/docs/mock-browser-apis',
+  ],
 ];
 function notify(text, error = false) {
   clearTimeout(state.noticeTimer);
@@ -147,12 +207,17 @@ function notify(text, error = false) {
   }, 8000);
 }
 async function api(url, options = {}) {
+  const epoch = state.epoch;
   const response = await fetch(url, {
     ...options,
     headers: { 'Content-Type': 'application/json', ...options.headers },
     ...(options.body ? { body: JSON.stringify(options.body) } : {}),
   });
   const result = await response.json();
+  if (epoch !== state.epoch)
+    throw new Error(
+      'La sesión cambió durante la solicitud. Volvé a iniciar sesión.',
+    );
   if (!response.ok)
     throw Object.assign(new Error(result.message), {
       status: response.status,
@@ -178,6 +243,7 @@ async function run(action) {
   try {
     await action();
   } catch (error) {
+    if (error.status === 401 && state.data) loseSession(true);
     notify(error.message || 'No se pudo completar la operación.', true);
   } finally {
     state.busy = false;
@@ -187,7 +253,10 @@ async function run(action) {
   }
 }
 async function refresh() {
-  state.data = await api('/api/overview');
+  const epoch = state.epoch;
+  const data = await api('/api/overview');
+  if (epoch !== state.epoch) return;
+  state.data = data;
   render();
 }
 function amount(value) {
@@ -224,7 +293,7 @@ function accountOptions(selected) {
 function landing() {
   return `<main id="main" class="welcome"><header class="brand">◈ <span>athena<span class="accent">bank</span></span><span class="pill">QA LAB / 02</span></header>
     <div class="welcome-grid"><section><p class="eyebrow">UN BANCO FICTICIO. PROBLEMAS REALES.</p><h1>Aprendé a probar<br>lo que <em>importa.</em></h1><p class="lead">Explorá, cuestioná y automatizá. Un entorno bancario con estados, límites y errores controlados para ir mucho más allá del clic.</p><div class="feature-line"><span>01 / Diseñá casos</span><span>02 / Investigá riesgos</span><span>03 / Automatizá</span></div><p class="safety">Solo dinero ficticio. No uses contraseñas, documentos ni datos personales reales.</p></section>
-    <section class="panel"><p class="eyebrow">TU ESPACIO DE PRÁCTICA</p><h2>Iniciar laboratorio</h2><p>Cada laboratorio tiene datos separados. La versión original sigue intacta en el repositorio.</p><form id="start-form"><label>Perfil del ejercicio<select name="profile"><option value="stable">Estable · comportamiento esperado</option><option value="duplicate-submit">Reto · operación duplicada</option><option value="missing-reservation">Reto · saldo reservado</option></select></label><button class="primary">Crear mi práctica <span aria-hidden="true">↗</span></button></form><div class="hint"><strong>Sin servicios externos</strong><p>Usuarios ficticios, SQLite local y un catálogo de 15 misiones. Podés volver a empezar cuando quieras.</p></div></section></div></main>`;
+    <section class="panel"><p class="eyebrow">TU ESPACIO DE PRÁCTICA</p><h2>Iniciar laboratorio</h2><p>Cada laboratorio tiene datos separados. La versión original sigue intacta en el repositorio.</p><form id="start-form"><label>Perfil del ejercicio<select name="profile"><option value="stable">Estable · comportamiento esperado</option><option value="duplicate-submit">Reto · operación duplicada</option><option value="missing-reservation">Reto · saldo reservado</option></select></label><button class="primary">Crear mi práctica <span aria-hidden="true">↗</span></button></form><div class="hint"><strong>Sin servicios externos</strong><p>Usuarios ficticios, SQLite local y un catálogo de 20 misiones. Podés volver a empezar cuando quieras.</p></div></section></div></main>`;
 }
 function login() {
   return `<main id="main" class="login-wrap"><a class="brand" href="/">◈ athenabank <span class="pill">LAB</span></a><section class="panel"><p class="eyebrow">LABORATORIO PREPARADO</p><h1>Tu sesión de práctica</h1><p>Perfil: <strong>${escape(state.lab.profile)}</strong></p><form id="login-form">${field('Email ficticio', 'email', 'type="email" autocomplete="username" required', 'ana@demo.test')}${field('Contraseña de práctica', 'password', 'type="password" autocomplete="current-password" required', 'Practica2026!')}<button class="primary">Iniciar sesión</button></form><p class="hint">Ana: ana@demo.test<br>Bruno: bruno@demo.test<br>Clave pública de ambos: <code>Practica2026!</code></p>${button('register', 'Crear otro usuario ficticio')}${button('new-lab', 'Volver al inicio', '', 'ghost')}</section></main>`;
@@ -348,7 +417,7 @@ function documents() {
   return `<div class="two-column"><section class="panel"><h2>Importar beneficiarios</h2><p>CSV simple, máximo 50 KB y 20 filas. Si una fila falla, no se importa ninguna.</p><pre>nombre,alias\nBruno,bruno.diaria\nAhorro,ana.ahorro</pre><form id="import-form"><label>Archivo CSV ficticio<input name="file" type="file" accept=".csv,text/csv" required></label><button class="primary">Importar CSV</button></form><ul>${state.data.documents.map((d) => `<li>${escape(d.filename)} · ${d.rows} filas importadas</li>`).join('')}</ul><a href="/api/statement.csv" download>Descargar extracto de movimientos ↗</a></section><section class="panel"><h2>Proveedor de verificación</h2><p>Integración ficticia en iframe. No habilita permisos bancarios.</p><iframe src="/provider.html" title="Proveedor de verificación ficticio"></iframe><p id="provider-status" role="status">Esperando validación del proveedor.</p></section></div>`;
 }
 function laboratory() {
-  return `<section class="panel lab-controls"><div><h2>Controlá las condiciones</h2><p>La hora del servidor se adelanta solo para esta práctica. El reloj del navegador es independiente.</p></div><div class="actions">${button('clock', 'Adelantar 2 minutos', 'data-minutes="2"')}${button('clock', 'Adelantar 1 día', 'data-minutes="1440"')}${button('fault', state.fault ? 'Fallo de procesamiento activado' : 'Simular fallo al procesar')}${button('location', 'Buscar sucursal ficticia')}${button('reset', 'Reiniciar mi práctica', '', 'danger')}</div><p id="location-status" role="status">No se consultó tu ubicación. En las pruebas usá coordenadas ficticias.</p></section><div class="mission-grid">${scenes.map(([id, title, description, techniques, link]) => `<article class="panel mission"><span class="mission-number">${id}</span><h2>${title}</h2><p>${description}</p><p class="techniques">${techniques}</p><a href="${link}" target="_blank" rel="noopener">Documentación oficial ↗</a></article>`).join('')}</div>`;
+  return `<section class="lab-banner"><div><p class="eyebrow">NUEVO / INTEGRACIONES AVANZADAS</p><h2>Un mercado para romper la red</h2><p>HTTP, HAR, WebSockets y consulta offline. Tasas inventadas, pruebas reales.</p></div><a class="primary" href="/mercado/">Abrir mercado ficticio ↗</a></section><section class="panel lab-controls"><div><h2>Controlá las condiciones</h2><p>La hora del servidor se adelanta solo para esta práctica. El reloj del navegador es independiente.</p></div><div class="actions">${button('clock', 'Adelantar 2 minutos', 'data-minutes="2"')}${button('clock', 'Adelantar 1 día', 'data-minutes="1440"')}${button('fault', state.fault ? 'Fallo de procesamiento activado' : 'Simular fallo al procesar')}${button('location', 'Buscar sucursal ficticia')}${button('expire', 'Vencer mi sesión')}${button('reset', 'Reiniciar mi práctica', '', 'danger')}</div><p id="location-status" role="status">No se consultó tu ubicación. En las pruebas usá coordenadas ficticias.</p></section><div class="mission-grid">${scenes.map(([id, title, description, techniques, link]) => `<article class="panel mission"><span class="mission-number">${id}</span><h2>${title}</h2><p>${description}</p><p class="techniques">${techniques}</p><a href="${link}" target="_blank" rel="noopener">Documentación oficial ↗</a></article>`).join('')}</div>`;
 }
 async function loadReceipt(id) {
   try {
@@ -361,13 +430,21 @@ async function loadReceipt(id) {
     notify(error.message, true);
   }
 }
-function transferForm() {
+function transferForm(draft) {
   if (!state.data.accounts.length)
     return notify('Primero creá una cuenta.', true);
   modal(
     'Nueva transferencia',
     `<form id="transfer-form"><label>Cuenta de origen<select name="from">${accountOptions()}</select></label>${field('Alias de destino', 'toAlias', 'required list="aliases"', 'bruno.diaria')}<datalist id="aliases">${state.data.beneficiaries.map((b) => `<option value="${escape(b.alias)}">${escape(b.name)}</option>`).join('')}</datalist>${field('Importe a transferir', 'amount', 'type="number" step="0.01" min="0.01" required')}${field('Concepto', 'note', 'maxlength="120"')}<p>La cotización dura 90 segundos. El servidor valida saldo, estado y límite al confirmar.</p><button class="primary">Revisar transferencia</button></form>`,
   );
+  if (draft) {
+    for (const name of ['from', 'toAlias', 'amount', 'note']) {
+      $('#transfer-form').elements[name].value = draft[name] || '';
+    }
+    notify(
+      'Borrador recuperado. Revisá los datos y volvé a cotizar. No se envió ninguna operación.',
+    );
+  }
 }
 function quoteModal(q) {
   state.quote = q;
@@ -430,7 +507,10 @@ document.addEventListener('click', (event) => {
   const id = target.dataset.id;
   if (['transfer', 'register', 'account', 'deposit'].includes(action))
     state.returnFocus = target;
-  if (action === 'close') return closeModal();
+  if (action === 'close') {
+    state.draft = null;
+    return closeModal();
+  }
   if (action === 'transfer') return transferForm();
   if (action === 'register')
     return modal(
@@ -480,9 +560,14 @@ document.addEventListener('click', (event) => {
   void run(async () => {
     if (action === 'logout') {
       await api('/api/auth/logout', { method: 'POST' });
-      state.data = null;
+      broadcastAuth('logout');
       history.pushState({}, '', '/');
-      render();
+      loseSession();
+      return;
+    }
+    if (action === 'expire') {
+      await api('/api/lab/session/expire', { method: 'POST' });
+      await refresh();
       return;
     }
     if (action === 'new-lab') {
@@ -498,6 +583,8 @@ document.addEventListener('click', (event) => {
       )
         return;
       await api('/api/lab', { method: 'DELETE' });
+      broadcastAuth('reset');
+      state.draft = null;
       state.data = null;
       state.lab = null;
       state.fault = false;
@@ -564,6 +651,7 @@ document.addEventListener('submit', (event) => {
   void run(async () => {
     if (form.id === 'start-form') {
       state.lab = await api('/api/labs', { method: 'POST', body: values });
+      state.draft = null;
       state.data = null;
       render();
       return;
@@ -576,9 +664,20 @@ document.addEventListener('submit', (event) => {
       closeModal();
       history.replaceState({}, '', '/');
       await refresh();
+      broadcastAuth('login');
+      const draft = state.draft;
+      state.draft = null;
+      if (
+        draft &&
+        draft.userId === state.data?.user.id &&
+        draft.labId === state.lab.id
+      )
+        transferForm(draft.values);
       return;
     }
     if (form.id === 'transfer-form') {
+      // Memory only: no password, OTP, quote ID or idempotency key is persisted.
+      state.draft = { userId: state.data.user.id, labId: state.lab.id, values };
       const q = await api('/api/quotes', {
         method: 'POST',
         body: { ...values, amount: amount(values.amount) },
@@ -592,6 +691,7 @@ document.addEventListener('submit', (event) => {
         headers: { 'Idempotency-Key': state.quote.key },
         body: { quoteId: state.quote.id, otp: values.otp },
       });
+      state.draft = null;
       closeModal();
       history.pushState({}, '', '/transferencias');
       await refresh();
@@ -638,6 +738,9 @@ window.addEventListener('message', (event) => {
       'Proveedor validado: integración simulada correcta.';
 });
 // A close event can arrive after the same dialog has reopened for the next step.
+$('#modal').addEventListener('cancel', () => {
+  state.draft = null;
+});
 $('#modal').addEventListener('close', () => {
   if (!$('#modal').open) {
     clearInterval(state.timer);

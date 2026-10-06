@@ -17,6 +17,35 @@
   --primary: #b9f76e;
   --dark: #102416;
 }
+.market-wrap {
+  max-width: 1160px;
+  margin: auto;
+  padding: 32px 24px;
+}
+.market-wrap > .page-title {
+  margin: 56px 0 28px;
+}
+.market-wrap .brand {
+  flex-wrap: wrap;
+}
+.market-wrap .section-bar .brand {
+  font-size: 24px;
+}
+.market-wrap .market-value {
+  color: var(--mint);
+  font-size: clamp(24px, 4vw, 36px);
+  font-weight: 750;
+  margin: 24px 0 12px;
+}
+.offline-panel {
+  margin-top: 24px;
+}
+.market-wrap .actions {
+  flex-wrap: wrap;
+}
+.market-wrap #rate-time {
+  overflow-wrap: anywhere;
+}
 * {
   box-sizing: border-box;
 }
@@ -1000,7 +1029,9 @@ lab-help .ghost {
 #notice {
   pointer-events: none;
 }
-#modal-notice { display: none; }
+#modal-notice {
+  display: none;
+}
 #modal-notice.visible {
   display: block;
   color: #fff0f2;

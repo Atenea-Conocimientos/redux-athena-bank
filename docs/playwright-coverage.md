@@ -33,6 +33,16 @@ Revisión de documentación oficial: 6 de octubre de 2026. Implementación fijad
 | [Web server](https://playwright.dev/docs/test-webserver) | Arranque y apagado de servidor de pruebas, distinto del manual. | Puerto 4178 / SQLite en memoria |
 | [Trace viewer](https://playwright.dev/docs/trace-viewer) | Investigar fallo con snapshots, red y acciones; adjuntos de axe y CSV. | `trace: retain-on-failure`, reporte HTML |
 | [CI](https://playwright.dev/docs/ci) | Quality gate y artifacts, sin despliegue ni secretos. | Workflow preparado; ejecución remota pendiente |
+| [HAR record/replay](https://playwright.dev/docs/mock#mocking-with-har-files) | Grabar solo la respuesta pública, cerrar contexto para guardar, reproducir sin fallback al proveedor. | `advanced-network.spec.js`: HAR sin cookies |
+| [Modificar respuestas](https://playwright.dev/docs/mock#modify-api-responses) | `route.fetch` conserva el contrato real; alterar tasa válida, vencida, negativa o incompleta. | Tabla parametrizada + POM de mercado |
+| [WebSockets](https://playwright.dev/docs/mock#mock-websockets) | Canal real, frames, mock completo, pass-through, corte y reconexión manual. | `routeWebSocket`, `connectToServer`, `framereceived` |
+| [Service Workers](https://playwright.dev/docs/service-workers) | Activación, recarga offline, respuesta desde caché, recuperación y borrado. Solo datos públicos. | `offline.spec.js`; Chromium y móvil, skip documentado en Firefox/WebKit |
+| [Mock browser APIs](https://playwright.dev/docs/mock-browser-apis) | Portapapeles permitido/denegado sin tocar clipboard real; ubicación denegada. | `addInitScript`, `exposeFunction` |
+| [POM](https://playwright.dev/docs/pom) | Interacciones repetidas de mercado, manteniendo aserciones explícitas en los tests. | `pages/MarketPage.js` usado por suites reales |
+| [Parametrización](https://playwright.dev/docs/test-parameterize) | Contratos válidos/inválidos y permisos concedidos/denegados. | `advanced-network.spec.js` |
+| [Project dependencies](https://playwright.dev/docs/test-global-setup-teardown) | Setup de salud del servidor antes de los proyectos; sin usuario mutable global. | `global.setup.js` + `dependencies: ['setup']` |
+| [Tags y annotations](https://playwright.dev/docs/test-annotations) | Elegir `@advanced`, `@network`, `@auth`, `@offline`; explicar exclusiones. | `npm run test:advanced` y anotación de alcance offline |
+| Sesión expirada y múltiples pestañas | API vence solo la sesión actual, recuperación de borrador sin OTP ni envío automático; logout sincronizado. | `session-recovery.spec.js` |
 
 Los nombres de suites remiten a `lab/e2e/`. `lab/tests/` agrega pruebas de negocio e integración HTTP: centavos, límite diario, rollback, idempotencia concurrente, importación atómica, aislamiento y rate limit. Esas pruebas usan `node:test`, no Playwright.
 
@@ -41,24 +51,22 @@ Los nombres de suites remiten a `lab/e2e/`. `lab/tests/` agrega pruebas de negoc
 No todo necesita una pantalla adicional. Estos temas se practican refactorizando o ejecutando la misma suite:
 
 - `test.step`, anexos y skip están en los ejemplos. Retries: configurados solo en CI; no “arreglan” un test inestable.
-- Reportes HTML, capturas y vídeo de fallos: configurados. UI Mode y depuración: `npm run test:ui` o `npx playwright test --debug --project=chromium`.
+- Reportes HTML/JSON, capturas y vídeo de fallos: configurados. UI Mode y depuración: `npm run test:ui` o `npx playwright test --debug --project=chromium`.
 - Codegen: `npx playwright codegen http://127.0.0.1:4177`; revisar los locators y agregar aserciones de negocio después de grabar.
-- Page Objects: ejercicio de refactorizar el wizard de transferencia después de entender el test directo. No hay una capa POM artificial en esta entrega.
-- Parametrización: convertir los límites de importes/OTP/alias en tablas de datos y decidir qué ejecutar por API y qué por UI.
-- [Sharding](https://playwright.dev/docs/test-sharding): probar `npx playwright test --project=chromium --shard=1/2` y `--shard=2/2`. No se ejecutó un pipeline distribuido en esta entrega.
-- Tags, anotaciones, timeouts, reporters personalizados y dependencias entre proyectos: extensiones del curso; no requieren añadir productos bancarios.
+- Page Objects y parametrización ya tienen ejemplos ejecutables en mercado. Ejercicio adicional: refactorizar el wizard de transferencia y decidir qué límites conviene probar por API.
+- [Sharding](https://playwright.dev/docs/test-sharding): `--grep '@advanced' --project=chromium --shard=1/2` y `--shard=2/2` verificados localmente de manera secuencial. No se ejecutó un pipeline distribuido en esta entrega.
+- Tags, anotaciones y dependencias entre proyectos están implementados. Reporters personalizados quedan como extensión opcional: se usan los oficiales HTML/JSON, sin añadir mantenimiento innecesario.
 
 ## Pendiente de una siguiente etapa, explícitamente no implementado
 
 | Tema | Escenario propuesto | Motivo para separarlo |
 | --- | --- | --- |
-| HAR record/replay | Cotizador de monedas externo simulado y caché de tasas. | Hoy no hay proveedor HTTP externo; el mock de errores sí está implementado. |
-| WebSocket / streaming | Seguimiento de procesamiento en vivo, desconexión y reconexión. | Actualmente procesar es explícito por HTTP, no un worker ni una cola. |
-| Service Workers / PWA | Extracto offline con advertencia de datos desactualizados. | Offline actual muestra aviso; no promete operar sin red. |
-| Sesión expirada por reloj, logout entre pestañas | Recuperación de formulario sin duplicar transferencias. | Hay TTL de una hora, pero el reloj didáctico no manipula sesiones ni hay sincronización automática. |
+| Streaming bancario privado | Notificaciones de procesamiento con permisos por usuario. | El WebSocket implementado transmite solo tasas públicas ficticias; no es una cola de transferencias. |
+| Extracto privado offline / PWA instalable | Datos por usuario y borrado seguro al logout; manifest e instalación. | El Service Worker actual cubre consulta pública, no cuentas ni documentos privados. |
+| TTL programable de sesión | Reloj de autenticación configurable y renovación automática. | Existe expiración explícita del servidor para practicar 401; el reloj bancario sigue separado. |
 | Roles y doble aprobación | Operador solicita, supervisor aprueba; límites por rol. | Hoy hay dos clientes, no roles administrativos bancarios. |
 | Programadas, reversiones, disputas | Fines de semana, zona horaria, conciliación y reversión de comisión. | Requiere nuevas reglas y oráculos, no solo pantallas. |
-| Internacionalización / divisas | Conversión, redondeo y tipos de cambio vencidos. | Actualmente ARS y día UTC deliberadamente explícitos. |
+| Transferencias en divisas / internacionalización completa | Conversión, redondeo, comisiones y liquidación multimoneda. | El cotizador USD/EUR y tasas vencidas está implementado; cuentas/transferencias siguen en ARS, sin conversión real. |
 | Component testing | Probar piezas de la interfaz aisladas. | La v2 es HTML/CSS/JS independiente; no se migró el React legacy. |
 | Extensiones, Electron, Android, WebView2 | Laboratorios especializados si el curso los necesita. | Fuera del objetivo de automatización web de este banco. |
 | Ejecución de código dentro de Atenea | Resolver retos desde el sitio, con evaluación automática. | Necesita sandbox real, cuotas y aislamiento de código no confiable; no ejecutar código de alumnos en el servidor de Atenea. |

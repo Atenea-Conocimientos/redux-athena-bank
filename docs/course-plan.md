@@ -8,6 +8,8 @@ No prometer dominio de “todo Playwright”, empleo ni seguridad bancaria profe
 
 Formato propuesto (a validar con Juan): cuatro encuentros en vivo de unas dos horas + retos entre encuentros. Puede dividirse en ocho módulos asincrónicos. Antes de venderlo, hacer un piloto con Isaac y Luis y medir tiempos reales; todavía no es un curso grabado ni una oferta comercial publicada.
 
+La ampliación avanzada agrega material para **dos encuentros adicionales opcionales**, no para comprimir todo en las ocho horas originales: (A) HTTP/HAR/WebSockets y (B) sesiones/caché offline/diagnóstico. Guía en [integraciones avanzadas](advanced-lab.md).
+
 ## Recorrido
 
 | Módulo | Problema del alumno | Trabajo y entregable |
@@ -98,7 +100,36 @@ Como cliente ficticio quiero registrarme y entrar para ver solo mis cuentas.
 - Offline indica falta de red; no promete completar operaciones.
 - Geolocalización simulada produce sucursal ficticia; rechazo de permiso ofrece alternativa textual.
 - El dashboard funciona en móvil sin desborde horizontal de página.
-- Casos: offline/online, permiso otorgado/denegado, foco de diálogo, escape, texto largo, tamaños intermedios. La suite actual cubre otorgado; denegado y validación manual con lector de pantalla quedan para ampliar.
+- Casos: offline/online, permiso otorgado/denegado, foco de diálogo, escape, texto largo, tamaños intermedios. La suite cubre ambos permisos; la validación manual con lector de pantalla sigue pendiente.
+
+### AB-11 · Consultar un proveedor reproducible
+
+- El mercado identifica explícitamente tasas ficticias; monedas USD/EUR y base ARS.
+- Una respuesta negativa, incompleta o no disponible no muestra un precio como válido.
+- Una tasa vencida muestra advertencia; cambiar moneda no solicita dinero ni modifica cuentas.
+- Casos: HAR grabado/reproducido, `route.fetch` con respuesta alterada, contrato inválido, 503, reloj 91 segundos.
+
+### AB-12 · Recuperar un canal de eventos
+
+- Conectar recibe evento 0; solicitar nuevo evento incrementa secuencia de esa conexión.
+- Corte deshabilita envío y deja claro que la última tasa está desactualizada.
+- Reconectar inicia nueva secuencia; eventos malformados no rompen la página.
+- Casos: WebSocket real, frames, mock total y pass-through con `connectToServer`.
+
+### AB-13 · Consultar información pública offline
+
+- Habilitación explícita, recarga sin red, advertencia de antigüedad y recuperación al volver la red.
+- Ninguna API de cuenta/sesión/transferencia entra en caché.
+- Borrar caché quita este worker sin tocar otros caches.
+- Casos: activación, `setOffline`, `fromServiceWorker`, allowlist e invalidación. Automatizado en Chromium y móvil.
+
+### AB-14 · Recuperar una sesión interrumpida
+
+- Expirar solo mi sesión devuelve 401 en servidor; no modifica el reloj bancario.
+- Reingresar como el mismo usuario recupera el borrador, sin OTP ni confirmación automática.
+- Reingresar como otro usuario no muestra el borrador anterior.
+- Salir en una pestaña oculta saldos y cierra diálogos en las demás.
+- Casos: sesión vencida antes de cotizar y antes de confirmar, borrador de otra identidad, logout entre pestañas.
 
 ## Retos integradores (sin regalar el test resuelto)
 
@@ -128,6 +159,10 @@ Ejecutar con varios workers y motores. Separar problema de app, test y entorno. 
 6. ¿Dos contextos de navegador garantizan datos distintos en backend? **No.** El fixture debe separar prácticas; compartir cookie comparte datos.
 7. ¿axe sin violaciones demuestra accesibilidad completa? **No.** Solo ciertos chequeos automáticos, en el estado evaluado.
 8. ¿Debe rechazarse todo comprobante de pending? **No.** Puede documentar una solicitud pendiente, sin afirmar acreditación.
+9. ¿Un HAR es siempre seguro para subir al repositorio? **No.** Puede contener cookies, tokens y datos privados. El ejemplo filtra solo el proveedor público y comprueba ausencia de credenciales.
+10. ¿Ver datos offline demuestra que el servidor respondió? **No.** Puede ser caché; verificar origen y antigüedad de la respuesta.
+11. ¿Recuperar el borrador permite reutilizar el OTP/cotización anterior? **No.** Se vuelve a cotizar y confirmar explícitamente; recuperar texto no equivale a autorizar una operación.
+12. ¿Mockear un WebSocket prueba la conexión real? **No.** La suite incluye también un caso contra el servidor real y otro pass-through.
 
 ## Evaluación sugerida
 
@@ -142,6 +177,6 @@ Elegir **una** línea después del piloto, no sumar diez pantallas a la vez:
 1. Transferencias programadas y cola: calendario, concurrencia, worker, reintentos y eventos en tiempo real.
 2. Operador/supervisor: permisos y aprobaciones por umbral; separación de funciones.
 3. Disputas y reversión: estado final no siempre es final; conciliación y trazabilidad.
-4. Divisas/cotizador: contrato externo, HAR, tasas vencidas y redondeo.
+4. Divisas con liquidación: el cotizador, HAR y tasas vencidas ya existen; faltan las reglas de conversión bancaria y redondeo multimoneda.
 
 La eventual integración con Atenea debe ser un proyecto separado: escenarios versionados, ejecución aislada del código del alumno, límites de recursos y limpieza. No correr tests aportados por usuarios dentro del backend de producción.

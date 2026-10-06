@@ -34,7 +34,10 @@ Variables opcionales: `LAB_PORT` y `LAB_DB`. No exponer el servidor a Internet: 
 - Procesamiento transaccional: el fallo simulado después del débito revierte la operación completa.
 - Beneficiarios ordenables, CSV importable atómicamente, movimientos filtrables/paginados y descarga de extractos.
 - Comprobantes en nueva pestaña, proveedor local en iframe, ayuda en Shadow DOM y geolocalización simulable.
-- 15 misiones dentro de la interfaz; modo estable y dos perfiles con defectos intencionales.
+- 20 misiones dentro de la interfaz; modo estable y dos perfiles con defectos intencionales.
+- **Laboratorio → Abrir mercado ficticio**: proveedor HTTP, grabación/replay HAR, WebSocket real y simulado, cortes/reconexión y caché pública offline con advertencia de antigüedad.
+- Sesión expirable desde Laboratorio; recuperación del borrador de transferencia al volver a entrar con el mismo usuario, sin conservar OTP ni enviar automáticamente. Salir también limpia las otras pestañas de la práctica.
+- Page Object de referencia, tests parametrizados, tags, proyecto de setup y reportes HTML/JSON.
 - Fixtures aisladas, pruebas de negocio/API/UI, Chromium/Firefox/WebKit y emulación móvil, axe, ARIA, captura visual y configuración de CI.
 
 ### Verificar
@@ -45,11 +48,12 @@ npm run check
 npm test
 npm run test:e2e
 npm run test:all-browsers
+npm run test:advanced
 npm run test:ui
 npm run test:report
 ```
 
-`test:e2e` corre Chromium y móvil; `test:all-browsers` corre los tres motores de escritorio. `npx playwright test` incluye los cuatro proyectos. No usa perfiles personales ni credenciales reales del navegador. Un laboratorio por prueba permite ejecución paralela.
+`test:e2e` corre Chromium y móvil; `test:all-browsers` corre los tres motores de escritorio. `npx playwright test` incluye esos cuatro proyectos y un setup de salud como dependencia. No usa perfiles personales ni credenciales reales del navegador. Un laboratorio por prueba permite ejecución paralela. El caso Service Worker se ejecuta en Chromium/escritorio y móvil; se omite expresamente en Firefox/WebKit por la limitación de las APIs de Playwright.
 
 Comparación visual separada: `npm run test:visual`. Hay una baseline revisada de Chromium/Windows; en otro SO hay que generar y **revisar** su propia baseline con `npm run test:visual -- --update-snapshots`, y volver a ejecutar sin ese flag. No aceptar cambios de imágenes automáticamente para ocultar diferencias. El workflow de CI no compara la baseline Windows contra Linux.
 
@@ -58,6 +62,7 @@ Comparación visual separada: `npm run test:visual`. Hay una baseline revisada d
 - [Mapa de cobertura de Playwright y temas pendientes](docs/playwright-coverage.md).
 - [Reglas del banco y contrato de API](docs/lab-rules.md).
 - [Historias, casos y propuesta de curso](docs/course-plan.md).
+- [Práctica guiada de integraciones avanzadas](docs/advanced-lab.md).
 - Pruebas resueltas: `lab/tests`, `lab/e2e` y `lab/visual`.
 - Archivos de práctica: `lab/fixtures`.
 

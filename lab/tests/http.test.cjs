@@ -45,6 +45,29 @@ async function setup(t) {
   return { api, client };
 }
 
+test('HTTP: expirar mi sesión no vence la de otra práctica ni depende del reloj bancario', async (t) => {
+  const { api, client } = await setup(t);
+  const second = client();
+  await second('/api/labs', 'POST', {});
+  await second('/api/auth/login', 'POST', {
+    email: 'bruno@demo.test',
+    password: DEMO_PASSWORD,
+  });
+  assert.equal(
+    (await api('/api/lab/clock', 'POST', { minutes: 1440 })).status,
+    200,
+  );
+  assert.equal((await api('/api/overview')).status, 200);
+  assert.equal((await api('/api/lab/session/expire', 'POST')).status, 200);
+  assert.equal((await api('/api/overview')).status, 401);
+  assert.equal(
+    (await api('/api/accounts/ana-main/deposit', 'POST', { amount: 100 }))
+      .status,
+    401,
+  );
+  assert.equal((await second('/api/overview')).status, 200);
+});
+
 test('HTTP: autenticación, ownership, cookies protegidas y logout invalidado', async (t) => {
   const { api, client } = await setup(t);
   const anon = client();

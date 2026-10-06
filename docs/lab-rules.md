@@ -55,6 +55,24 @@ Extracto descargable: todos los movimientos propios, no solamente la página/fil
 
 ## API rápida
 
+### Sesiones y borradores
+
+`POST /api/lab/session/expire` vence exclusivamente la sesión autenticada que llama. No necesita esperar una hora ni adelantar el reloj bancario. La siguiente operación protegida recibe 401. Un nuevo login rota/revoca el token anterior del mismo navegador.
+
+Si el 401 sucede al revisar/confirmar una transferencia, la UI vuelve al login y conserva en memoria únicamente origen, destino, importe y concepto. El mismo usuario de la misma práctica puede recuperarlos; otra identidad no. No se conservan OTP, contraseñas, cotización ni clave de idempotencia en ese borrador; no se envía una transferencia al reingresar. Hay que cotizar y confirmar otra vez. Recargar la página pierde el borrador; cerrar voluntariamente el diálogo o salir lo descarta.
+
+Logout/login/reset se comunican por BroadcastChannel a las otras pestañas de la misma práctica: se ocultan saldos y se cierran diálogos. La autorización real sigue siendo del servidor; BroadcastChannel no sustituye ese control. Contextos de navegador separados mantienen sesiones independientes.
+
+### Mercado público ficticio
+
+`/mercado/` no requiere sesión. `GET /api/market/rates` entrega `{fictional:true,base:'ARS',sequence,asOf,expiresAt,rates:{USD,EUR}}`. Son números inventados, no precios reales: inicialmente USD=1000 y EUR=1200. Validez de referencia de 90 segundos; no compra, vende ni convierte fondos. El fetch omite cookies para no guardarlas en HAR.
+
+`ws://127.0.0.1:4177/ws/market` emite el mismo contrato con `type:'rates'`. Secuencia 0 inicial; mensaje de texto `next` incrementa la secuencia de esa conexión y usa tasa base + (secuencia módulo 10). `disconnect` cierra con código 1012. Mensaje desconocido devuelve `type:'error'`; binarios y payload >1024 bytes se rechazan. Origen/Host estrictamente locales y del mismo origen, máximo 64 conexiones. No comparte secuencias entre clientes ni publica cuentas, sesiones o transferencias. Reconectar es manual y reinicia secuencia.
+
+El Service Worker se habilita voluntariamente desde mercado y su scope es `/mercado/`. Allowlist de caché: esa página, su JS, CSS y respuesta pública de tasas; nunca endpoints de banco ni peticiones de escritura. Estrategia network-first con fallback marcado `X-Lab-Cache: stale`. La UI informa datos desactualizados al usar fallback, no tener red o vencer la tasa. Borrar caché desregistra solo este worker, borra solo caches `athena-market-*` y recarga para liberar el controlador. No es una PWA instalable ni permite operar offline.
+
+### Endpoints bancarios
+
 Requests JSON; cookies por contexto; base local `http://127.0.0.1:4177`. `Idempotency-Key` solo en confirmar. Errores `{message, code}` con HTTP 4xx/503. No hay contrato OpenAPI generado aún.
 
 | Método / ruta | Cuerpo o respuesta relevante |
@@ -79,5 +97,7 @@ Requests JSON; cookies por contexto; base local `http://127.0.0.1:4177`. `Idempo
 | POST `/api/documents/import` | `{filename,content}` |
 | GET `/api/statement.csv` | Descarga del historial propio completo |
 | POST `/api/lab/clock` | `{minutes:2}` |
+| POST `/api/lab/session/expire` | Sin cuerpo; vence la sesión actual en servidor |
+| GET `/api/market/rates` | Público, tasas ficticias; no requiere cookies |
 
 Sin autorización para producción: compartirlo por Internet requiere revisar persistencia/sesiones, límites de recursos, aislamiento, HTTPS, administración de escenarios y abuso. Nunca reutilizar la contraseña pública ni cargar una copia de usuarios de Atenea.
