@@ -1,6 +1,12 @@
 # Ignorar archivos de entorno
 backend/.env
 backend/node_modules
+node_modules/
+.lab-data/
+test-results/
+playwright-report/
+playwright/.auth/
+artifacts/
 
 # Ignorar archivos de entorno
 frontend/.env

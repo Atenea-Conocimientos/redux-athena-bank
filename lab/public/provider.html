@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Proveedor ficticio de verificación</title>
+    <link rel="stylesheet" href="/style.css" />
+    <script defer src="/provider.js"></script>
+  </head>
+  <body class="provider">
+    <form id="verification">
+      <h2>Validación de práctica</h2>
+      <p>Este proveedor es un iframe local. No ingreses datos personales.</p>
+      <label
+        >Código del proveedor<input
+          name="code"
+          inputmode="numeric"
+          autocomplete="off"
+          required
+          pattern="135790"
+          aria-describedby="code-help"
+      /></label>
+      <p id="code-help">Código ficticio: 135790</p>
+      <button>Validar código</button>
+      <p id="result" role="status"></p>
+    </form>
+  </body>
+</html>

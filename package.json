@@ -1,0 +1,24 @@
+{
+  "name": "athena-bank-lab",
+  "version": "2.0.0",
+  "private": true,
+  "description": "Laboratorio local de QA y Playwright. Solo datos y dinero ficticios.",
+  "engines": {
+    "node": ">=24.0.0"
+  },
+  "scripts": {
+    "dev": "node lab/server.cjs",
+    "start": "node lab/server.cjs",
+    "test": "node --test lab/tests/*.test.cjs",
+    "test:e2e": "playwright test --project=chromium --project=mobile",
+    "test:ui": "playwright test --ui",
+    "test:report": "playwright show-report",
+    "test:visual": "playwright test --config=playwright.visual.config.js",
+    "test:all-browsers": "playwright test --project=chromium --project=firefox --project=webkit",
+    "check": "node --check lab/bank.cjs && node --check lab/server.cjs && node --check lab/public/app.js"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "4.13.0",
+    "@playwright/test": "1.63.0"
+  }
+}

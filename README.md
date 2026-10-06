@@ -1,5 +1,74 @@
 # Redux Athena Bank
 
+## Nuevo: Athena Bank Lab v2 — laboratorio para el curso de Playwright
+
+Un banco **ficticio y exclusivamente local**, con reglas de negocio, errores controlados y pruebas de referencia. No procesa pagos ni se conecta a Atenea, QA, producción, MongoDB o servicios externos.
+
+La aplicación original permanece en `backend/` y `frontend/`, sin migraciones ni cambios de comportamiento. El laboratorio nuevo vive en `lab/`: usa Node.js 24, SQLite integrado y una interfaz independiente. Los datos y las credenciales de ambas versiones **no se comparten**. La v2 es una base funcional para desarrollar el curso, no un banco de producción ni una cobertura de cada método de Playwright.
+
+### Levantar el laboratorio
+
+Desde la raíz del repositorio, con **Node.js 24 o superior**:
+
+```sh
+npm ci
+npm run dev
+```
+
+Abrir [http://127.0.0.1:4177](http://127.0.0.1:4177), elegir **Estable** y crear una práctica. No se necesita `.env`.
+
+- Ana: `ana@demo.test` · Bruno: `bruno@demo.test`.
+- Contraseña **pública y ficticia** de ambos: `Practica2026!`.
+- OTP de transferencias: `246810`. Código del iframe: `135790`.
+- Nunca ingresar información, archivos ni contraseñas reales.
+- SQLite persiste en `.lab-data/bank.sqlite` (ignorado por Git). Las sesiones duran una hora y se invalidan al reiniciar el servidor.
+- En **Laboratorio → Reiniciar mi práctica**, se borra solamente ese conjunto de datos ficticios. El resto de las prácticas no cambia. Crear una práctica nueva no elimina las anteriores.
+- Cada contexto del navegador conserva su laboratorio mediante una cookie. Compartir esa cookie significa compartir la práctica; para sesiones separadas de Ana/Bruno, ver el ejemplo de `browser.newContext` en la suite.
+
+Variables opcionales: `LAB_PORT` y `LAB_DB`. No exponer el servidor a Internet: escucha exclusivamente en `127.0.0.1`. El puerto de pruebas es **4178** y usa SQLite en memoria, separado de tu práctica manual en **4177**.
+
+### Qué incluye
+
+- Registro y sesiones; cuentas con alias únicos, congelación, depósitos y cierre controlado.
+- Transferencias con comisión, límite diario, OTP de práctica, vencimiento de cotización, reservas, idempotencia y estados pendiente/completada/cancelada/rechazada.
+- Procesamiento transaccional: el fallo simulado después del débito revierte la operación completa.
+- Beneficiarios ordenables, CSV importable atómicamente, movimientos filtrables/paginados y descarga de extractos.
+- Comprobantes en nueva pestaña, proveedor local en iframe, ayuda en Shadow DOM y geolocalización simulable.
+- 15 misiones dentro de la interfaz; modo estable y dos perfiles con defectos intencionales.
+- Fixtures aisladas, pruebas de negocio/API/UI, Chromium/Firefox/WebKit y emulación móvil, axe, ARIA, captura visual y configuración de CI.
+
+### Verificar
+
+```sh
+npx playwright install chromium firefox webkit
+npm run check
+npm test
+npm run test:e2e
+npm run test:all-browsers
+npm run test:ui
+npm run test:report
+```
+
+`test:e2e` corre Chromium y móvil; `test:all-browsers` corre los tres motores de escritorio. `npx playwright test` incluye los cuatro proyectos. No usa perfiles personales ni credenciales reales del navegador. Un laboratorio por prueba permite ejecución paralela.
+
+Comparación visual separada: `npm run test:visual`. Hay una baseline revisada de Chromium/Windows; en otro SO hay que generar y **revisar** su propia baseline con `npm run test:visual -- --update-snapshots`, y volver a ejecutar sin ese flag. No aceptar cambios de imágenes automáticamente para ocultar diferencias. El workflow de CI no compara la baseline Windows contra Linux.
+
+### Material para preparar el curso
+
+- [Mapa de cobertura de Playwright y temas pendientes](docs/playwright-coverage.md).
+- [Reglas del banco y contrato de API](docs/lab-rules.md).
+- [Historias, casos y propuesta de curso](docs/course-plan.md).
+- Pruebas resueltas: `lab/tests`, `lab/e2e` y `lab/visual`.
+- Archivos de práctica: `lab/fixtures`.
+
+El workflow `lab-tests.yml` queda preparado, **sin ejecutar ni desplegar desde este trabajo local**. Al publicarlo, revisar las cuotas de GitHub Actions de la organización antes de activar ejecuciones frecuentes. No necesita secretos.
+
+---
+
+## Aplicación original (legacy)
+
+Las instrucciones siguientes corresponden únicamente al proyecto anterior. No se necesitan para usar el laboratorio v2. Esta implementación anterior no fue modificada ni revalidada como parte de la v2; no publicarla como servicio bancario real.
+
 Aplicación bancaria full-stack que permite gestionar cuentas, registrar transacciones (depósitos, transferencias y eventos de ciclo de vida de cuentas) y visualizar un panel de actividad.
 
 ---
