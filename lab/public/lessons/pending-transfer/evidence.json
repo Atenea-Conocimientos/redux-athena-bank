@@ -1,0 +1,14 @@
+{
+  "capturedAt": "2026-10-07T13:34:42.554Z",
+  "sourceSha256": "c204c84d5297e9cec0e78978dad13bd06b3fe175d2d4e3a3adf09b4d0f5ae5da",
+  "browser": "chromium",
+  "playwright": "1.63.0",
+  "environment": "isolated in-memory practice; fictional accounts only",
+  "verified": [
+    "initial balances",
+    "quote: 101 ARS",
+    "pending UI and API",
+    "Ana: balance 250000 / reserved 10100 / available 239900 cents",
+    "Bruno: unchanged 120000 cents"
+  ]
+}

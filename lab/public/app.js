@@ -364,7 +364,7 @@ function renderPage(route) {
   if (route === '/beneficiarios') return beneficiaries();
   if (route === '/movimientos') return movements();
   if (route === '/documentos') return documents();
-  if (route === '/laboratorio') return laboratory();
+  if (route === '/laboratorio') return `<section class="lab-banner"><div><p class="eyebrow">MICROLECCIÓN / VOZ LOCAL</p><h2>¿Pendiente significa que llegó?</h2><p>En 2 minutos y 35 segundos, comprobá una transferencia con Playwright: estado, reserva y saldo del receptor.</p></div><a class="primary" href="/lecciones/transferencia-pendiente/">Ver microlección ↗</a></section>` + laboratory();
   return dashboard();
 }
 function dashboard() {

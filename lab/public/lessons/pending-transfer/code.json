@@ -1,0 +1,7 @@
+{
+  "inicio": "const before = await (await context.request.get('/api/overview')).json();\nexpect(before.accounts.find(a => a.id === 'ana-main'))\n  .toMatchObject({ balance: 250000, reserved: 0, available: 250000 });",
+  "cotizacion": "await page.getByRole('button', { name: 'Transferir ↗' }).click();\nawait page.getByLabel('Importe a transferir').fill('100');\nawait page.getByRole('button', { name: 'Revisar transferencia' }).click();\nawait expect(page.getByRole('dialog')).toContainText('101,00');",
+  "estado": "await page.getByLabel('Código de confirmación ficticio').fill('246810');\nawait page.getByRole('button', { name: 'Confirmar y reservar' }).click();\nawait expect(page.getByRole('article')).toContainText('Pendiente');",
+  "reserva": "const response = await context.request.get('/api/overview');\nexpect(response.ok()).toBeTruthy();\nconst { accounts, transfers } = await response.json();\nexpect(accounts.find(a => a.id === 'ana-main')).toMatchObject({\n  balance: 250000,    // $2.500: sin débito todavía\n  reserved: 10100,   // $101: importe + comisión\n  available: 239900, // $2.399: saldo - reserva\n});",
+  "receptor": "// bruno es otro BrowserContext, autenticado en la misma práctica.\nconst receiverResponse = await bruno.request.get('/api/overview');\nexpect(receiverResponse.ok()).toBeTruthy();\nconst receiver = await receiverResponse.json();\nexpect(receiver.accounts.find(a => a.id === 'bruno-main'))\n  .toMatchObject({ balance: 120000, reserved: 0, available: 120000 });"
+}

@@ -1,0 +1,7 @@
+# Optional authoring tools. End users do not need these packages.
+kokoro-onnx==0.6.1
+soundfile==0.13.1
+espeakng-loader==0.2.4
+phonemizer==3.4.0
+onnxruntime==1.30.0
+numpy==2.5.3

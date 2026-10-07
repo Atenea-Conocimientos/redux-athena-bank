@@ -1,0 +1,83 @@
+{
+  "title": "Cómo comprobar una transferencia pendiente",
+  "voice": "ef_dora",
+  "language": "es",
+  "speed": 1.0,
+  "scenes": [
+    {
+      "id": "objetivo", "title": "Pendiente no es completada", "image": "pending.png",
+      "alt": "Transferencia real del laboratorio: 100 pesos a bruno.diaria, estado Pendiente y comisión de 1 peso.",
+      "takeaway": "Un estado correcto no alcanza: también hay que comprobar el dinero.",
+      "code": "estado", "focus": [1, 2, 3],
+      "cues": [
+        "Una transferencia dice pendiente. ¿Eso significa que el dinero ya llegó? No. En esta microlección vamos a comprobarlo con Playwright.",
+        "Estamos en Athena Bank, un laboratorio con dinero ficticio. Vamos a mirar tres cosas: el estado, la reserva del emisor y el saldo del receptor.",
+        "El objetivo no es hacer clic y confiar en un mensaje. Es demostrar que la operación respeta las reglas del negocio."
+      ]
+    },
+    {
+      "id": "preparar", "title": "Partí de datos conocidos", "image": "before.png",
+      "alt": "Cuenta ana.diaria antes de transferir: 2.500 pesos disponibles y cero pesos reservados.",
+      "takeaway": "Práctica estable y nueva. Ana: $2.500. Bruno: $1.200.",
+      "code": "inicio", "focus": [1, 2, 3],
+      "cues": [
+        "Primero, creamos una práctica nueva en modo estable. Ana tiene dos mil quinientos pesos en su cuenta diaria. Bruno tiene mil doscientos.",
+        "La prueba prepara estos datos de forma aislada. Así no depende de una transferencia anterior ni de lo que haya hecho otro estudiante.",
+        "Atención: estamos comprobando la cuenta diaria de Ana, no el saldo total que incluye sus ahorros."
+      ]
+    },
+    {
+      "id": "cotizar", "title": "Importe más comisión", "image": "quote.png",
+      "alt": "Diálogo de confirmación: importe 100 pesos, comisión 1 peso y total a reservar 101 pesos.",
+      "takeaway": "$100 de importe + $1 de comisión = $101 a reservar.",
+      "code": "cotizacion", "focus": [1, 2, 3, 4], "codeFromCue": 2,
+      "cues": [
+        "Abrimos una transferencia a la cuenta diaria de Bruno e ingresamos cien pesos. Antes de confirmar, revisamos la cotización.",
+        "En este laboratorio, la comisión externa es del uno por ciento, con un mínimo de un peso. El total a reservar es ciento uno.",
+        "En el código buscamos controles por su nombre accesible. La aserción del diálogo verifica el total antes de continuar."
+      ]
+    },
+    {
+      "id": "confirmar", "title": "Confirmar y reservar", "image": "pending.png",
+      "alt": "La operación queda Pendiente y permite Procesar o Cancelar; todavía no está completada.",
+      "takeaway": "Confirmar crea la operación. Procesar mueve el dinero.",
+      "code": "estado", "focus": [1, 2, 3], "codeFromCue": 1,
+      "cues": [
+        "Ingresamos el código ficticio y confirmamos. La operación debe aparecer como pendiente. No vamos a presionar Procesar.",
+        "Usamos una aserción que espera el estado de la interfaz. No necesitamos una pausa fija ni adivinar cuánto tarda la pantalla."
+      ]
+    },
+    {
+      "id": "reserva", "title": "Comprobá la cuenta de Ana", "image": "ana.png",
+      "alt": "ana.diaria después de confirmar: 2.399 pesos disponibles y 101 pesos reservados.",
+      "takeaway": "Contable: $2.500 · Reservado: $101 · Disponible: $2.399.",
+      "code": "reserva", "focus": [4, 5, 6, 7, 8], "codeFromCue": 0,
+      "cues": [
+        "Ahora consultamos la cuenta de Ana por la API, usando su misma sesión. El saldo contable sigue en dos mil quinientos.",
+        "Hay ciento un pesos reservados. Por eso, el disponible baja a dos mil trescientos noventa y nueve, aunque todavía no hubo un débito.",
+        "La API expresa los importes en centavos. Por eso el código compara números enteros: una reserva de ciento un pesos aparece como diez mil cien."
+      ]
+    },
+    {
+      "id": "receptor", "title": "Bruno todavía no cobró", "image": "bruno.png",
+      "alt": "En una sesión independiente, bruno.diaria conserva 1.200 pesos disponibles y no tiene reservas.",
+      "takeaway": "Misma práctica, otra sesión. Bruno conserva $1.200.",
+      "code": "receptor", "focus": [1, 2, 3, 4, 5, 6], "codeFromCue": 0,
+      "cues": [
+        "Por último, entramos como Bruno en un contexto separado, dentro de la misma práctica. No reutilizamos la sesión de Ana.",
+        "Su saldo continúa en mil doscientos pesos. Si ya recibió los cien, encontramos un defecto, aunque la pantalla de Ana diga pendiente."
+      ]
+    },
+    {
+      "id": "practicar", "title": "Ahora te toca a vos", "image": "ana.png",
+      "alt": "Evidencia final de la reserva en la cuenta de Ana; los fondos todavía no fueron transferidos.",
+      "takeaway": "Reto: $200 → $202 reservados. Cancelar debe liberar la reserva.",
+      "code": "reserva", "focus": [4, 5, 6, 7, 8],
+      "cues": [
+        "Ya tenemos tres evidencias: estado pendiente, reserva correcta y receptor sin acreditar. Eso es comprobar el comportamiento, no solamente automatizar clics.",
+        "Tu reto: en una práctica nueva, transferí doscientos pesos. Calculá la reserva y después cancelá. ¿El dinero vuelve a estar disponible?",
+        "Podés pausar, recorrer los capítulos y descargar la prueba completa. Ahora respondé la pregunta debajo del reproductor y probalo en el laboratorio."
+      ]
+    }
+  ]
+}

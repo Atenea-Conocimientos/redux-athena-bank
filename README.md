@@ -30,6 +30,7 @@ Variables opcionales: `LAB_PORT` y `LAB_DB`. No exponer el servidor a Internet: 
 ### Qué incluye
 
 - Registro y sesiones; cuentas con alias únicos, congelación, depósitos y cierre controlado.
+- **Laboratorio → Ver microlección**: [Cómo comprobar una transferencia pendiente](http://127.0.0.1:4177/lecciones/transferencia-pendiente/), piloto de 2:35 con voz local, pantalla/código sincronizados, subtítulos, capítulos y un quiz. No requiere instalar TTS para reproducirlo. [Guía y regeneración](docs/microleccion-transferencia.md).
 - Transferencias con comisión, límite diario, OTP de práctica, vencimiento de cotización, reservas, idempotencia y estados pendiente/completada/cancelada/rechazada.
 - Procesamiento transaccional: el fallo simulado después del débito revierte la operación completa.
 - Beneficiarios ordenables, CSV importable atómicamente, movimientos filtrables/paginados y descarga de extractos.

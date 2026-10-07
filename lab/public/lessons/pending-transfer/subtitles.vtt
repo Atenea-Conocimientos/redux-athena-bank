@@ -1,0 +1,58 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:08.451
+Una transferencia dice pendiente. ¿Eso significa que el dinero ya llegó? No. En esta microlección vamos a comprobarlo con Playwright.
+
+00:00:08.451 --> 00:00:17.868
+Estamos en Athena Bank, un laboratorio con dinero ficticio. Vamos a mirar tres cosas: el estado, la reserva del emisor y el saldo del receptor.
+
+00:00:17.868 --> 00:00:25.169
+El objetivo no es hacer clic y confiar en un mensaje. Es demostrar que la operación respeta las reglas del negocio.
+
+00:00:25.169 --> 00:00:34.057
+Primero, creamos una práctica nueva en modo estable. Ana tiene dos mil quinientos pesos en su cuenta diaria. Bruno tiene mil doscientos.
+
+00:00:34.057 --> 00:00:42.181
+La prueba prepara estos datos de forma aislada. Así no depende de una transferencia anterior ni de lo que haya hecho otro estudiante.
+
+00:00:42.181 --> 00:00:48.229
+Atención: estamos comprobando la cuenta diaria de Ana, no el saldo total que incluye sus ahorros.
+
+00:00:48.229 --> 00:00:56.012
+Abrimos una transferencia a la cuenta diaria de Bruno e ingresamos cien pesos. Antes de confirmar, revisamos la cotización.
+
+00:00:56.012 --> 00:01:03.645
+En este laboratorio, la comisión externa es del uno por ciento, con un mínimo de un peso. El total a reservar es ciento uno.
+
+00:01:03.645 --> 00:01:10.937
+En el código buscamos controles por su nombre accesible. La aserción del diálogo verifica el total antes de continuar.
+
+00:01:10.937 --> 00:01:18.647
+Ingresamos el código ficticio y confirmamos. La operación debe aparecer como pendiente. No vamos a presionar Procesar.
+
+00:01:18.647 --> 00:01:26.461
+Usamos una aserción que espera el estado de la interfaz. No necesitamos una pausa fija ni adivinar cuánto tarda la pantalla.
+
+00:01:26.461 --> 00:01:33.753
+Ahora consultamos la cuenta de Ana por la API, usando su misma sesión. El saldo contable sigue en dos mil quinientos.
+
+00:01:33.753 --> 00:01:41.788
+Hay ciento un pesos reservados. Por eso, el disponible baja a dos mil trescientos noventa y nueve, aunque todavía no hubo un débito.
+
+00:01:41.788 --> 00:01:51.115
+La API expresa los importes en centavos. Por eso el código compara números enteros: una reserva de ciento un pesos aparece como diez mil cien.
+
+00:01:51.115 --> 00:01:58.781
+Por último, entramos como Bruno en un contexto separado, dentro de la misma práctica. No reutilizamos la sesión de Ana.
+
+00:01:58.781 --> 00:02:06.870
+Su saldo continúa en mil doscientos pesos. Si ya recibió los cien, encontramos un defecto, aunque la pantalla de Ana diga pendiente.
+
+00:02:06.870 --> 00:02:17.085
+Ya tenemos tres evidencias: estado pendiente, reserva correcta y receptor sin acreditar. Eso es comprobar el comportamiento, no solamente automatizar clics.
+
+00:02:17.085 --> 00:02:25.769
+Tu reto: en una práctica nueva, transferí doscientos pesos. Calculá la reserva y después cancelá. ¿El dinero vuelve a estar disponible?
+
+00:02:25.769 --> 00:02:35.096
+Podés pausar, recorrer los capítulos y descargar la prueba completa. Ahora respondé la pregunta debajo del reproductor y probalo en el laboratorio.

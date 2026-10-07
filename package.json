@@ -15,8 +15,10 @@
     "test:report": "playwright show-report",
     "test:visual": "playwright test --config=playwright.visual.config.js",
     "test:advanced": "playwright test --grep @advanced",
+    "test:lesson": "playwright test pending-lesson.spec.js lesson-player.spec.js",
+    "lesson:capture": "node scripts/capture-lesson.cjs",
     "test:all-browsers": "playwright test --project=chromium --project=firefox --project=webkit",
-    "check": "node --check lab/bank.cjs && node --check lab/server.cjs && node --check lab/market.cjs && node --check lab/public/app.js && node --check lab/public/market.js && node --check lab/public/market-sw.js"
+    "check": "node --check lab/bank.cjs && node --check lab/server.cjs && node --check lab/market.cjs && node --check lab/public/app.js && node --check lab/public/market.js && node --check lab/public/market-sw.js && node --check lab/lesson-assets.cjs && node --check lab/public/lesson.js && node --check scripts/capture-lesson.cjs"
   },
   "devDependencies": {
     "@axe-core/playwright": "4.13.0",

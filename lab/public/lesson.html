@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="color-scheme" content="dark" />
+    <title>Transferencia pendiente · Athena Bank Academy</title>
+    <link rel="stylesheet" href="/lesson.css" />
+    <script type="module" src="/lesson.js"></script>
+  </head>
+  <body>
+    <a class="skip" href="#lesson">Saltar a la lección</a>
+    <header class="topbar">
+      <a class="brand" href="/"
+        >a<span>athena<span class="brand-sub">BANK / ACADEMY</span></span></a
+      >
+      <a class="back" href="/laboratorio">Volver al laboratorio ↗</a>
+    </header>
+    <main id="lesson">
+      <div class="intro">
+        <p class="eyebrow">
+          MICROLECCIÓN 01 <span>/</span> PLAYWRIGHT + CRITERIO DE QA
+        </p>
+        <h1>
+          Cómo comprobar una<br class="wide-only" />
+          transferencia <em>pendiente.</em>
+        </h1>
+        <p class="description">
+          No te quedes con el mensaje de éxito. Comprobá lo que pasó con el
+          dinero.
+        </p>
+        <div class="meta">
+          <span id="duration">2–3 min</span
+          ><span>Voz en español · generada localmente</span
+          ><span>Datos 100% ficticios</span>
+        </div>
+      </div>
+      <p id="load-status" role="status">Preparando la lección…</p>
+      <noscript
+        ><p>
+          Activá JavaScript para reproducir la lección. También podés
+          <a href="/lessons/pending-transfer/subtitles.vtt">leer el guion</a> o
+          <a href="/lessons/pending-transfer/narration.mp3"
+            >escuchar la narración</a
+          >.
+        </p></noscript
+      >
+      <div id="experience" hidden>
+        <div class="lesson-layout">
+          <section class="player" aria-label="Reproductor de microlección">
+            <div class="scene-header">
+              <span id="scene-counter" class="eyebrow">01 / 07</span
+              ><span class="recorded"
+                ><span aria-hidden="true">●</span> Capturas de una ejecución
+                real</span
+              >
+            </div>
+            <div id="stage" class="stage">
+              <h2 id="scene-title"></h2>
+              <div
+                class="view-controls"
+                role="group"
+                aria-label="Vista de la escena"
+              >
+                <button id="view-screen" type="button" aria-pressed="true">
+                  Pantalla</button
+                ><button id="view-code" type="button" aria-pressed="false">
+                  Código Playwright</button
+                ><span>Sincronizado con la voz</span>
+              </div>
+              <div class="screen-frame">
+                <div class="window-bar">
+                  <span aria-hidden="true">● ● ●</span
+                  ><span id="frame-label">athena bank / práctica aislada</span>
+                </div>
+                <div id="screen-view" class="screenshot-area">
+                  <img id="scene-image" alt="" />
+                </div>
+                <pre
+                  id="code-view"
+                  tabindex="0"
+                  aria-label="Código Playwright del capítulo"
+                  hidden
+                ><code id="code"></code></pre>
+              </div>
+              <p id="takeaway" class="takeaway"></p>
+            </div>
+            <div
+              id="caption"
+              class="caption"
+              aria-label="Subtítulo actual"
+            ></div>
+            <div class="transport">
+              <label class="sr-only" for="seek">Posición de la lección</label>
+              <input
+                id="seek"
+                type="range"
+                min="0"
+                max="180"
+                step="0.1"
+                value="0"
+              />
+              <div class="controls">
+                <button id="play" class="play" type="button">
+                  ▶ Reproducir
+                </button>
+                <button
+                  id="back-ten"
+                  type="button"
+                  aria-label="Retroceder 10 segundos"
+                >
+                  ↶ 10 s
+                </button>
+                <output id="time" aria-label="Tiempo de reproducción"
+                  >0:00 / 0:00</output
+                >
+                <label class="speed"
+                  ><span class="sr-only">Velocidad de reproducción</span
+                  ><select id="speed">
+                    <option value="0.75">0,75×</option>
+                    <option value="1" selected>1×</option>
+                    <option value="1.25">1,25×</option>
+                    <option value="1.5">1,5×</option>
+                  </select></label
+                >
+                <button
+                  id="mute"
+                  type="button"
+                  aria-label="Silenciar narración"
+                  aria-pressed="false"
+                >
+                  Voz
+                </button>
+                <button
+                  id="captions"
+                  type="button"
+                  aria-label="Mostrar subtítulos"
+                  aria-pressed="true"
+                >
+                  CC
+                </button>
+              </div>
+            </div>
+            <audio id="narration" preload="metadata"></audio>
+          </section>
+          <aside class="chapters-panel" aria-labelledby="chapters-title">
+            <p class="eyebrow">TU RECORRIDO</p>
+            <h2 id="chapters-title">De la pantalla<br />a la evidencia.</h2>
+            <ol id="chapters"></ol>
+            <p class="aside-note">
+              A tu ritmo. Pausá o saltá a cualquier capítulo: la voz, la
+              pantalla y el código se mantienen sincronizados.
+            </p>
+          </aside>
+        </div>
+        <section class="code-panel" aria-labelledby="code-title">
+          <div class="code-heading">
+            <div>
+              <p class="eyebrow">LA PRUEBA DETRÁS DE LA ESCENA</p>
+              <h2 id="code-title">Código que sí se ejecuta.</h2>
+            </div>
+            <a href="/lessons/pending-transfer/pending-lesson.spec.js" download
+              >Descargar prueba completa ↓</a
+            >
+          </div>
+          <p class="code-note">
+            Fragmento de <code>pending-lesson.spec.js</code>. La prueba completa
+            incluye las sesiones, la preparación y la limpieza de datos.
+          </p>
+        </section>
+        <section class="challenge" aria-labelledby="challenge-title">
+          <div>
+            <p class="eyebrow">ANTES DE IR AL LAB</p>
+            <h2 id="challenge-title">¿Qué evidencia falta?</h2>
+            <p>
+              Ana ve “Pendiente” y una reserva de $101. ¿Qué comprobarías ahora?
+            </p>
+          </div>
+          <form id="quiz">
+            <fieldset>
+              <legend class="sr-only">Elegí la siguiente comprobación</legend>
+              <label
+                ><input
+                  type="radio"
+                  name="answer"
+                  value="message"
+                  required
+                /><span
+                  >Que el botón haya mostrado un mensaje de éxito.</span
+                ></label
+              >
+              <label
+                ><input type="radio" name="answer" value="receiver" /><span
+                  >Que Bruno siga teniendo $1.200, sin acreditar los $100.</span
+                ></label
+              >
+              <label
+                ><input type="radio" name="answer" value="wait" /><span
+                  >Esperar cinco segundos y dar la prueba por terminada.</span
+                ></label
+              >
+            </fieldset>
+            <button class="primary" type="submit">
+              Comprobar respuesta ↗
+            </button>
+            <p id="feedback" role="status"></p>
+          </form>
+        </section>
+        <section class="next-step">
+          <div>
+            <p class="eyebrow">TU SIGUIENTE PASO</p>
+            <h2>Ahora, cambiá las condiciones.</h2>
+            <p>
+              Creá una práctica nueva y estable. Transferí $200: deberían
+              reservarse $202 y quedar $2.298 disponibles en ana.diaria. Cancelá
+              y comprobá que la reserva vuelva a cero.
+            </p>
+            <small
+              >Esta lección no crea ni modifica operaciones en tu
+              práctica.</small
+            >
+          </div>
+          <a class="primary" href="/">Ir a practicar ↗</a>
+        </section>
+        <details class="transcript">
+          <summary>Leer la transcripción completa</summary>
+          <div id="transcript"></div>
+          <a href="/lessons/pending-transfer/subtitles.vtt" download
+            >Descargar subtítulos (.vtt) ↓</a
+          >
+        </details>
+      </div>
+    </main>
+    <footer>
+      Athena Bank Lab <span>·</span> Aprendé a comprobar, no solamente a hacer
+      clic.<br /><small
+        >Piloto local · Voz sintética Kokoro / Dora · Sin servicios de voz en la
+        nube.</small
+      >
+    </footer>
+  </body>
+</html>

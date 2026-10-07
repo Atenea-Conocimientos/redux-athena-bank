@@ -4,6 +4,7 @@ const path = require('node:path');
 const { randomBytes } = require('node:crypto');
 const { Bank, BankError, DEMO_PASSWORD, PROFILES } = require('./bank.cjs');
 const { rates, attachMarket } = require('./market.cjs');
+const { serveLessonAsset } = require('./lesson-assets.cjs');
 
 function createServer({
   filename,
@@ -72,6 +73,7 @@ function createServer({
       if (!route.startsWith('/api/')) {
         if (!['GET', 'HEAD'].includes(req.method))
           throw new BankError('Método no permitido.', 405);
+        if (serveLessonAsset(req, res, route)) return;
         const assets = {
           '/app.js': 'app.js',
           '/style.css': 'style.css',
@@ -80,6 +82,10 @@ function createServer({
           '/mercado/': 'market.html',
           '/mercado/app.js': 'market.js',
           '/mercado/sw.js': 'market-sw.js',
+          '/lecciones/transferencia-pendiente': 'lesson.html',
+          '/lecciones/transferencia-pendiente/': 'lesson.html',
+          '/lesson.js': 'lesson.js',
+          '/lesson.css': 'lesson.css',
         };
         const file =
           assets[route] || (route.includes('.') ? null : 'index.html');
