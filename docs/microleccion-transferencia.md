@@ -1,6 +1,6 @@
 # Microlección 01: cómo comprobar una transferencia pendiente
 
-Piloto **local**, 2 minutos y 35 segundos, programado en HTML/CSS/JS. No es un MP4 ni una grabación interactiva del usuario. Alterna **capturas obtenidas de una prueba real** con fragmentos de esa misma prueba. La voz sintética en español se generó localmente con Kokoro (Dora / `ef_dora`); no utiliza ElevenLabs, API de voz, claves ni suscripciones.
+Piloto **local**, de dos a tres minutos, programado en HTML/CSS/JS. No es un MP4 ni una grabación interactiva del usuario. Alterna **capturas obtenidas de una prueba real** con fragmentos de esa misma prueba. Ahora usa la voz de Juan, clonada con su autorización y generada en ElevenLabs (Eleven v4). El MP3 final se sirve desde el Lab: reproducirlo no envía datos a ElevenLabs ni consume créditos. El generador Kokoro anterior se conserva como alternativa, no es la voz actual.
 
 ## Verla
 
@@ -9,18 +9,19 @@ npm ci
 npm run dev
 ```
 
-Abrí <http://127.0.0.1:4177/lecciones/transferencia-pendiente/> o **Laboratorio → Ver microlección**. No hace falta sesión para verla. El audio MP3 y las capturas ya están incluidos (aproximadamente 2 MB en total), por lo que **no hay que instalar Python ni bajar modelos para reproducirla**.
+Abrí <http://127.0.0.1:4177/lecciones/transferencia-pendiente/> o **Laboratorio → Ver microlección**. No hace falta sesión para verla. El audio MP3 y las capturas ya están incluidos, por lo que **no hay que instalar Python ni bajar modelos para reproducirla**.
 
 - Reproducir/pausar, repetir, retroceder 10 segundos, cambiar velocidad y silenciar.
 - Siete capítulos; el audio gobierna los subtítulos y los cambios de pantalla/código.
 - Los botones Pantalla/Código permiten inspeccionar la otra vista; al comenzar la próxima frase vuelve la vista prevista por el guion.
 - Subtítulos visibles por defecto; transcripción completa y descarga VTT.
-- Fragmentos de código reales y prueba completa descargable.
+- Fragmentos de código reales, prueba completa visible y descargable, proyectos ZIP inicio/solución.
+- Paso 0 separado para instalar Playwright, crear el repo GitHub y guardar el avance por clase.
 - Quiz con feedback y un reto de cancelación de $200.
 - Sin autoplay ni peticiones a servicios externos. La reproducción no crea ni modifica prácticas, sesiones ni transferencias.
 - Si el audio no puede cargarse, capítulos, código y lectura siguen disponibles.
 
-La voz es **sintética**, no una imitación de Juan. Tiene pronunciación española, no un acento argentino garantizado. El piloto queda sujeto a la revisión de Juan sobre dicción, ritmo y tono antes de escalar a un curso. No se ha realizado una evaluación auditiva humana del resultado.
+La interfaz informa que es una **voz clonada con IA y autorizada**. Juan aprobó las muestras de introducción y saldos; se reutilizaron sin regenerarlas. Los cinco capítulos restantes conservan modelo y ajustes (estabilidad 50%, similitud 75%, velocidad normal). La sincronización se valida localmente contra el guion; la revisión auditiva del montaje completo queda a cargo de Juan antes de publicar.
 
 ## Qué se enseña y de dónde sale la evidencia
 
@@ -53,7 +54,49 @@ npm run lesson:capture
 
 El comando ejecuta la referencia en Chromium con el servidor de pruebas **4178**, SQLite **en memoria**. No toca el servidor manual 4177 ni `.lab-data/bank.sqlite`. Si la prueba falla, el comando falla. Después de cambiar el código de referencia, regenerá capturas/fragmentos: el test de integridad detecta copias desactualizadas.
 
-## Cambiar guion y regenerar la voz
+## Importar la voz aprobada de Juan
+
+Los siete MP3 originales se guardan en `.lesson-tools/elevenlabs/`, uno por ID de
+escena (`objetivo.mp3`, `preparar.mp3`, `cotizar.mp3`, `confirmar.mp3`, `reserva.mp3`,
+`receptor.mp3`, `practicar.mp3`). No subir allí grabaciones de entrenamiento a Git.
+La generación se hizo desde la sesión autorizada de ElevenLabs, sin crear claves API.
+
+`scripts/import-lesson-audio.py` requiere FFmpeg y `faster-whisper` con un modelo
+local ya descargado. No descarga modelos ni hace llamadas a servicios de voz:
+
+```sh
+python scripts/import-lesson-audio.py --model-dir RUTA_AL_MODELO_WHISPER_LOCAL
+```
+
+Decodifica los MP3 a PCM mono de 44.1 kHz, agrega 250 ms entre capítulos y vuelve a
+codificar a 128 kbps. Calcula el tiempo por muestras reales y alinea las frases con
+timestamps de palabras de Whisper; exige al menos 85% de coincidencia de la prosa
+por capítulo (excluye formas numéricas, porque Whisper escribe dígitos) y límites
+crecientes. Conserva el texto original como subtítulo, no las posibles
+transcripciones erróneas. `lesson.json` guarda hashes de guion/audio y evidencia de
+alineación. Esta comprobación técnica no sustituye una escucha humana completa.
+
+No cambiar únicamente el MP3: regenerar también `lesson.json` y `subtitles.vtt`.
+Los modelos, MP3 originales y caché quedan ignorados; solo se distribuye la narración
+final autorizada. No hay licencias API, contraseñas ni muestras biométricas fuente
+en los ZIP del alumno.
+
+## Material del alumno y checkpoints
+
+`course/automation/` es la plantilla JavaScript del repositorio de tests separado.
+`npm run course:build` genera los ZIP locales, con una lista explícita de archivos.
+Inicio incluye un smoke test y un ejercicio `test.skip`; solución reemplaza ese
+ejercicio por el mismo `lab/e2e/pending-lesson.spec.js` que se ejecuta en la lección.
+Los tests fallan si el ZIP se queda desactualizado o su contenido deja de coincidir.
+
+Propuesta de publicación: repo plantilla separado, dos ramas de referencia por
+clase (`clase-NN-inicio`, `clase-NN-solucion`) y tags de versión para congelar lo
+enseñado. El alumno trabaja en `clase/NN-tema` dentro de su propio repo y compara
+por PR. Cada siguiente inicio incorpora lo necesario de la clase anterior.
+**Esas ramas/repo remotos no fueron creados todavía.** La guía no ejecuta pushes
+automáticos ni lleva a los alumnos a una rama que no existe.
+
+## Alternativa anterior: regenerar con voz local Kokoro
 
 Fuente: `lab/lessons/pending-transfer.json`. Define capítulos, frases, captura asociada y el primer índice de frase que muestra código (`codeFromCue`, base cero). La línea de tiempo se calcula con la duración real de cada segmento de audio, no con tiempos estimados. El generador exige una duración total de 120 a 180 segundos.
 
@@ -103,7 +146,21 @@ npm run test:visual
 
 No se agregó persistencia de avance, integración con cursos de Atenea, exportación MP4 ni publicación. Este piloto valida primero el formato.
 
-### Resultado local — 7 de octubre de 2026
+### Resultado con voz de Juan y material del alumno — 7 de octubre de 2026
+
+- Audio: **166,16 s (2:46)**, siete escenas, 19 subtítulos. Alineación local de
+  prosa entre 93% y 100%; no equivale a una evaluación auditiva humana.
+- `npm run check`: correcto. `npm test`: **28/28**.
+- `npx playwright test`: **170 aprobadas y 3 omisiones preexistentes** (Service
+  Worker Firefox/WebKit y arrastre HTML5 móvil). Incluye guía, descargas y test
+  completo, sin desborde horizontal y con axe sin violaciones en los casos probados.
+- `npm run test:visual`: **1/1**, sin modificar el baseline del dashboard.
+- Ambos ZIP extraídos en directorios nuevos fuera del repo, con `npm ci` y pruebas
+  contra un servidor aislado en memoria en el puerto 4179: inicio **1 aprobada +
+  1 omitida intencionalmente**, solución **2/2 aprobadas**.
+- Sin push, publicación, creación de repos remotos ni despliegue a QA/producción.
+
+### Resultado del piloto anterior (Kokoro) — 7 de octubre de 2026
 
 - `npm run check`: correcto; el generador Python también compila con `py_compile`.
 - `npm test`: **25/25**.

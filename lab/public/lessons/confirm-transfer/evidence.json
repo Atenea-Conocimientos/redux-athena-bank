@@ -1,0 +1,53 @@
+{
+  "capturedAt": "2026-10-08T14:05:57.682Z",
+  "browser": "chromium",
+  "playwright": "1.63.0",
+  "sourceSha256": "6bbe456a2b29c706720265d858dc89c1532843b0a25532fcb3ee8fc5e8b27a98",
+  "challengeSha256": "cb860ac6cfce9746bf5d8bc89fb8a262a2f3570f8d87ac17421e6c9a2ed146bc",
+  "diagnosticSourceSha256": "348d631359562c7d4bb8a0e1c4af076506b36b2ba7146522720e0153087e106b",
+  "status": "passed",
+  "durationMs": 850,
+  "challengeStatus": "passed",
+  "challengeDurationMs": 856,
+  "scope": "Fresh browser context and independent UI-created stable practice per test; isolated server on 4186 with SQLite :memory:; fictional transfer only. Ana UI verifies pending status, reserved/available/total balances. No receiver-session verification or settlement. Wrong-OTP challenge proves visible rejection and no transfer or reservation after refreshing.",
+  "tests": [
+    {
+      "title": "confirmar una transferencia reserva fondos y mantiene el estado pendiente",
+      "status": "passed",
+      "durationMs": 850
+    },
+    {
+      "title": "un código de confirmación incorrecto no crea transferencias ni reserva saldo",
+      "status": "passed",
+      "durationMs": 856
+    },
+    {
+      "title": "confirmación: evidencia visual de cotización, pendiente y reserva",
+      "status": "passed",
+      "durationMs": 1844
+    },
+    {
+      "title": "confirmación: evidencia visual de código incorrecto sin efectos",
+      "status": "passed",
+      "durationMs": 1471
+    }
+  ],
+  "screenshots": [
+    {
+      "name": "quote.png",
+      "sha256": "3e56229245d4d7d7978daf4fd64891bbbd7a7e7677dbe0683efe932236ac1aa7"
+    },
+    {
+      "name": "pending.png",
+      "sha256": "6b0c53a7a3fef2d00c9b5fb796ec1726542bab7907d8c06d8e5c24cbe0253805"
+    },
+    {
+      "name": "balances.png",
+      "sha256": "3ced1ad9abba28ffa8dc3468e61047ae6918531c6e3ea1c5cdc3dd1a7b705413"
+    },
+    {
+      "name": "rejected.png",
+      "sha256": "243ef798419c9014c10b490a7c6c176bb33a85266c8d6ea7f748e63849069117"
+    }
+  ]
+}

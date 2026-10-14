@@ -1,0 +1,46 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:10.740
+En la primera clase comprobamos la bienvenida. Ahora vamos a usar el formulario: crear una práctica estable, iniciar sesión como Ana y verificar que vemos su cuenta.
+
+00:00:10.740 --> 00:00:21.780
+Antes de escribir, recorré esos pasos manualmente en una ventana privada. Son datos ficticios del laboratorio. No uses tu correo, tus contraseñas ni información bancaria real.
+
+00:00:21.780 --> 00:00:32.459
+Seguimos en tu repositorio de pruebas. Guardá el avance anterior y creá la rama de la clase dos. El banco queda encendido en otra terminal; no estamos modificando Atenea.
+
+00:00:32.459 --> 00:00:43.979
+Abrimos la raíz del banco con goto. Después buscamos Perfil del ejercicio por su etiqueta. Select option elige stable, el valor técnico de la opción que muestra Estable.
+
+00:00:43.979 --> 00:00:55.139
+Hacemos clic en Crear mi práctica usando el rol de botón y su nombre. A continuación comprobamos el encabezado Tu sesión de práctica: esa es la señal de que podemos continuar.
+
+00:00:55.139 --> 00:01:05.153
+Cada prueba empieza en un contexto limpio y crea su propia práctica. No depende de que hayas iniciado sesión en Chrome ni de que otro test se haya ejecutado antes.
+
+00:01:05.153 --> 00:01:17.553
+Para completar el acceso usamos get by label y fill. Las etiquetas son Email ficticio y Contraseña de práctica. Los valores de Ana están escritos en el ejemplo y son públicos.
+
+00:01:17.553 --> 00:01:28.733
+Aunque el formulario ya trae datos, fill los reemplaza. Así el test declara qué usuario está probando, en lugar de depender silenciosamente de lo que viene cargado por defecto.
+
+00:01:28.733 --> 00:01:40.094
+Después hacemos clic en Iniciar sesión. Playwright comprueba que el botón pueda recibir la acción. No agregamos pausas fijas, pero todavía falta demostrar el resultado del acceso.
+
+00:01:40.094 --> 00:01:51.554
+El resultado esperado es el saludo Buen día, Ana, y su cuenta diaria visible. Una acción sin error no alcanza: podríamos haber enviado el formulario y recibido un rechazo.
+
+00:01:51.554 --> 00:02:03.574
+Usamos expect para el encabezado y para la región que identifica esa cuenta. Las aserciones reintentan hasta cumplir la condición o agotar el tiempo, sin dormir cinco segundos porque sí.
+
+00:02:03.574 --> 00:02:14.851
+En este banco cambia la pantalla, pero la dirección sigue siendo la raíz. No inventamos una ruta de dashboard. Comprobamos el resultado observable que realmente define nuestro caso.
+
+00:02:14.851 --> 00:02:26.631
+Ahora te toca el caso negativo. En otro test, creá una práctica nueva e intentá entrar como Ana con una contraseña incorrecta. No borres ni rompas la prueba que ya funciona.
+
+00:02:26.631 --> 00:02:38.331
+Comprobá tres cosas: aparece el error de credenciales, seguimos en el formulario y no se muestra la cuenta de Ana. Un rechazo esperado significa que este test debe pasar, no fallar.
+
+00:02:38.331 --> 00:02:49.792
+Ejecutá los dos casos, revisá el reporte y guardá un commit. Intentá resolver el reto antes de abrir la solución. Ya estás comprobando resultados, no solamente automatizando clics.

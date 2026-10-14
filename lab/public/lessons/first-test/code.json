@@ -1,0 +1,10 @@
+{
+  "completo": "const { test, expect } = require('@playwright/test');\n\ntest('la bienvenida permite iniciar una práctica', async ({ page }) => {\n  // @snippet navegar\n  await page.goto('/');\n  // @end\n\n  // @snippet titulo\n  const titulo = page.getByRole('heading', { level: 1 });\n  await expect(titulo).toHaveText('Aprendé a probar lo que importa.');\n  // @end\n\n  // @snippet boton\n  const crearPractica = page.getByRole('button', { name: 'Crear mi práctica' });\n  await expect(crearPractica).toBeVisible();\n  await expect(crearPractica).toBeEnabled();\n  // @end\n});",
+  "fallo-real": "expect(locator).toHaveText(expected) failed\n\nLocator:  getByRole('heading', { level: 1 })\nExpected: \"Bienvenido al banco\"\nReceived: \"Aprendé a probar lo que importa.\"\nTimeout:  1000ms\n\nCall log:\n  - Expect \"toHaveText\" getByRole('heading', { level: 1 }) with timeout 1000ms\n  - waiting for getByRole('heading', { level: 1 })\n    11 × locator resolved to <h1>…</h1>\n       - unexpected value \"Aprendé a probar lo que importa.\"",
+  "ejecucion-real": "Ejecución real · Chromium\n\nCaso: la bienvenida permite iniciar una práctica\nEstado: passed\nDuración: 398 ms\n\nEl test verifica el título y el botón.\nTodavía no comprueba qué pasa al crear una práctica.",
+  "navegar": "await page.goto('/');",
+  "titulo": "const titulo = page.getByRole('heading', { level: 1 });\nawait expect(titulo).toHaveText('Aprendé a probar lo que importa.');",
+  "boton": "const crearPractica = page.getByRole('button', { name: 'Crear mi práctica' });\nawait expect(crearPractica).toBeVisible();\nawait expect(crearPractica).toBeEnabled();",
+  "incorrecto": "await expect(titulo).toHaveText('Bienvenido al banco', { timeout: 1000 });",
+  "reto": "const perfil = page.getByLabel('Perfil del ejercicio');\nawait expect(perfil).toHaveValue('stable');\nawait expect(perfil.locator('option:checked'))\n.toHaveText('Estable · comportamiento esperado');"
+}

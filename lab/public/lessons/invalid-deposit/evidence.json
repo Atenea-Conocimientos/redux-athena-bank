@@ -1,0 +1,63 @@
+{
+  "capturedAt": "2026-10-08T14:04:29.982Z",
+  "browser": "chromium",
+  "playwright": "1.63.0",
+  "sourceSha256": "95413fdcde881eb9f1524ce9de9c8095a6609a5883e3c7ea9a96bed9cc83e863",
+  "challengeSha256": "570c278c07557df9523a7ca4c34998037f9ce399072ddf95d13143c6e0fb85be",
+  "diagnosticSourceSha256": "5ab49ea45481e26d2f17a538691068607a943d1c933988ce3cb6d3ee1b5248dc",
+  "status": "passed",
+  "durationMs": 690,
+  "challengeStatus": "passed",
+  "challengeDurationMs": 669,
+  "scope": "Fresh browser context and UI-created stable practice per principal test; isolated server on 4184 with SQLite :memory:. Diagnostic verifies native valueMissing/rangeUnderflow and no POST to deposit endpoint. No real money or personal credentials.",
+  "tests": [
+    {
+      "title": "depósito vacío: conserva ambos saldos",
+      "status": "passed",
+      "durationMs": 690
+    },
+    {
+      "title": "depósito cero: conserva ambos saldos",
+      "status": "passed",
+      "durationMs": 640
+    },
+    {
+      "title": "depósito negativo: conserva ambos saldos",
+      "status": "passed",
+      "durationMs": 704
+    },
+    {
+      "title": "depósito mínimo: acepta un centavo sin modificar ahorro",
+      "status": "passed",
+      "durationMs": 669
+    },
+    {
+      "title": "depósitos inválidos: evidencia de validación nativa sin solicitudes",
+      "status": "passed",
+      "durationMs": 2306
+    },
+    {
+      "title": "depósitos inválidos: evidencia del límite válido de un centavo",
+      "status": "passed",
+      "durationMs": 890
+    }
+  ],
+  "screenshots": [
+    {
+      "name": "before.png",
+      "sha256": "1b405793d1273c029f4e6ba8d2d2847dd28d07cedaf25ecc221cea64658e79d6"
+    },
+    {
+      "name": "empty.png",
+      "sha256": "f86f9a1cfcd514048de371184b9eb9a4288d8c211925328a6d946ad80076ae08"
+    },
+    {
+      "name": "error.png",
+      "sha256": "f987c9c1a18fb8c59ccfb9407eace3da3e3af1d62221cdd9d83877ee5a38d7c3"
+    },
+    {
+      "name": "challenge.png",
+      "sha256": "9f5efd168bc349143ed9dd3b86bb27bbaf16ecca58ab122f8202808bdbb99ae1"
+    }
+  ]
+}

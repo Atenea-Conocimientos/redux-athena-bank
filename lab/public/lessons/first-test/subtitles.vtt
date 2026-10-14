@@ -1,0 +1,46 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:09.940
+Hoy vamos a escribir tu primera prueba con Playwright. La pregunta es sencilla: ¿la bienvenida del banco muestra el título esperado y permite iniciar una práctica?
+
+00:00:09.940 --> 00:00:20.100
+Antes de automatizar, mirá esa pantalla manualmente. Buscá el encabezado y el botón Crear mi práctica. No vamos a pulsarlo ni a iniciar sesión todavía.
+
+00:00:20.100 --> 00:00:29.716
+Necesitás el banco funcionando y el proyecto inicial descargado desde el Paso cero. Abrí ese proyecto en tu editor: ahí vas a guardar tus propias pruebas.
+
+00:00:29.716 --> 00:00:39.656
+Creamos el archivo de la primera prueba dentro de tests. Importamos test y expect: uno define el caso y el otro nos permite comprobar resultados.
+
+00:00:39.656 --> 00:00:50.216
+El nombre del test describe el comportamiento. Playwright nos entrega una página nueva y aislada. La función es async porque las operaciones del navegador son asíncronas.
+
+00:00:50.216 --> 00:01:01.679
+Con page punto goto abrimos la raíz del banco. La dirección base ya está en la configuración. Await espera esta operación antes de seguir; no es una pausa de varios segundos.
+
+00:01:01.679 --> 00:01:12.899
+Buscamos el encabezado principal por su rol y nivel. Ese localizador no comprueba nada por sí solo. La aserción compara el texto con Aprendé a probar lo que importa.
+
+00:01:12.899 --> 00:01:23.619
+Después buscamos Crear mi práctica por su rol de botón y su nombre accesible. Comprobamos que esté visible y habilitado. No alcanza con que exista escondido en la página.
+
+00:01:23.619 --> 00:01:33.014
+Estas aserciones esperan y vuelven a comprobar hasta que se cumple la condición o vence el tiempo configurado. No necesitamos agregar una espera fija.
+
+00:01:33.014 --> 00:01:43.094
+Ahora provocamos un fallo: cambiamos el título esperado por Bienvenido al banco. Ejecutamos la prueba y leemos el diagnóstico real que aparece en pantalla.
+
+00:01:43.094 --> 00:01:55.534
+Expected muestra nuestra expectativa y Received muestra el texto encontrado. En este ejercicio cambiamos el test a propósito: restauramos el requisito correcto y volvemos a ejecutar.
+
+00:01:55.534 --> 00:02:04.507
+En un proyecto real, no cambies la expectativa solo para poner todo en verde. Revisá si está mal el test o si encontraste un defecto en la aplicación.
+
+00:02:04.507 --> 00:02:16.087
+La versión correcta pasa. Para verla en tu máquina usá el comando que está debajo del reproductor. El modo headed muestra el navegador; el reporte permite revisar el resultado.
+
+00:02:16.087 --> 00:02:26.927
+Tu reto es comprobar que el perfil seleccionado sea Estable, sin cambiarlo ni crear una práctica. Tenés una pista y la solución separadas, para intentar resolverlo primero.
+
+00:02:26.927 --> 00:02:36.626
+Guardá el avance en tu rama y hacé un commit. Ya tenés una prueba pequeña con una intención clara, un resultado esperado y evidencia para explicar qué pasó.

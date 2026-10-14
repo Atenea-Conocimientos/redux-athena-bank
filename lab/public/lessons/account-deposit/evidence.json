@@ -1,0 +1,53 @@
+{
+  "capturedAt": "2026-10-08T13:34:56.977Z",
+  "browser": "chromium",
+  "playwright": "1.63.0",
+  "sourceSha256": "6a9abaaf4fa10033392a10c2dd886b0d89983bb8fc36ef1643695c601fc966ae",
+  "challengeSha256": "0ff5415987b408caaaf22292420d6fe9f4710f4d28167f0da3ce2f61f3ce683c",
+  "diagnosticSourceSha256": "830f7376676c25fa21e01efeef9121b1bcc813270b8474fd797d5372c0d3667d",
+  "status": "passed",
+  "durationMs": 974,
+  "challengeStatus": "passed",
+  "challengeDurationMs": 1053,
+  "scope": "Fresh browser context and independent UI-created stable practice per test; isolated server on 4178 with SQLite :memory:; fictional deposits and public credentials only. Evidence also verifies a globally ambiguous Depositar click is rejected by strictness.",
+  "tests": [
+    {
+      "title": "depositar en la cuenta diaria no modifica el fondo de ahorro",
+      "status": "passed",
+      "durationMs": 974
+    },
+    {
+      "title": "depositar en el fondo de ahorro no modifica la cuenta diaria",
+      "status": "passed",
+      "durationMs": 1053
+    },
+    {
+      "title": "depósito: evidencia de dos botones y actualización de la cuenta elegida",
+      "status": "passed",
+      "durationMs": 1856
+    },
+    {
+      "title": "depósito: evidencia del reto de ahorro independiente",
+      "status": "passed",
+      "durationMs": 1333
+    }
+  ],
+  "screenshots": [
+    {
+      "name": "before.png",
+      "sha256": "1b405793d1273c029f4e6ba8d2d2847dd28d07cedaf25ecc221cea64658e79d6"
+    },
+    {
+      "name": "form.png",
+      "sha256": "27026d10d3414ca27b9008f558be972cc4b79f38c1b8d3594b0a86a1db4e954c"
+    },
+    {
+      "name": "after.png",
+      "sha256": "ca0a7e5e19235e48f36af1abd943fb885a72a3c1e26216404acc709f4f95e4ba"
+    },
+    {
+      "name": "challenge.png",
+      "sha256": "98b861b507bd306c8e57868fcd56305df9eed6d8ce611eefddd94af5a0a04569"
+    }
+  ]
+}

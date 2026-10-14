@@ -1,0 +1,46 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:09.540
+Ya comprobamos un depósito correcto. Ahora cambiamos la pregunta: ¿qué debería pasar si el importe está vacío, es cero o es negativo?
+
+00:00:09.540 --> 00:00:19.960
+La operación no debe completarse. La diaria conserva dos mil quinientos pesos ficticios, y el ahorro, seiscientos. Cada caso parte de una práctica nueva.
+
+00:00:19.960 --> 00:00:27.574
+Guardá tu avance y creá la rama de la clase cuatro. Probá esos valores manualmente y observá quién muestra la validación.
+
+00:00:27.574 --> 00:00:38.274
+Podríamos copiar el test tres veces. Pero solo cambia el dato: una cadena vacía, cero y menos uno. Los guardamos en una tabla con nombres descriptivos.
+
+00:00:38.274 --> 00:00:46.274
+Un bucle declara un test por caso. El reporte muestra tres resultados separados: un fallo no oculta los otros dos.
+
+00:00:46.274 --> 00:00:55.070
+Crear la práctica e iniciar sesión queda dentro de cada test. Parametrizar no significa encadenar tres operaciones sobre el mismo estado.
+
+00:00:55.070 --> 00:01:05.450
+Abrimos Depositar dentro de la cuenta diaria y comprobamos su destino. Este campo es obligatorio y tiene un mínimo de cero coma cero uno: un centavo.
+
+00:01:05.450 --> 00:01:16.890
+Completamos el importe y pulsamos Depositar fondos. La validación nativa bloquea el envío. No esperes un error de la aplicación: este recorrido no llega al servidor.
+
+00:01:16.890 --> 00:01:24.629
+Comprobamos un mensaje de validación no vacío. No copiamos su texto literal: cambia según el navegador y su idioma.
+
+00:01:24.629 --> 00:01:32.709
+El diálogo debe seguir abierto. Verificamos que el campo conserve el foco y los saldos sigan iguales dentro de cada cuenta.
+
+00:01:32.709 --> 00:01:41.769
+Los saldos solos no alcanzan: podrían estar iguales porque una operación sigue en curso. Primero comprobamos el rechazo nativo del importe.
+
+00:01:41.769 --> 00:01:53.327
+Ejecutá los tres casos y revisá el reporte. No usamos pausas fijas ni saltamos las restricciones. Esto prueba la interfaz; no reemplaza las pruebas de seguridad del servidor.
+
+00:01:53.327 --> 00:02:04.587
+Ahora probá el límite válido: un centavo, escrito como cero punto cero uno. Creá otro test con una práctica nueva, sin reutilizar los casos inválidos.
+
+00:02:04.587 --> 00:02:15.007
+Al depositarlo en la cuenta diaria, el diálogo debe cerrarse y el saldo pasar a dos mil quinientos pesos con un centavo. El ahorro conserva sus seiscientos pesos.
+
+00:02:15.007 --> 00:02:24.323
+Resolvelo antes de mirar la solución. Guardá el avance con un commit: ahora sabés separar datos de pasos y comprobar los dos lados de una regla.

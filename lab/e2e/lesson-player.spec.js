@@ -1,6 +1,8 @@
 const { test, expect } = require('@playwright/test');
 const AxeBuilder = require('@axe-core/playwright').default;
 const lesson = require('../public/lessons/pending-transfer/lesson.json');
+const fs = require('node:fs');
+const path = require('node:path');
 
 const url = '/lecciones/transferencia-pendiente/';
 
@@ -21,6 +23,7 @@ test('microlección: voz local, pausa, capítulos, código, velocidad y repetici
     'transferencia pendiente',
   );
   await expect(page.locator('#experience')).toBeVisible();
+  await expect(page.locator('#voice-label')).toHaveText(lesson.voiceDisclosure);
   expect(await page.locator('audio').evaluate((a) => a.paused)).toBe(true);
   await expect
     .poll(() => page.locator('audio').evaluate((a) => a.duration))
@@ -115,6 +118,31 @@ test('microlección: teclado, transcripción, quiz y accesibilidad responsive', 
   ).toBe(true);
   const accessibility = await new AxeBuilder({ page }).analyze();
   expect(accessibility.violations).toEqual([]);
+});
+
+test('microlección: repo inicial, solución separada y código real completo', async ({ page }) => {
+  await page.goto(url);
+  await page.getByText('Ver el test completo, paso a paso', { exact: true }).click();
+  const source = fs.readFileSync(path.join(__dirname, 'pending-lesson.spec.js'), 'utf8').replaceAll('\r\n', '\n');
+  await expect.poll(() => page.locator('#full-source').textContent()).toBe(source);
+  await page.getByText('Ya hice mi intento: comparar con la solución', { exact: true }).click();
+  const solved = page.waitForEvent('download');
+  await page.getByRole('link', { name: 'Descargar proyecto solución (.zip) ↓' }).click();
+  expect((await solved).suggestedFilename()).toBe('athena-automation-solucion.zip');
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+  expect((await new AxeBuilder({ page }).analyze()).violations).toEqual([]);
+  await page.getByRole('link', { name: 'Prepará tu repo y descargá el proyecto inicial ↗' }).click();
+  await expect(page).toHaveURL(/\/lecciones\/preparar-repositorio\/$/);
+  await expect(page.getByRole('heading', { level: 1 })).toContainText('Tu repo.');
+  await expect(page.getByText('1 prueba aprobada y 1 omitida.', { exact: false })).toBeVisible();
+  const starter = page.waitForEvent('download');
+  await page.getByRole('link', { name: 'Descargar proyecto inicial (.zip) ↓' }).click();
+  expect((await starter).suggestedFilename()).toBe('clase-01-inicio.zip');
+  await page.getByRole('link', { name: '04 · Clases', exact: true }).click();
+  await expect(page.getByRole('heading', { name: 'Intentá. Comprobá. Compará.' })).toBeInViewport();
+  await page.getByText('Si algo no arranca', { exact: true }).click();
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+  expect((await new AxeBuilder({ page }).analyze()).violations).toEqual([]);
 });
 
 test('microlección: sin audio conserva capítulos, subtítulos y lectura', async ({

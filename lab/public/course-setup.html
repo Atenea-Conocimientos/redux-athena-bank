@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="color-scheme" content="dark" />
+    <title>Prepará tu repositorio · Athena Bank Academy</title>
+    <link rel="stylesheet" href="/lesson.css" />
+  </head>
+  <body>
+    <a class="skip" href="#setup">Saltar a la guía</a>
+    <header class="topbar">
+      <a class="brand" href="/">a<span>athena<span class="brand-sub">BANK / ACADEMY</span></span></a>
+      <a class="back" href="/lecciones/primera-prueba/">Ir a la clase 01 ↗</a>
+    </header>
+    <main id="setup" class="setup-guide">
+      <div class="intro">
+        <p class="eyebrow">PASO 0 <span>/</span> TU ESPACIO DE PRÁCTICA</p>
+        <h1>Tu código.<br />Tu progreso. <em>Tu repo.</em></h1>
+        <p class="description">Prepará el entorno una vez. Después, cada clase suma una prueba
+          y un punto de control que podés volver a consultar.</p>
+        <div class="meta"><span>Node.js 24+</span><span>JavaScript + Playwright</span><span>Sin claves ni cuentas bancarias</span></div>
+      </div>
+      <div class="repo-map" aria-label="Dos proyectos separados">
+        <section><p class="eyebrow">APLICACIÓN</p><h2>Athena Bank Lab</h2>
+          <p>El banco ficticio que vas a probar. Lo iniciás en una terminal y lo dejás abierto en el puerto 4177.</p>
+          <code>redux-athena-bank/</code></section>
+        <section><p class="eyebrow">AUTOMATIZACIÓN</p><h2>Tu proyecto Playwright</h2>
+          <p>Los tests que vas escribiendo. Vive en otra carpeta, con su propio Git y su propia terminal.</p>
+          <code>athena-bank-automation/</code></section>
+      </div>
+      <nav class="setup-nav" aria-label="Pasos de preparación">
+        <a href="#app">01 · Banco</a><a href="#tests">02 · Tests</a>
+        <a href="#github">03 · GitHub</a><a href="#checkpoints">04 · Clases</a>
+      </nav>
+      <section id="app" class="setup-step">
+        <p class="eyebrow">01 / TERMINAL DE LA APLICACIÓN</p>
+        <h2>Dejá el banco funcionando.</h2>
+        <p>Necesitás <a href="https://nodejs.org/en/download">Node.js 24 o superior</a>,
+          <a href="https://git-scm.com/downloads">Git</a>, un editor y la <strong>versión Lab</strong>
+          que te entregue el instructor. No es la antigua aplicación Redux con MongoDB.
+          La distribución pública del Lab todavía está pendiente; no clones una versión distinta.</p>
+        <p>En la raíz de la copia local del Lab:</p>
+        <pre tabindex="0" aria-label="Iniciar la aplicación"><code>npm ci
+npm run dev</code></pre>
+        <p>Abrí <a href="/api/health" target="_blank" rel="noopener">la comprobación de salud</a>.
+          Debe indicar <code>status: "ok"</code>, <code>mode: "local-lab"</code> y
+          <code>realMoney: false</code>. No cierres esa terminal.</p>
+      </section>
+      <section id="tests" class="setup-step">
+        <p class="eyebrow">02 / TERMINAL DE TUS PRUEBAS</p>
+        <h2>Empezá con una base pequeña.</h2>
+        <p>Extraé el proyecto en una carpeta nueva llamada <code>athena-bank-automation</code>,
+          <strong>al lado del banco, no adentro</strong>. Abrila en tu editor.</p>
+        <a class="primary" href="/lessons/first-test/clase-01-inicio.zip" download>Descargar proyecto inicial (.zip) ↓</a>
+        <pre tabindex="0" aria-label="Instalar y comprobar Playwright"><code>node --version
+git --version
+npm ci
+npx playwright install chromium
+npm test</code></pre>
+        <p class="setup-result"><strong>Resultado esperado:</strong> 1 prueba aprobada y 1 omitida.
+          La primera comprueba el servidor. La omitida (<code>skipped</code>) es tu ejercicio,
+          todavía sin implementar: no cuenta como aprobado.</p>
+        <p>El ZIP incluye <code>package-lock.json</code>, configuración local y README con el paso a paso.
+          No necesitás secretos ni una suscripción para ejecutar las pruebas.</p>
+      </section>
+      <section id="github" class="setup-step">
+        <p class="eyebrow">03 / GUARDÁ TU PUNTO DE PARTIDA</p>
+        <h2>Creá tu propio repo en GitHub.</h2>
+        <p>En la carpeta de automatización, iniciá Git y guardá la base:</p>
+        <pre tabindex="0" aria-label="Crear repositorio local"><code>git init -b main
+git add .
+git commit -m "chore: preparar laboratorio de automatizacion"</code></pre>
+        <p>Si Git pide nombre y email, configurá tu identidad para este repositorio.
+          Luego, en <a href="https://github.com/new" target="_blank" rel="noopener">GitHub → New repository</a>,
+          creá <code>athena-bank-automation</code> en tu cuenta. Elegí público o privado y
+          <strong>dejalo vacío</strong>: sin README, licencia ni .gitignore adicionales.</p>
+        <p>Reemplazá <code>TU_USUARIO</code> por tu usuario real:</p>
+        <pre tabindex="0" aria-label="Conectar el repositorio a GitHub"><code>git remote add origin https://github.com/TU_USUARIO/athena-bank-automation.git
+git push -u origin main
+git switch -c clase/01-primera-prueba</code></pre>
+        <p>Autenticate con el flujo normal de GitHub. No escribas claves en el código,
+          commits o URL. El proyecto ya ignora dependencias, reportes, sesiones y archivos <code>.env</code>.</p>
+      </section>
+      <section id="checkpoints" class="setup-step">
+        <p class="eyebrow">04 / UNA CLASE, UN CAMBIO CONCRETO</p>
+        <h2>Intentá. Comprobá. Compará.</h2>
+        <ol class="class-flow">
+          <li><strong>Inicio.</strong> Leé el escenario y los resultados esperados; reproducilo manualmente.</li>
+          <li><strong>Tu rama.</strong> En <code>tests/first-test.spec.js</code>, quitá <code>.skip</code>
+            y escribí las aserciones. Corré <code>npm run test:headed</code> para ver el navegador.</li>
+          <li><strong>Tu evidencia.</strong> Guardá el intento y el resultado. Ante un fallo,
+            revisá el reporte y el trace antes de agregar una espera fija.</li>
+          <li><strong>Solución.</strong> Compará con el test de referencia de la lección.
+            Extraé el ZIP solución en otra carpeta para conservar tu trabajo.</li>
+        </ol>
+        <pre tabindex="0" aria-label="Guardar el trabajo de la clase"><code>git add tests/first-test.spec.js
+git commit -m "test: comprobar bienvenida del banco"
+git push -u origin clase/01-primera-prueba</code></pre>
+        <p>Podés abrir un PR de esa rama hacia <code>main</code> en tu propio repositorio.
+          No necesitás modificar ni enviar PR a la aplicación bancaria.</p>
+        <div class="setup-result"><strong>Cómo organizaremos el curso:</strong>
+          cada clase tendrá <code>clase-NN-inicio</code> y <code>clase-NN-solucion</code>
+          como referencias del instructor. Tu rama es tu espacio de trabajo; no cambies de rama
+          con cambios sin guardar. Las clases van sumando lo aprendido.</div>
+        <p><strong>Disponible ahora:</strong> los ZIP acumulativos de inicio y solución de las clases 01 a 06.
+          Cada clase ofrece sus descargas; no necesitás ramas remotas del instructor para seguir el piloto.</p>
+      </section>
+      <details class="transcript">
+        <summary>Si algo no arranca</summary>
+        <ul>
+          <li><code>ECONNREFUSED</code>: revisá la terminal del banco y el puerto 4177.</li>
+          <li>Chromium no instalado: corré <code>npx playwright install chromium</code> en el proyecto de tests.</li>
+          <li>Node incompatible: instalá Node.js 24+ y reabrí tu terminal.</li>
+          <li>Test omitido: es el ejercicio inicial; falta implementarlo y quitar <code>.skip</code>.</li>
+          <li>No te pedirán claves de QA o producción: las prácticas usan datos ficticios y la URL está restringida a localhost.</li>
+        </ul>
+        <p>Fuentes: <a href="https://playwright.dev/docs/intro">instalación de Playwright</a>,
+          <a href="https://playwright.dev/docs/test-assertions">aserciones</a> y
+          <a href="https://playwright.dev/docs/api-testing">preparación por API</a>.</p>
+      </details>
+      <section class="next-step"><div><p class="eyebrow">LISTO PARA LA CLASE 01</p>
+        <h2>Mi primera prueba con Playwright.</h2><p>Del escenario manual a tu primer test, su fallo y tu primer commit.</p></div>
+        <a class="primary" href="/lecciones/primera-prueba/">Empezar la clase 01 ↗</a>
+      </section>
+    </main>
+    <footer>Athena Bank Lab · Prácticas aisladas, datos ficticios, código ejecutable.</footer>
+  </body>
+</html>

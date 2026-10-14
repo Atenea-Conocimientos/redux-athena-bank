@@ -1,0 +1,62 @@
+{
+  "title": "Crear una práctica e iniciar sesión",
+  "codeFile": "create-practice.spec.js",
+  "language": "es",
+  "scenes": [
+    {
+      "id": "objetivo", "title": "Del botón al resultado", "image": "welcome.png",
+      "alt": "Bienvenida real del banco, con el selector de perfil y Crear mi práctica.",
+      "takeaway": "Objetivo: crear una práctica estable y comprobar que entramos como Ana.",
+      "code": "completo", "focus": [3],
+      "cues": [
+        "En la primera clase comprobamos la bienvenida. Ahora vamos a usar el formulario: crear una práctica estable, iniciar sesión como Ana y verificar que vemos su cuenta.",
+        "Antes de escribir, recorré esos pasos manualmente en una ventana privada. Son datos ficticios del laboratorio. No uses tu correo, tus contraseñas ni información bancaria real.",
+        "Seguimos en tu repositorio de pruebas. Guardá el avance anterior y creá la rama de la clase dos. El banco queda encendido en otra terminal; no estamos modificando Atenea."
+      ]
+    },
+    {
+      "id": "preparar", "title": "Elegí el perfil y creá la práctica", "image": "login.png",
+      "alt": "Pantalla real Tu sesión de práctica después de crear el perfil stable.",
+      "takeaway": "selectOption usa el valor stable; la aserción espera el formulario de acceso.",
+      "code": "preparar", "focus": [2, 3, 4, 5], "codeFromCue": 0,
+      "cues": [
+        "Abrimos la raíz del banco con goto. Después buscamos Perfil del ejercicio por su etiqueta. Select option elige stable, el valor técnico de la opción que muestra Estable.",
+        "Hacemos clic en Crear mi práctica usando el rol de botón y su nombre. A continuación comprobamos el encabezado Tu sesión de práctica: esa es la señal de que podemos continuar.",
+        "Cada prueba empieza en un contexto limpio y crea su propia práctica. No depende de que hayas iniciado sesión en Chrome ni de que otro test se haya ejecutado antes."
+      ]
+    },
+    {
+      "id": "acceder", "title": "Completá campos por su etiqueta", "image": "login.png",
+      "alt": "Formulario con Email ficticio y Contraseña de práctica, antes de iniciar sesión.",
+      "takeaway": "getByLabel identifica el campo; fill reemplaza su contenido; click envía el formulario.",
+      "code": "acceder", "focus": [1, 2, 3], "codeFromCue": 0,
+      "cues": [
+        "Para completar el acceso usamos get by label y fill. Las etiquetas son Email ficticio y Contraseña de práctica. Los valores de Ana están escritos en el ejemplo y son públicos.",
+        "Aunque el formulario ya trae datos, fill los reemplaza. Así el test declara qué usuario está probando, en lugar de depender silenciosamente de lo que viene cargado por defecto.",
+        "Después hacemos clic en Iniciar sesión. Playwright comprueba que el botón pueda recibir la acción. No agregamos pausas fijas, pero todavía falta demostrar el resultado del acceso."
+      ]
+    },
+    {
+      "id": "comprobar", "title": "Comprobá quién entró", "image": "dashboard.png",
+      "alt": "Resumen real de Ana con el saludo y su cuenta ana.diaria.",
+      "takeaway": "Un clic sin error no demuestra el login: comprobá el saludo y la cuenta esperados.",
+      "code": "comprobar", "focus": [1, 2, 3, 4], "codeFromCue": 1,
+      "cues": [
+        "El resultado esperado es el saludo Buen día, Ana, y su cuenta diaria visible. Una acción sin error no alcanza: podríamos haber enviado el formulario y recibido un rechazo.",
+        "Usamos expect para el encabezado y para la región que identifica esa cuenta. Las aserciones reintentan hasta cumplir la condición o agotar el tiempo, sin dormir cinco segundos porque sí.",
+        "En este banco cambia la pantalla, pero la dirección sigue siendo la raíz. No inventamos una ruta de dashboard. Comprobamos el resultado observable que realmente define nuestro caso."
+      ]
+    },
+    {
+      "id": "reto", "title": "Tu reto: que también sepa rechazar", "image": "denied.png",
+      "alt": "Formulario de acceso con el mensaje real Email o contraseña incorrectos.",
+      "takeaway": "Contraseña incorrecta: mostrar el error, conservar el formulario y no mostrar la cuenta.",
+      "code": "rechazo", "focus": [4, 5, 6, 7, 8, 9],
+      "cues": [
+        "Ahora te toca el caso negativo. En otro test, creá una práctica nueva e intentá entrar como Ana con una contraseña incorrecta. No borres ni rompas la prueba que ya funciona.",
+        "Comprobá tres cosas: aparece el error de credenciales, seguimos en el formulario y no se muestra la cuenta de Ana. Un rechazo esperado significa que este test debe pasar, no fallar.",
+        "Ejecutá los dos casos, revisá el reporte y guardá un commit. Intentá resolver el reto antes de abrir la solución. Ya estás comprobando resultados, no solamente automatizando clics."
+      ]
+    }
+  ]
+}

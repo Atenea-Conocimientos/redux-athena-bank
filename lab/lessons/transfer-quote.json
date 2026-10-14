@@ -1,0 +1,62 @@
+{
+  "title": "Cotizar antes de confirmar",
+  "codeFile": "transfer-quote.spec.js",
+  "language": "es",
+  "scenes": [
+    {
+      "id": "objetivo", "title": "Cotizar no es transferir", "image": "before.png",
+      "alt": "Ana tiene 2.500 pesos disponibles en diaria y 600 en ahorro, sin transferencias.",
+      "takeaway": "Consultar cuánto costaría enviar $100 no debe reservar ni mover dinero.",
+      "code": "preparar", "focus": [1, 2, 3],
+      "cues": [
+        "Antes de enviar dinero, revisamos cuánto va a costar. Cotizamos una transferencia, pero no la confirmamos. Es importante separar esas acciones.",
+        "Desde una práctica nueva, Ana tiene dos mil quinientos pesos en diaria y seiscientos en ahorro. Queremos consultar el envío de cien pesos a Bruno.",
+        "La comisión externa será un peso y el total a reservar, ciento uno. No debe cambiar ningún saldo. Primero comprobamos las condiciones iniciales."
+      ]
+    },
+    {
+      "id": "formulario", "title": "Definí origen, destino e importe", "image": "form.png",
+      "alt": "Nueva transferencia desde ana.diaria hacia bruno.diaria por 100 pesos ficticios.",
+      "takeaway": "Un test.step agrupa una intención visible en el reporte; no crea otro test.",
+      "code": "formulario", "focus": [1, 3, 4, 5, 6, 8], "codeFromCue": 1,
+      "cues": [
+        "Abrimos Transferir y localizamos el diálogo Nueva transferencia. Usamos sus etiquetas para elegir la cuenta de origen, completar el alias de Bruno y escribir cien.",
+        "Agrupamos el recorrido dentro de test punto step, con un nombre que explique la intención: solicitar la cotización. En el reporte veremos ese grupo.",
+        "Step no reemplaza las aserciones ni crea una sesión nueva. Seleccionar el origen acá sí forma parte del caso. Terminamos pulsando Revisar transferencia."
+      ]
+    },
+    {
+      "id": "desglose", "title": "Comprobá cada concepto", "image": "quote.png",
+      "alt": "Cotización hacia bruno.diaria: importe 100, comisión 1 y total a reservar 101 pesos.",
+      "takeaway": "Importe $100 + comisión $1 = total a reservar $101; todavía no está reservado.",
+      "code": "desglose", "focus": [2, 3, 4, 5, 6, 7], "codeFromCue": 1,
+      "cues": [
+        "Aparece Confirmar transferencia. Comprobamos destino y desglose: importe cien, comisión uno y total a reservar ciento uno. No alcanza con encontrar cien en cualquier lugar.",
+        "Verificamos los nombres de los conceptos y sus valores en el mismo orden. Las aserciones sobre listas también detectan conceptos faltantes, sobrantes o desordenados.",
+        "No completamos el código de confirmación. Total a reservar describe lo que ocurriría al confirmar, no una reserva ya realizada."
+      ]
+    },
+    {
+      "id": "cancelar", "title": "Cerrar la cotización no envía nada", "image": "after.png",
+      "alt": "Tras cerrar y recargar, diaria conserva 2.500, ahorro 600 y no hay transferencias.",
+      "takeaway": "Cerrar → recargar → comprobar los dos saldos y la ausencia de transferencias.",
+      "code": "cancelar", "focus": [2, 3, 4, 5, 6, 7], "codeFromCue": 1,
+      "cues": [
+        "Cerramos el diálogo y recargamos. Así volvemos a consultar el estado, en lugar de confiar en las tarjetas que quedaron detrás del formulario.",
+        "Comprobamos que diaria conserve dos mil quinientos, ahorro seiscientos y que todavía no haya transferencias. Cotizar no equivale a enviar ni a cancelar una operación pendiente.",
+        "Cada grupo tiene un nombre legible. Si falla, sabemos si el problema estuvo en preparar datos, revisar costos o conservar el estado."
+      ]
+    },
+    {
+      "id": "reto", "title": "¿Y entre cuentas de Ana?", "image": "challenge.png",
+      "alt": "Cotización a ana.ahorro por 100 pesos: comisión cero y total 100, sin confirmar.",
+      "takeaway": "Reto independiente: $100 a ana.ahorro, comisión $0, total $100 y saldos intactos.",
+      "code": "preparar", "focus": [1, 2, 3],
+      "cues": [
+        "Tu reto es otro test independiente: cotizá cien pesos desde diaria hacia el ahorro de Ana. Entre cuentas propias no hay comisión: el total debe ser cien.",
+        "Cerrá sin confirmar, recargá y comprobá saldos originales y ausencia de transferencias. No reutilices la práctica anterior ni abras todavía la solución.",
+        "Ejecutá ambos casos y revisá sus pasos en el reporte. En la próxima clase vamos a confirmar y estudiar qué significa que una transferencia quede pendiente."
+      ]
+    }
+  ]
+}

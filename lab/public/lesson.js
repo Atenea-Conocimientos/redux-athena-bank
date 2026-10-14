@@ -1,5 +1,8 @@
 const $ = (selector) => document.querySelector(selector);
-const base = '/lessons/pending-transfer/';
+const lessonId = ['first-test', 'create-practice', 'account-deposit',
+  'invalid-deposit', 'transfer-quote', 'confirm-transfer'].includes(document.body.dataset.lesson)
+  ? document.body.dataset.lesson : 'pending-transfer';
+const base = `/lessons/${lessonId}/`;
 const audio = $('#narration');
 const time = (seconds) =>
   `${Math.floor(seconds / 60)}:${String(Math.floor(seconds % 60)).padStart(2, '0')}`;
@@ -29,6 +32,12 @@ function setView(view) {
     view === 'code'
       ? 'playwright / fragmento verificado'
       : 'athena bank / práctica aislada';
+  if ($('#output-view')) {
+    const output = lesson?.scenes[active]?.output;
+    $('#output-view').hidden = view !== 'screen' || !output;
+    $('#screen-view').hidden = view !== 'screen' || !!output;
+    if (view === 'screen' && output) $('#frame-label').textContent = 'playwright / salida de una ejecución real';
+  }
 }
 
 function draw(position = audioFailed ? silentPosition : audio.currentTime) {
@@ -47,6 +56,7 @@ function draw(position = audioFailed ? silentPosition : audio.currentTime) {
     $('#scene-image').src = base + scene.image;
     $('#scene-image').alt = scene.alt;
     $('#takeaway').textContent = scene.takeaway;
+    if ($('#output-view')) $('#output-view').textContent = scene.output ? snippets[scene.output] : '';
     for (const [i, button] of [
       ...$('#chapters').querySelectorAll('button'),
     ].entries()) {
@@ -114,6 +124,15 @@ async function load() {
       responses.map((response) => response.json()),
     );
     $('#duration').textContent = `${time(lesson.duration)} min`;
+    $('#voice-label').textContent = lesson.voiceDisclosure || 'Voz sintética Kokoro / Dora';
+    $('#voice-production').textContent = lesson.voiceProduction || 'Voz generada localmente con Kokoro / Dora.';
+    // The same complete test is downloaded and displayed; never maintain a second example.
+    fetch(base + (lesson.codeFile || 'pending-lesson.spec.js')).then(async (response) => {
+      if (!response.ok) throw new Error('Missing reference');
+      $('#full-source').textContent = await response.text();
+    }).catch(() => {
+      $('#full-source').textContent = 'No se pudo cargar el código. Recargá o usá la descarga de la prueba completa.';
+    });
     $('#seek').max = String(lesson.duration);
     for (const [index, scene] of lesson.scenes.entries()) {
       const item = document.createElement('li');
@@ -217,13 +236,13 @@ async function load() {
       event.preventDefault();
       const answer = new FormData(event.target).get('answer');
       $('#feedback').textContent =
-        answer === 'receiver'
-          ? '¡Exacto! Comprobar al receptor detecta una acreditación anticipada, incluso si el estado y la reserva de Ana parecen correctos.'
-          : 'Todavía falta evidencia. Un mensaje o una espera no prueban el saldo del receptor. Buscá la opción que comprueba el dinero de Bruno.';
+        answer === ($('#quiz').dataset.correct || 'receiver')
+          ? ($('#quiz').dataset.success || '¡Exacto! Comprobar al receptor detecta una acreditación anticipada, incluso si el estado y la reserva de Ana parecen correctos.')
+          : ($('#quiz').dataset.retry || 'Todavía falta evidencia. Un mensaje o una espera no prueban el saldo del receptor. Buscá la opción que comprueba el dinero de Bruno.');
     });
   } catch {
     $('#load-status').textContent =
-      'No se pudo preparar la lección. Recargá la página o consultá lab/lessons/pending-transfer.json en el repositorio.';
+      `No se pudo preparar la lección. Recargá la página o consultá lab/lessons/${lessonId}.json en el repositorio.`;
   }
 }
 

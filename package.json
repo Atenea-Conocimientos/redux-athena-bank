@@ -15,10 +15,18 @@
     "test:report": "playwright show-report",
     "test:visual": "playwright test --config=playwright.visual.config.js",
     "test:advanced": "playwright test --grep @advanced",
-    "test:lesson": "playwright test pending-lesson.spec.js lesson-player.spec.js",
+    "test:lesson": "playwright test pending-lesson.spec.js lesson-player.spec.js first-test first-lesson-player.spec.js create-practice practice-lesson-player.spec.js account-deposit deposit-lesson-player.spec.js invalid-deposit transfer-quote confirm-transfer next-lessons-player.spec.js",
+    "test:classes456": "playwright test invalid-deposit transfer-quote confirm-transfer next-lessons-player.spec.js",
     "lesson:capture": "node scripts/capture-lesson.cjs",
+    "lesson:capture:first": "node scripts/capture-first-lesson.cjs",
+    "lesson:capture:practice": "node scripts/capture-practice-lesson.cjs",
+    "lesson:capture:deposit": "node scripts/capture-deposit-lesson.cjs",
+    "lesson:capture:invalid": "node scripts/capture-invalid-deposit-lesson.cjs",
+    "lesson:capture:quote": "node scripts/capture-quote-lesson.cjs",
+    "lesson:capture:confirm": "node scripts/capture-confirm-lesson.cjs",
+    "course:build": "node scripts/build-course-materials.cjs",
     "test:all-browsers": "playwright test --project=chromium --project=firefox --project=webkit",
-    "check": "node --check lab/bank.cjs && node --check lab/server.cjs && node --check lab/market.cjs && node --check lab/public/app.js && node --check lab/public/market.js && node --check lab/public/market-sw.js && node --check lab/lesson-assets.cjs && node --check lab/public/lesson.js && node --check scripts/capture-lesson.cjs"
+    "check": "node --check lab/bank.cjs && node --check lab/server.cjs && node --check lab/market.cjs && node --check lab/public/app.js && node --check lab/public/market.js && node --check lab/public/market-sw.js && node --check lab/lesson-assets.cjs && node --check lab/public/lesson.js && node --check scripts/capture-lesson.cjs && node --check scripts/capture-first-lesson.cjs && node --check scripts/capture-practice-lesson.cjs && node --check scripts/capture-deposit-lesson.cjs && node --check scripts/capture-invalid-deposit-lesson.cjs && node --check scripts/capture-quote-lesson.cjs && node --check scripts/capture-confirm-lesson.cjs && node --check scripts/build-course-materials.cjs"
   },
   "devDependencies": {
     "@axe-core/playwright": "4.13.0",

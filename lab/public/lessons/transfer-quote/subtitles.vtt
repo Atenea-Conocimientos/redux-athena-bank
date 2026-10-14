@@ -1,0 +1,46 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:09.920
+Antes de enviar dinero, revisamos cuánto va a costar. Cotizamos una transferencia, pero no la confirmamos. Es importante separar esas acciones.
+
+00:00:09.920 --> 00:00:19.300
+Desde una práctica nueva, Ana tiene dos mil quinientos pesos en diaria y seiscientos en ahorro. Queremos consultar el envío de cien pesos a Bruno.
+
+00:00:19.300 --> 00:00:29.481
+La comisión externa será un peso y el total a reservar, ciento uno. No debe cambiar ningún saldo. Primero comprobamos las condiciones iniciales.
+
+00:00:29.481 --> 00:00:40.101
+Abrimos Transferir y localizamos el diálogo Nueva transferencia. Usamos sus etiquetas para elegir la cuenta de origen, completar el alias de Bruno y escribir cien.
+
+00:00:40.101 --> 00:00:49.621
+Agrupamos el recorrido dentro de test punto step, con un nombre que explique la intención: solicitar la cotización. En el reporte veremos ese grupo.
+
+00:00:49.621 --> 00:01:00.164
+Step no reemplaza las aserciones ni crea una sesión nueva. Seleccionar el origen acá sí forma parte del caso. Terminamos pulsando Revisar transferencia.
+
+00:01:00.164 --> 00:01:12.684
+Aparece Confirmar transferencia. Comprobamos destino y desglose: importe cien, comisión uno y total a reservar ciento uno. No alcanza con encontrar cien en cualquier lugar.
+
+00:01:12.684 --> 00:01:22.964
+Verificamos los nombres de los conceptos y sus valores en el mismo orden. Las aserciones sobre listas también detectan conceptos faltantes, sobrantes o desordenados.
+
+00:01:22.964 --> 00:01:31.499
+No completamos el código de confirmación. Total a reservar describe lo que ocurriría al confirmar, no una reserva ya realizada.
+
+00:01:31.499 --> 00:01:39.959
+Cerramos el diálogo y recargamos. Así volvemos a consultar el estado, en lugar de confiar en las tarjetas que quedaron detrás del formulario.
+
+00:01:39.959 --> 00:01:51.219
+Comprobamos que diaria conserve dos mil quinientos, ahorro seiscientos y que todavía no haya transferencias. Cotizar no equivale a enviar ni a cancelar una operación pendiente.
+
+00:01:51.219 --> 00:01:59.779
+Cada grupo tiene un nombre legible. Si falla, sabemos si el problema estuvo en preparar datos, revisar costos o conservar el estado.
+
+00:01:59.779 --> 00:02:10.459
+Tu reto es otro test independiente: cotizá cien pesos desde diaria hacia el ahorro de Ana. Entre cuentas propias no hay comisión: el total debe ser cien.
+
+00:02:10.459 --> 00:02:20.299
+Cerrá sin confirmar, recargá y comprobá saldos originales y ausencia de transferencias. No reutilices la práctica anterior ni abras todavía la solución.
+
+00:02:20.299 --> 00:02:30.148
+Ejecutá ambos casos y revisá sus pasos en el reporte. En la próxima clase vamos a confirmar y estudiar qué significa que una transferencia quede pendiente.

@@ -60,3 +60,4 @@ fs.writeFileSync(
 console.log(
   'Lesson screenshots and code generated from the passing reference test.',
 );
+require('./build-course-materials.cjs').buildMaterials();

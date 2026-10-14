@@ -6,11 +6,34 @@
 
 No prometer dominio de “todo Playwright”, empleo ni seguridad bancaria profesional. El valor no es mostrar más métodos: es enseñar a elegir qué probar, construir el resultado esperado, preparar datos y explicar un fallo con evidencia.
 
-Formato propuesto (a validar con Juan): cuatro encuentros en vivo de unas dos horas + retos entre encuentros. Puede dividirse en ocho módulos asincrónicos. Antes de venderlo, hacer un piloto con Isaac y Luis y medir tiempos reales; todavía no es un curso grabado ni una oferta comercial publicada.
+Formato propuesto (a validar con Juan): cuatro encuentros en vivo de unas dos horas + retos entre encuentros. Puede dividirse en ocho módulos asincrónicos. Antes de venderlo, hacer un piloto con Luis y medir tiempos reales; las clases 01–06 ya tienen narración y ejercicios; el programa completo todavía no es una oferta comercial publicada.
 
 La ampliación avanzada agrega material para **dos encuentros adicionales opcionales**, no para comprimir todo en las ocho horas originales: (A) HTTP/HAR/WebSockets y (B) sesiones/caché offline/diagnóstico. Guía en [integraciones avanzadas](advanced-lab.md).
 
 ## Recorrido
+
+### Microlecciones locales disponibles
+
+El recorrido inicial implementado es [preparar el repositorio](http://127.0.0.1:4177/lecciones/preparar-repositorio/)
+→ [clase 01: primera prueba](http://127.0.0.1:4177/lecciones/primera-prueba/)
+→ [clase 02: crear práctica y acceder](http://127.0.0.1:4177/lecciones/crear-practica/)
+→ [clase 03: depósito en la cuenta correcta](http://127.0.0.1:4177/lecciones/deposito-en-cuenta/)
+→ [clase 04: depósitos inválidos](http://127.0.0.1:4177/lecciones/depositos-invalidos/)
+→ [clase 05: cotizar antes de confirmar](http://127.0.0.1:4177/lecciones/cotizar-transferencia/)
+→ [clase 06: confirmar no es completar](http://127.0.0.1:4177/lecciones/confirmar-transferencia/).
+Cada clase tiene voz autorizada de Juan, subtítulos, código probado, quiz, reto y ZIPs
+acumulativos. Son pilotos locales, no un curso completo publicado.
+
+El caso de [transferencia pendiente](http://127.0.0.1:4177/lecciones/transferencia-pendiente/)
+es un piloto avanzado separado con API y sesiones de emisor/receptor; no sustituye
+la clase 06 inicial, que comprueba solo la interfaz de Ana y explicita esa limitación.
+
+La primera etapa de **12 microclases** es una propuesta de alcance, no doce entregas
+ya disponibles. Las clases 01–06 están implementadas localmente. La clase 07 propuesta
+es cancelar una transferencia pendiente y comprobar la liberación de la reserva.
+El contenido y la división de las restantes se ajustarán con el piloto.
+
+### Programa completo propuesto
 
 | Módulo | Problema del alumno | Trabajo y entregable |
 | --- | --- | --- |

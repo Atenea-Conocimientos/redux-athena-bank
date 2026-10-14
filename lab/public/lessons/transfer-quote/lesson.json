@@ -1,0 +1,248 @@
+{
+  "title": "Cotizar antes de confirmar",
+  "duration": 150.148,
+  "voice": "Juan Torres",
+  "language": "es",
+  "voiceDisclosure": "Voz de Juan · clonada con IA y autorizada",
+  "voiceProduction": "Generada con ElevenLabs; audio alojado localmente, sin llamadas a TTS al reproducir.",
+  "provider": "ElevenLabs",
+  "model": "Eleven v4",
+  "alignment": "Local Whisper word timestamps matched to prose; numeric spellings excluded from timing score (not an audio content audit)",
+  "sourceSha256": "b369c79bf764531b035400df590cd78edf7fecd16bbfd4ccaf7802edd54013b4",
+  "audioSha256": "186d03a652a9701ee792855c3276948784d16afd1d70b0fc8046aee800958b2c",
+  "audio": "narration.mp3",
+  "scenes": [
+    {
+      "id": "objetivo",
+      "title": "Cotizar no es transferir",
+      "image": "before.png",
+      "alt": "Ana tiene 2.500 pesos disponibles en diaria y 600 en ahorro, sin transferencias.",
+      "takeaway": "Consultar cuánto costaría enviar $100 no debe reservar ni mover dinero.",
+      "code": "preparar",
+      "focus": [
+        1,
+        2,
+        3
+      ],
+      "start": 0,
+      "end": 29.481
+    },
+    {
+      "id": "formulario",
+      "title": "Definí origen, destino e importe",
+      "image": "form.png",
+      "alt": "Nueva transferencia desde ana.diaria hacia bruno.diaria por 100 pesos ficticios.",
+      "takeaway": "Un test.step agrupa una intención visible en el reporte; no crea otro test.",
+      "code": "formulario",
+      "focus": [
+        1,
+        3,
+        4,
+        5,
+        6,
+        8
+      ],
+      "codeFromCue": 1,
+      "start": 29.481,
+      "end": 60.164
+    },
+    {
+      "id": "desglose",
+      "title": "Comprobá cada concepto",
+      "image": "quote.png",
+      "alt": "Cotización hacia bruno.diaria: importe 100, comisión 1 y total a reservar 101 pesos.",
+      "takeaway": "Importe $100 + comisión $1 = total a reservar $101; todavía no está reservado.",
+      "code": "desglose",
+      "focus": [
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "codeFromCue": 1,
+      "start": 60.164,
+      "end": 91.499
+    },
+    {
+      "id": "cancelar",
+      "title": "Cerrar la cotización no envía nada",
+      "image": "after.png",
+      "alt": "Tras cerrar y recargar, diaria conserva 2.500, ahorro 600 y no hay transferencias.",
+      "takeaway": "Cerrar → recargar → comprobar los dos saldos y la ausencia de transferencias.",
+      "code": "cancelar",
+      "focus": [
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "codeFromCue": 1,
+      "start": 91.499,
+      "end": 119.779
+    },
+    {
+      "id": "reto",
+      "title": "¿Y entre cuentas de Ana?",
+      "image": "challenge.png",
+      "alt": "Cotización a ana.ahorro por 100 pesos: comisión cero y total 100, sin confirmar.",
+      "takeaway": "Reto independiente: $100 a ana.ahorro, comisión $0, total $100 y saldos intactos.",
+      "code": "preparar",
+      "focus": [
+        1,
+        2,
+        3
+      ],
+      "start": 119.779,
+      "end": 150.148
+    }
+  ],
+  "subtitles": [
+    {
+      "start": 0,
+      "end": 9.92,
+      "text": "Antes de enviar dinero, revisamos cuánto va a costar. Cotizamos una transferencia, pero no la confirmamos. Es importante separar esas acciones.",
+      "view": "screen"
+    },
+    {
+      "start": 9.92,
+      "end": 19.3,
+      "text": "Desde una práctica nueva, Ana tiene dos mil quinientos pesos en diaria y seiscientos en ahorro. Queremos consultar el envío de cien pesos a Bruno.",
+      "view": "screen"
+    },
+    {
+      "start": 19.3,
+      "end": 29.481,
+      "text": "La comisión externa será un peso y el total a reservar, ciento uno. No debe cambiar ningún saldo. Primero comprobamos las condiciones iniciales.",
+      "view": "screen"
+    },
+    {
+      "start": 29.481,
+      "end": 40.101,
+      "text": "Abrimos Transferir y localizamos el diálogo Nueva transferencia. Usamos sus etiquetas para elegir la cuenta de origen, completar el alias de Bruno y escribir cien.",
+      "view": "screen"
+    },
+    {
+      "start": 40.101,
+      "end": 49.621,
+      "text": "Agrupamos el recorrido dentro de test punto step, con un nombre que explique la intención: solicitar la cotización. En el reporte veremos ese grupo.",
+      "view": "code"
+    },
+    {
+      "start": 49.621,
+      "end": 60.164,
+      "text": "Step no reemplaza las aserciones ni crea una sesión nueva. Seleccionar el origen acá sí forma parte del caso. Terminamos pulsando Revisar transferencia.",
+      "view": "code"
+    },
+    {
+      "start": 60.164,
+      "end": 72.684,
+      "text": "Aparece Confirmar transferencia. Comprobamos destino y desglose: importe cien, comisión uno y total a reservar ciento uno. No alcanza con encontrar cien en cualquier lugar.",
+      "view": "screen"
+    },
+    {
+      "start": 72.684,
+      "end": 82.964,
+      "text": "Verificamos los nombres de los conceptos y sus valores en el mismo orden. Las aserciones sobre listas también detectan conceptos faltantes, sobrantes o desordenados.",
+      "view": "code"
+    },
+    {
+      "start": 82.964,
+      "end": 91.499,
+      "text": "No completamos el código de confirmación. Total a reservar describe lo que ocurriría al confirmar, no una reserva ya realizada.",
+      "view": "code"
+    },
+    {
+      "start": 91.499,
+      "end": 99.959,
+      "text": "Cerramos el diálogo y recargamos. Así volvemos a consultar el estado, en lugar de confiar en las tarjetas que quedaron detrás del formulario.",
+      "view": "screen"
+    },
+    {
+      "start": 99.959,
+      "end": 111.219,
+      "text": "Comprobamos que diaria conserve dos mil quinientos, ahorro seiscientos y que todavía no haya transferencias. Cotizar no equivale a enviar ni a cancelar una operación pendiente.",
+      "view": "code"
+    },
+    {
+      "start": 111.219,
+      "end": 119.779,
+      "text": "Cada grupo tiene un nombre legible. Si falla, sabemos si el problema estuvo en preparar datos, revisar costos o conservar el estado.",
+      "view": "code"
+    },
+    {
+      "start": 119.779,
+      "end": 130.459,
+      "text": "Tu reto es otro test independiente: cotizá cien pesos desde diaria hacia el ahorro de Ana. Entre cuentas propias no hay comisión: el total debe ser cien.",
+      "view": "screen"
+    },
+    {
+      "start": 130.459,
+      "end": 140.299,
+      "text": "Cerrá sin confirmar, recargá y comprobá saldos originales y ausencia de transferencias. No reutilices la práctica anterior ni abras todavía la solución.",
+      "view": "screen"
+    },
+    {
+      "start": 140.299,
+      "end": 150.148,
+      "text": "Ejecutá ambos casos y revisá sus pasos en el reporte. En la próxima clase vamos a confirmar y estudiar qué significa que una transferencia quede pendiente.",
+      "view": "screen"
+    }
+  ],
+  "sceneAudio": [
+    {
+      "scene": "objetivo",
+      "audioSha256": "8c63e78a3b8e27dce48c01e74c61df2290d953bda6054a3f98cc2f035bf58ea9",
+      "alignmentCoverage": 0.9828,
+      "cueStarts": [
+        0,
+        9.92,
+        19.3
+      ]
+    },
+    {
+      "scene": "formulario",
+      "audioSha256": "3e71a9858f2a0757d9b9567157c665b1b2ff78cb33cbbfb6044e46eda2450a5e",
+      "alignmentCoverage": 0.9701,
+      "cueStarts": [
+        0,
+        10.62,
+        20.14
+      ]
+    },
+    {
+      "scene": "desglose",
+      "audioSha256": "d9022d8e89fb6521c1800aeb7783c94cbf4ac1dfcc2c573e73fd6189655856de",
+      "alignmentCoverage": 0.9667,
+      "cueStarts": [
+        0,
+        12.52,
+        22.8
+      ]
+    },
+    {
+      "scene": "cancelar",
+      "audioSha256": "0981072e05190f4b7a1bc35a63be4d0fccb82798f662e8bc4604b03a86d558b9",
+      "alignmentCoverage": 0.9688,
+      "cueStarts": [
+        0,
+        8.459999999999999,
+        19.720000000000002
+      ]
+    },
+    {
+      "scene": "reto",
+      "audioSha256": "8bf236c8d644571ebc5c5f55238629465d1365f20d68a5c9eddcf2b5d5d0d762",
+      "alignmentCoverage": 1.0,
+      "cueStarts": [
+        0,
+        10.68,
+        20.520000000000003
+      ]
+    }
+  ],
+  "codeFile": "transfer-quote.spec.js"
+}

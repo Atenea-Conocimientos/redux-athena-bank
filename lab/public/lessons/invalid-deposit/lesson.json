@@ -1,0 +1,248 @@
+{
+  "title": "Depósitos inválidos: tres datos, una regla",
+  "duration": 144.323,
+  "voice": "Juan Torres",
+  "language": "es",
+  "voiceDisclosure": "Voz de Juan · clonada con IA y autorizada",
+  "voiceProduction": "Generada con ElevenLabs; audio alojado localmente, sin llamadas a TTS al reproducir.",
+  "provider": "ElevenLabs",
+  "model": "Eleven v4",
+  "alignment": "Local Whisper word timestamps matched to prose; numeric spellings excluded from timing score (not an audio content audit)",
+  "sourceSha256": "ea51d745f0a7105fcd2c14e5ebd4c36fc86e4dad11f8e9c8313c7b205cacd696",
+  "audioSha256": "85b6077da8c92ccb001de66cf51e197ea8a18d64d887329b6582b9c1d25ec47b",
+  "audio": "narration.mp3",
+  "scenes": [
+    {
+      "id": "objetivo",
+      "title": "También importa lo que no debe pasar",
+      "image": "before.png",
+      "alt": "Práctica nueva con cuenta diaria en 2.500 pesos y ahorro en 600 pesos.",
+      "takeaway": "Un depósito inválido no debe cambiar ninguno de los dos saldos.",
+      "code": "datos",
+      "focus": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "start": 0,
+      "end": 27.574
+    },
+    {
+      "id": "datos",
+      "title": "Una tabla, tres tests independientes",
+      "image": "before.png",
+      "alt": "Saldos iniciales que cada caso independiente debe recuperar creando una práctica nueva.",
+      "takeaway": "El bucle define un test por dato; no comparte una sesión entre los tres intentos.",
+      "code": "datos",
+      "focus": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        7,
+        8
+      ],
+      "codeFromCue": 1,
+      "start": 27.574,
+      "end": 55.07
+    },
+    {
+      "id": "validacion",
+      "title": "Es el navegador, no un error del servidor",
+      "image": "empty.png",
+      "alt": "Formulario de depósito vacío, rechazado por la validación nativa del campo obligatorio.",
+      "takeaway": "required bloquea vacío; min=0.01 bloquea cero y negativos. No dependas del idioma del mensaje nativo.",
+      "code": "validacion",
+      "focus": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "codeFromCue": 1,
+      "start": 55.07,
+      "end": 84.629
+    },
+    {
+      "id": "comprobar",
+      "title": "El rechazo también necesita evidencia",
+      "image": "error.png",
+      "alt": "Importe negativo en el diálogo de depósito, que sigue abierto tras el rechazo nativo.",
+      "takeaway": "Validación visible en el campo, formulario abierto y ambos saldos intactos; sin pausas fijas.",
+      "code": "comprobar",
+      "focus": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "codeFromCue": 1,
+      "start": 84.629,
+      "end": 113.327
+    },
+    {
+      "id": "reto",
+      "title": "Probá el otro lado del límite",
+      "image": "challenge.png",
+      "alt": "Depósito mínimo de un centavo completado: diaria 2.500,01 y ahorro sin cambios en 600.",
+      "takeaway": "Reto independiente: 0.01 debe aceptarse; diaria $2.500,01 y ahorro $600,00.",
+      "code": "datos",
+      "focus": [
+        3,
+        4
+      ],
+      "start": 113.327,
+      "end": 144.323
+    }
+  ],
+  "subtitles": [
+    {
+      "start": 0,
+      "end": 9.54,
+      "text": "Ya comprobamos un depósito correcto. Ahora cambiamos la pregunta: ¿qué debería pasar si el importe está vacío, es cero o es negativo?",
+      "view": "screen"
+    },
+    {
+      "start": 9.54,
+      "end": 19.96,
+      "text": "La operación no debe completarse. La diaria conserva dos mil quinientos pesos ficticios, y el ahorro, seiscientos. Cada caso parte de una práctica nueva.",
+      "view": "screen"
+    },
+    {
+      "start": 19.96,
+      "end": 27.574,
+      "text": "Guardá tu avance y creá la rama de la clase cuatro. Probá esos valores manualmente y observá quién muestra la validación.",
+      "view": "screen"
+    },
+    {
+      "start": 27.574,
+      "end": 38.274,
+      "text": "Podríamos copiar el test tres veces. Pero solo cambia el dato: una cadena vacía, cero y menos uno. Los guardamos en una tabla con nombres descriptivos.",
+      "view": "screen"
+    },
+    {
+      "start": 38.274,
+      "end": 46.274,
+      "text": "Un bucle declara un test por caso. El reporte muestra tres resultados separados: un fallo no oculta los otros dos.",
+      "view": "code"
+    },
+    {
+      "start": 46.274,
+      "end": 55.07,
+      "text": "Crear la práctica e iniciar sesión queda dentro de cada test. Parametrizar no significa encadenar tres operaciones sobre el mismo estado.",
+      "view": "code"
+    },
+    {
+      "start": 55.07,
+      "end": 65.45,
+      "text": "Abrimos Depositar dentro de la cuenta diaria y comprobamos su destino. Este campo es obligatorio y tiene un mínimo de cero coma cero uno: un centavo.",
+      "view": "screen"
+    },
+    {
+      "start": 65.45,
+      "end": 76.89,
+      "text": "Completamos el importe y pulsamos Depositar fondos. La validación nativa bloquea el envío. No esperes un error de la aplicación: este recorrido no llega al servidor.",
+      "view": "code"
+    },
+    {
+      "start": 76.89,
+      "end": 84.629,
+      "text": "Comprobamos un mensaje de validación no vacío. No copiamos su texto literal: cambia según el navegador y su idioma.",
+      "view": "code"
+    },
+    {
+      "start": 84.629,
+      "end": 92.709,
+      "text": "El diálogo debe seguir abierto. Verificamos que el campo conserve el foco y los saldos sigan iguales dentro de cada cuenta.",
+      "view": "screen"
+    },
+    {
+      "start": 92.709,
+      "end": 101.769,
+      "text": "Los saldos solos no alcanzan: podrían estar iguales porque una operación sigue en curso. Primero comprobamos el rechazo nativo del importe.",
+      "view": "code"
+    },
+    {
+      "start": 101.769,
+      "end": 113.327,
+      "text": "Ejecutá los tres casos y revisá el reporte. No usamos pausas fijas ni saltamos las restricciones. Esto prueba la interfaz; no reemplaza las pruebas de seguridad del servidor.",
+      "view": "code"
+    },
+    {
+      "start": 113.327,
+      "end": 124.587,
+      "text": "Ahora probá el límite válido: un centavo, escrito como cero punto cero uno. Creá otro test con una práctica nueva, sin reutilizar los casos inválidos.",
+      "view": "screen"
+    },
+    {
+      "start": 124.587,
+      "end": 135.007,
+      "text": "Al depositarlo en la cuenta diaria, el diálogo debe cerrarse y el saldo pasar a dos mil quinientos pesos con un centavo. El ahorro conserva sus seiscientos pesos.",
+      "view": "screen"
+    },
+    {
+      "start": 135.007,
+      "end": 144.323,
+      "text": "Resolvelo antes de mirar la solución. Guardá el avance con un commit: ahora sabés separar datos de pasos y comprobar los dos lados de una regla.",
+      "view": "screen"
+    }
+  ],
+  "sceneAudio": [
+    {
+      "scene": "objetivo",
+      "audioSha256": "e25f6cf8614d8c1082aaca0d07c9f343d9616ca2e80ff80abfd06c78d888e058",
+      "alignmentCoverage": 0.9661,
+      "cueStarts": [
+        0,
+        9.54,
+        19.96
+      ]
+    },
+    {
+      "scene": "datos",
+      "audioSha256": "ed7294a4ac726544b796f673a923008a3ee2350a4033c70a2f3ce47d0fec9cd4",
+      "alignmentCoverage": 0.9818,
+      "cueStarts": [
+        0,
+        10.7,
+        18.700000000000003
+      ]
+    },
+    {
+      "scene": "validacion",
+      "audioSha256": "d506d7ce6361c875f252630722dad227814f6795f731699952daaec39cafb38b",
+      "alignmentCoverage": 0.9516,
+      "cueStarts": [
+        0,
+        10.38,
+        21.82
+      ]
+    },
+    {
+      "scene": "comprobar",
+      "audioSha256": "a831702032afce981e0b867c3ca7e0330f0d76115c3e84a923608f39a7937283",
+      "alignmentCoverage": 1.0,
+      "cueStarts": [
+        0,
+        8.08,
+        17.14
+      ]
+    },
+    {
+      "scene": "reto",
+      "audioSha256": "5610a1a76523d8d7696bd43b68c2c56cc36c88494eb26f091a4fee9c24f9145c",
+      "alignmentCoverage": 0.8955,
+      "cueStarts": [
+        0,
+        11.26,
+        21.680000000000003
+      ]
+    }
+  ],
+  "codeFile": "invalid-deposit.spec.js"
+}

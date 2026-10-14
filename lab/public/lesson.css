@@ -15,6 +15,40 @@
   --mint: #83f2ca;
   --lime: #b9f76e;
 }
+.setup-link {
+  padding: 16px 20px;
+  background: #142921;
+  border: 1px solid #355c4b;
+  border-radius: 12px;
+  line-height: 1.8;
+  color: var(--muted);
+}
+.setup-link > span { color: var(--mint); font-weight: 750; margin-right: 12px; }
+.setup-guide { max-width: 1080px; }
+.repo-map { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+.repo-map section { padding: 25px; border: 1px solid var(--line); border-radius: 16px; background: #111b25; }
+.repo-map p, .setup-step p, .setup-step li { color: var(--muted); line-height: 1.8; }
+.repo-map h2 { font-size: 23px; }
+.repo-map code, .setup-step code { overflow-wrap: anywhere; }
+.setup-nav { display: flex; flex-wrap: wrap; gap: 20px; margin: 30px 0; padding: 20px 0; border-block: 1px solid var(--line); }
+.setup-step { padding: 30px 0; border-bottom: 1px solid var(--line); scroll-margin-top: 25px; }
+.setup-step h2 { font-size: clamp(24px, 3vw, 34px); letter-spacing: -0.7px; }
+.setup-step strong, .class-flow strong { color: #edf3f8; }
+.setup-step pre { min-height: 0; margin: 25px 0; padding: 22px; border: 1px solid var(--line); border-radius: 12px; background: #080d12; }
+.setup-result { padding: 18px 22px; border-left: 3px solid var(--mint); background: #14241e; line-height: 1.8; color: var(--muted); }
+.class-flow li { padding: 8px 0 8px 6px; }
+.full-source { padding: 10px 28px 22px; min-width: 0; }
+.full-source summary { color: var(--mint); cursor: pointer; font-weight: 650; }
+.full-source p { color: var(--muted); line-height: 1.7; }
+.full-source pre { margin-top: 18px; max-height: 520px; border: 1px solid var(--line); border-radius: 12px; white-space: pre; }
+.full-source code { display: block; }
+@media (max-width: 620px) {
+  .repo-map { grid-template-columns: 1fr; }
+  .repo-map section { padding: 20px; }
+  .setup-step pre { padding: 16px; font-size: 12px; }
+  .full-source { padding-inline: 18px; }
+  .setup-nav { gap: 15px; font-size: 13px; }
+}
 * {
   box-sizing: border-box;
 }
@@ -592,6 +626,45 @@ footer small {
 }
 .code-panel {
   padding-bottom: 8px;
+}
+body:is([data-lesson='first-test'], [data-lesson='create-practice'], [data-lesson='account-deposit'], [data-lesson='invalid-deposit'], [data-lesson='transfer-quote'], [data-lesson='confirm-transfer']) .screenshot-area,
+body:is([data-lesson='first-test'], [data-lesson='create-practice'], [data-lesson='account-deposit'], [data-lesson='invalid-deposit'], [data-lesson='transfer-quote'], [data-lesson='confirm-transfer']) #code-view,
+.run-output {
+  height: 440px;
+}
+body:is([data-lesson='first-test'], [data-lesson='create-practice'], [data-lesson='account-deposit'], [data-lesson='invalid-deposit'], [data-lesson='transfer-quote'], [data-lesson='confirm-transfer']) #code-view {
+  align-items: flex-start;
+  font-size: 12px;
+  line-height: 1.8;
+}
+body:is([data-lesson='first-test'], [data-lesson='create-practice'], [data-lesson='account-deposit'], [data-lesson='invalid-deposit'], [data-lesson='transfer-quote'], [data-lesson='confirm-transfer']) #code-view code {
+  min-width: 0;
+  width: 100%;
+}
+body:is([data-lesson='first-test'], [data-lesson='create-practice'], [data-lesson='account-deposit'], [data-lesson='invalid-deposit'], [data-lesson='transfer-quote'], [data-lesson='confirm-transfer']) #code-view .code-line {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+.run-output {
+  border: 0;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  color: #c7eddd;
+  font-family: 'Cascadia Code', Consolas, monospace;
+  font-size: 12px;
+  line-height: 1.8;
+}
+@media (max-width: 760px) {
+  body:is([data-lesson='first-test'], [data-lesson='create-practice'], [data-lesson='account-deposit'], [data-lesson='invalid-deposit'], [data-lesson='transfer-quote'], [data-lesson='confirm-transfer']) .screenshot-area,
+  body:is([data-lesson='first-test'], [data-lesson='create-practice'], [data-lesson='account-deposit'], [data-lesson='invalid-deposit'], [data-lesson='transfer-quote'], [data-lesson='confirm-transfer']) #code-view,
+  body:is([data-lesson='first-test'], [data-lesson='create-practice'], [data-lesson='account-deposit'], [data-lesson='invalid-deposit'], [data-lesson='transfer-quote'], [data-lesson='confirm-transfer']) .run-output { height: 560px; }
+  body:is([data-lesson='first-test'], [data-lesson='create-practice'], [data-lesson='account-deposit'], [data-lesson='invalid-deposit'], [data-lesson='transfer-quote'], [data-lesson='confirm-transfer']) #code-view { font-size: 11px; }
+  body:is([data-lesson='account-deposit'], [data-lesson='invalid-deposit'], [data-lesson='transfer-quote'], [data-lesson='confirm-transfer']) .screenshot-area { height: 260px; }
+  body:is([data-lesson='account-deposit'], [data-lesson='invalid-deposit'], [data-lesson='transfer-quote'], [data-lesson='confirm-transfer']) #code-view {
+    height: auto;
+    min-height: 280px;
+    max-height: 560px;
+  }
 }
 @media (min-width: 1500px) {
   .screenshot-area,

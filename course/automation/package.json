@@ -1,0 +1,14 @@
+{
+  "name": "athena-bank-automation",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Mi práctica de automatización de Athena Bank Lab",
+  "engines": { "node": ">=24.0.0" },
+  "scripts": {
+    "test": "playwright test",
+    "test:headed": "playwright test --headed",
+    "test:ui": "playwright test --ui",
+    "report": "playwright show-report"
+  },
+  "devDependencies": { "@playwright/test": "1.63.0" }
+}

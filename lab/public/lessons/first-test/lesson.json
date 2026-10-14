@@ -1,0 +1,238 @@
+{
+  "title": "Mi primera prueba con Playwright",
+  "duration": 156.626,
+  "voice": "Juan Torres",
+  "language": "es",
+  "voiceDisclosure": "Voz de Juan · clonada con IA y autorizada",
+  "voiceProduction": "Generada con ElevenLabs; audio alojado localmente, sin llamadas a TTS al reproducir.",
+  "provider": "ElevenLabs",
+  "model": "Eleven v4",
+  "alignment": "Local Whisper word timestamps matched to prose; numeric spellings excluded from timing score (not an audio content audit)",
+  "sourceSha256": "705617555ff1f3e777bff35d8745eefffa0ff03233390a073ba006df1d8987f8",
+  "audioSha256": "1e9f81e6e1154130ec7649af49290d097f2c5b6a82b97daf6937d5da71726b31",
+  "audio": "narration.mp3",
+  "scenes": [
+    {
+      "id": "objetivo",
+      "title": "Primero, una pregunta concreta",
+      "image": "welcome.png",
+      "alt": "Pantalla inicial real de Athena Bank Lab: título de bienvenida y botón Crear mi práctica.",
+      "takeaway": "¿La bienvenida muestra el título esperado y permite crear una práctica?",
+      "code": "completo",
+      "focus": [
+        3
+      ],
+      "start": 0,
+      "end": 29.716
+    },
+    {
+      "id": "estructura",
+      "title": "Abrí la página desde un test",
+      "image": "welcome.png",
+      "alt": "Bienvenida del banco que abre la prueba con page.goto.",
+      "takeaway": "test define el caso; page es la pestaña; await espera la operación.",
+      "code": "completo",
+      "focus": [
+        1,
+        3,
+        5
+      ],
+      "codeFromCue": 0,
+      "start": 29.716,
+      "end": 61.679
+    },
+    {
+      "id": "comprobar",
+      "title": "Localizar no es comprobar",
+      "image": "welcome.png",
+      "alt": "El encabezado principal y el botón de inicio son los elementos que comprueba el test.",
+      "takeaway": "getByRole encuentra; expect comprueba. El resultado esperado viene del requisito.",
+      "code": "completo",
+      "focus": [
+        9,
+        10,
+        14,
+        15,
+        16
+      ],
+      "codeFromCue": 0,
+      "start": 61.679,
+      "end": 93.014
+    },
+    {
+      "id": "fallo",
+      "title": "Un fallo también es evidencia",
+      "image": "welcome.png",
+      "output": "fallo-real",
+      "alt": "Diagnóstico real de Playwright al esperar un título incorrecto.",
+      "takeaway": "Expected = lo que pediste. Received = lo observado. Primero investigá la diferencia.",
+      "code": "incorrecto",
+      "focus": [
+        1
+      ],
+      "start": 93.014,
+      "end": 124.507
+    },
+    {
+      "id": "reto",
+      "title": "Tu primer cambio, tu primer commit",
+      "image": "welcome.png",
+      "output": "ejecucion-real",
+      "alt": "Resumen generado desde la ejecución real del test correcto en Chromium.",
+      "takeaway": "Reto: comprobá la opción estable sin crear una práctica. Guardá tu intento antes de ver la solución.",
+      "code": "completo",
+      "focus": [
+        14,
+        15,
+        16
+      ],
+      "start": 124.507,
+      "end": 156.626
+    }
+  ],
+  "subtitles": [
+    {
+      "start": 0,
+      "end": 9.94,
+      "text": "Hoy vamos a escribir tu primera prueba con Playwright. La pregunta es sencilla: ¿la bienvenida del banco muestra el título esperado y permite iniciar una práctica?",
+      "view": "screen"
+    },
+    {
+      "start": 9.94,
+      "end": 20.1,
+      "text": "Antes de automatizar, mirá esa pantalla manualmente. Buscá el encabezado y el botón Crear mi práctica. No vamos a pulsarlo ni a iniciar sesión todavía.",
+      "view": "screen"
+    },
+    {
+      "start": 20.1,
+      "end": 29.716,
+      "text": "Necesitás el banco funcionando y el proyecto inicial descargado desde el Paso cero. Abrí ese proyecto en tu editor: ahí vas a guardar tus propias pruebas.",
+      "view": "screen"
+    },
+    {
+      "start": 29.716,
+      "end": 39.656,
+      "text": "Creamos el archivo de la primera prueba dentro de tests. Importamos test y expect: uno define el caso y el otro nos permite comprobar resultados.",
+      "view": "code"
+    },
+    {
+      "start": 39.656,
+      "end": 50.216,
+      "text": "El nombre del test describe el comportamiento. Playwright nos entrega una página nueva y aislada. La función es async porque las operaciones del navegador son asíncronas.",
+      "view": "code"
+    },
+    {
+      "start": 50.216,
+      "end": 61.679,
+      "text": "Con page punto goto abrimos la raíz del banco. La dirección base ya está en la configuración. Await espera esta operación antes de seguir; no es una pausa de varios segundos.",
+      "view": "code"
+    },
+    {
+      "start": 61.679,
+      "end": 72.899,
+      "text": "Buscamos el encabezado principal por su rol y nivel. Ese localizador no comprueba nada por sí solo. La aserción compara el texto con Aprendé a probar lo que importa.",
+      "view": "code"
+    },
+    {
+      "start": 72.899,
+      "end": 83.619,
+      "text": "Después buscamos Crear mi práctica por su rol de botón y su nombre accesible. Comprobamos que esté visible y habilitado. No alcanza con que exista escondido en la página.",
+      "view": "code"
+    },
+    {
+      "start": 83.619,
+      "end": 93.014,
+      "text": "Estas aserciones esperan y vuelven a comprobar hasta que se cumple la condición o vence el tiempo configurado. No necesitamos agregar una espera fija.",
+      "view": "code"
+    },
+    {
+      "start": 93.014,
+      "end": 103.094,
+      "text": "Ahora provocamos un fallo: cambiamos el título esperado por Bienvenido al banco. Ejecutamos la prueba y leemos el diagnóstico real que aparece en pantalla.",
+      "view": "screen"
+    },
+    {
+      "start": 103.094,
+      "end": 115.534,
+      "text": "Expected muestra nuestra expectativa y Received muestra el texto encontrado. En este ejercicio cambiamos el test a propósito: restauramos el requisito correcto y volvemos a ejecutar.",
+      "view": "screen"
+    },
+    {
+      "start": 115.534,
+      "end": 124.507,
+      "text": "En un proyecto real, no cambies la expectativa solo para poner todo en verde. Revisá si está mal el test o si encontraste un defecto en la aplicación.",
+      "view": "screen"
+    },
+    {
+      "start": 124.507,
+      "end": 136.087,
+      "text": "La versión correcta pasa. Para verla en tu máquina usá el comando que está debajo del reproductor. El modo headed muestra el navegador; el reporte permite revisar el resultado.",
+      "view": "screen"
+    },
+    {
+      "start": 136.087,
+      "end": 146.927,
+      "text": "Tu reto es comprobar que el perfil seleccionado sea Estable, sin cambiarlo ni crear una práctica. Tenés una pista y la solución separadas, para intentar resolverlo primero.",
+      "view": "screen"
+    },
+    {
+      "start": 146.927,
+      "end": 156.626,
+      "text": "Guardá el avance en tu rama y hacé un commit. Ya tenés una prueba pequeña con una intención clara, un resultado esperado y evidencia para explicar qué pasó.",
+      "view": "screen"
+    }
+  ],
+  "sceneAudio": [
+    {
+      "scene": "objetivo",
+      "audioSha256": "40a920597cfe0c055b5f563559838176e35380959e03548fab2f74c30ff3587c",
+      "alignmentCoverage": 0.9589,
+      "cueStarts": [
+        0,
+        9.94,
+        20.1
+      ]
+    },
+    {
+      "scene": "estructura",
+      "audioSha256": "aa3269f851d6f5507ff192564db07d6ef89875a3b3618279bf24b89ddb495b2c",
+      "alignmentCoverage": 0.9605,
+      "cueStarts": [
+        0,
+        9.94,
+        20.5
+      ]
+    },
+    {
+      "scene": "comprobar",
+      "audioSha256": "684b07f83775a812976e0d3d475db10a562456508d48e6d7f18c8b4162ba64d4",
+      "alignmentCoverage": 0.9324,
+      "cueStarts": [
+        0,
+        11.22,
+        21.94
+      ]
+    },
+    {
+      "scene": "fallo",
+      "audioSha256": "a34868eb735443025acb3546f047285401c5c29224b06f57ba204699bb34f148",
+      "alignmentCoverage": 0.9577,
+      "cueStarts": [
+        0,
+        10.08,
+        22.520000000000003
+      ]
+    },
+    {
+      "scene": "reto",
+      "audioSha256": "b9400bd8d0993a6472b5ebe72bd1e9d5d34cb59dd42a0b14015b2d64403dcbf1",
+      "alignmentCoverage": 0.9733,
+      "cueStarts": [
+        0,
+        11.58,
+        22.42
+      ]
+    }
+  ],
+  "codeFile": "first-test.spec.js"
+}

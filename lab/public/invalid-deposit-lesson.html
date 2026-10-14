@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="color-scheme" content="dark" />
+    <title>Depósitos inválidos · Athena Bank Academy</title>
+    <link rel="stylesheet" href="/lesson.css" />
+    <script type="module" src="/lesson.js"></script>
+  </head>
+  <body data-lesson="invalid-deposit">
+    <a class="skip" href="#lesson">Saltar a la lección</a>
+    <header class="topbar">
+      <a class="brand" href="/">a<span>athena<span class="brand-sub">BANK / ACADEMY</span></span></a>
+      <a class="back" href="/lecciones/deposito-en-cuenta/">Clase 03 · La cuenta correcta ↗</a>
+    </header>
+    <main id="lesson">
+      <div class="intro">
+        <p class="eyebrow">CLASE 04 <span>/</span> IMPORTES INVÁLIDOS</p>
+        <h1>Tres datos.<br /><em>Una misma regla.</em></h1>
+        <p class="description">Parametrizá los depósitos inválidos y comprobá que un rechazo no modifica los saldos.</p>
+        <div class="meta"><span id="duration">2–3 min</span><span id="voice-label">Voz de Juan · clonada con IA</span><span>Nivel inicial</span></div>
+      </div>
+      <p class="setup-link"><span>ANTES DE EMPEZAR</span> Banco encendido + clase 03 terminada.
+        <a href="/lecciones/deposito-en-cuenta/">Volver a la clase 03 ↗</a></p>
+      <p id="load-status" role="status">Preparando la lección…</p>
+      <noscript><p>Activá JavaScript para el reproductor o <a href="/lessons/invalid-deposit/subtitles.vtt">leé la transcripción</a>.</p></noscript>
+      <div id="experience" hidden>
+        <div class="lesson-layout">
+          <section class="player" aria-label="Reproductor de microlección">
+            <div class="scene-header"><span id="scene-counter" class="eyebrow">01 / 05</span>
+              <span class="recorded"><span aria-hidden="true">●</span> Código y resultados de una ejecución real</span></div>
+            <div id="stage" class="stage">
+              <h2 id="scene-title"></h2>
+              <div class="view-controls" role="group" aria-label="Vista de la escena">
+                <button id="view-screen" type="button" aria-pressed="true">Pantalla</button>
+                <button id="view-code" type="button" aria-pressed="false">Código Playwright</button>
+                <span>Sincronizado con la voz</span>
+              </div>
+              <div class="screen-frame">
+                <div class="window-bar"><span aria-hidden="true">● ● ●</span><span id="frame-label">athena bank / importes</span></div>
+                <div id="screen-view" class="screenshot-area"><img id="scene-image" alt="" /></div>
+                <pre id="output-view" class="run-output" tabindex="0" aria-label="Salida real de Playwright" hidden></pre>
+                <pre id="code-view" tabindex="0" aria-label="Código Playwright del capítulo" hidden><code id="code"></code></pre>
+              </div>
+              <p id="takeaway" class="takeaway"></p>
+            </div>
+            <div id="caption" class="caption" aria-label="Subtítulo actual"></div>
+            <div class="transport">
+              <label class="sr-only" for="seek">Posición de la lección</label>
+              <input id="seek" type="range" min="0" max="180" step="0.1" value="0" />
+              <div class="controls">
+                <button id="play" class="play" type="button">▶ Reproducir</button>
+                <button id="back-ten" type="button" aria-label="Retroceder 10 segundos">↶ 10 s</button>
+                <output id="time" aria-label="Tiempo de reproducción">0:00 / 0:00</output>
+                <label class="speed"><span class="sr-only">Velocidad de reproducción</span><select id="speed">
+                  <option value="0.75">0,75×</option><option value="1" selected>1×</option><option value="1.25">1,25×</option><option value="1.5">1,5×</option>
+                </select></label>
+                <button id="mute" type="button" aria-label="Silenciar narración" aria-pressed="false">Voz</button>
+                <button id="captions" type="button" aria-label="Mostrar subtítulos" aria-pressed="true">CC</button>
+              </div>
+            </div>
+            <audio id="narration" preload="metadata"></audio>
+          </section>
+          <aside class="chapters-panel" aria-labelledby="chapters-title">
+            <p class="eyebrow">TU RECORRIDO</p><h2 id="chapters-title">Cambiá el dato.<br />Conservá la regla.</h2>
+            <ol id="chapters"></ol><p class="aside-note">Cinco capítulos para definir casos independientes y comprobar el rechazo.
+              Pausá para escribir. La lección solo reproduce recursos: no modifica tu práctica.</p>
+          </aside>
+        </div>
+        <section class="setup-step" aria-labelledby="manual-title">
+          <p class="eyebrow">01 / ANTES DEL CÓDIGO</p><h2 id="manual-title">Un importe inválido no debe mover dinero.</h2>
+          <p>En una práctica nueva estable, iniciá sesión como <code>ana@demo.test</code> con
+            <code>Practica2026!</code>. Son credenciales ficticias públicas. La diaria empieza en
+            <strong>$ 2.500,00</strong> y ahorro en <strong>$ 600,00</strong>.</p>
+          <p>Abrí <strong>Depositar</strong> dentro de <strong>ana.diaria</strong>.
+            Intentá enviar el importe vacío, <code>0</code> y <code>-1</code>.
+            En cada caso el campo es inválido, el diálogo queda abierto y ambos saldos siguen iguales.</p>
+          <p>La aplicación usa <code>required</code>, <code>min="0.01"</code> y <code>step="0.01"</code>.
+            El navegador bloquea estos envíos antes de llegar al servidor. Su mensaje puede cambiar de idioma:
+            no esperes un error propio de la aplicación ni busques un texto literal en el DOM.</p>
+          <a class="primary" href="/lessons/invalid-deposit/clase-04-inicio.zip" download>Descargar inicio de clase 04 ↓</a>
+          <p class="code-note">Incluye las clases anteriores resueltas y tres ejercicios parametrizados omitidos:
+            <strong>7 passed</strong> y <strong>3 skipped</strong>. Un test omitido todavía no demuestra nada.</p>
+        </section>
+        <section class="setup-step" aria-labelledby="branch-title">
+          <p class="eyebrow">TU REPO DE TESTS</p><h2 id="branch-title">Continuá desde la clase 03.</h2>
+          <p>En tu repositorio de automatización, revisá <code>git status</code> y guardá los cambios anteriores.
+            Creá esta rama desde la rama donde terminaste la clase 03:</p>
+          <pre tabindex="0" aria-label="Crear la rama de la clase 04"><code>git switch -c clase/04-depositos-invalidos</code></pre>
+          <p>Copiá únicamente <code>tests/invalid-deposit.spec.js</code> del inicio, sin sobrescribir tus pruebas.
+            Si preferís usar el ZIP completo, extraelo en otra carpeta y ejecutá <code>npm ci</code> y
+            <code>npx playwright install chromium</code>. El banco sigue corriendo en otra terminal en el puerto 4177.</p>
+        </section>
+        <section class="code-panel" aria-labelledby="code-title">
+          <div class="code-heading"><div><p class="eyebrow">02 / UNA TABLA DE CASOS</p><h2 id="code-title">Tres resultados en el reporte.</h2></div>
+            <a href="/lessons/invalid-deposit/invalid-deposit.spec.js" download>Descargar prueba completa ↓</a></div>
+          <p>Quitá <code>.skip</code> e implementá la preparación y las comprobaciones dentro de cada test.
+            El bucle declara pruebas independientes; no ejecuta tres intentos seguidos sobre una sesión compartida.</p>
+          <pre tabindex="0" aria-label="Datos del depósito parametrizado"><code>const casos = [
+  { nombre: 'vacío', importe: '' },
+  { nombre: 'cero', importe: '0' },
+  { nombre: 'negativo', importe: '-1' },
+];</code></pre>
+          <p>El nombre <code>depósito ${caso.nombre}: conserva ambos saldos</code> permite identificar qué dato falló.
+            Cada callback recibe su propia <code>page</code>, crea una práctica estable y accede como Ana.</p>
+          <p>Localizá ambas cuentas, verificá sus saldos iniciales y abrí el depósito de la diaria.
+            Comprobá <code>ana-main</code> en el selector antes de completar <code>caso.importe</code>.</p>
+          <details class="full-source"><summary>Ver el test completo, paso a paso</summary>
+            <p>Tabla → test por dato → práctica nueva → saldos iniciales → depósito → validación nativa → saldos intactos.</p>
+            <pre tabindex="0" aria-label="Prueba Playwright completa"><code id="full-source">Cargando código…</code></pre>
+          </details>
+        </section>
+        <section class="setup-step" aria-labelledby="run-title">
+          <p class="eyebrow">03 / COMPROBÁ EL RECHAZO</p><h2 id="run-title">No inventes un mensaje de error.</h2>
+          <p><code>validationMessage</code> es una propiedad del campo HTML, no un atributo ni un texto de la página.
+            Si está vacío, el control no informa una restricción incumplida. Comprobamos que no esté vacío, sin depender de su redacción:</p>
+          <pre tabindex="0" aria-label="Comprobar la validación nativa"><code>await expect(importe)
+  .not.toHaveJSProperty('validationMessage', '');
+await expect(dialogo).toBeVisible();
+await expect(importe).toBeFocused();</code></pre>
+          <p>Después verificá <strong>$ 2.500,00</strong> dentro de diaria y <strong>$ 600,00</strong> dentro de ahorro.
+            Comprobar solo los saldos podría aprobar mientras una operación todavía está en curso.
+            Primero necesitás evidencia del rechazo. No agregues <code>waitForTimeout()</code>.</p>
+          <p>Esta prueba cubre la validación de la interfaz. No demuestra que el servidor rechace solicitudes manipuladas:
+            esa responsabilidad necesita sus propios tests de API. No quites <code>required</code> ni <code>min</code>
+            desde el test para hacer pasar este recorrido.</p>
+          <pre tabindex="0" aria-label="Ejecutar los depósitos inválidos"><code>npx playwright test invalid-deposit.spec.js --headed
+npm test
+npm run report</code></pre>
+          <p>Este archivo debe mostrar <strong>3 passed</strong>; la suite acumulada, <strong>10 passed</strong>.
+            Al sumar el reto, serán <strong>11 passed</strong>.</p>
+        </section>
+        <section class="challenge" aria-labelledby="challenge-title">
+          <div><p class="eyebrow">ANTES DEL RETO</p><h2 id="challenge-title">¿Dónde se rechaza el importe vacío?</h2>
+            <p>El campo es obligatorio y el navegador conserva el diálogo abierto al intentar enviar.</p></div>
+          <form id="quiz" data-correct="native"
+            data-success="¡Exacto! La validación nativa bloquea el envío. Comprobá el campo y los saldos sin inventar un error del servidor."
+            data-retry="Revisá el formulario: required y min son restricciones nativas. En estos casos el navegador bloquea el envío antes de llamar al servidor.">
+            <fieldset><legend class="sr-only">Elegí dónde se valida el importe</legend>
+              <label><input type="radio" name="answer" value="server" required /><span>En el servidor; siempre debo esperar un aviso de error de la aplicación.</span></label>
+              <label><input type="radio" name="answer" value="native" /><span>En el navegador: verifico la validación nativa, el diálogo y los saldos intactos.</span></label>
+              <label><input type="radio" name="answer" value="sleep" /><span>No importa: espero dos segundos y solo compruebo el saldo.</span></label>
+            </fieldset><button class="primary" type="submit">Comprobar respuesta ↗</button><p id="feedback" role="status"></p>
+          </form>
+        </section>
+        <section class="setup-step" aria-labelledby="exercise-title">
+          <p class="eyebrow">04 / TU PRÓXIMO CASO</p><h2 id="exercise-title">El mínimo válido: un centavo.</h2>
+          <p>Creá <code>tests/invalid-deposit-challenge.spec.js</code> con un caso independiente.
+            Desde una práctica nueva, depositá <code>0.01</code> en diaria: el diálogo se cierra,
+            diaria pasa a <strong>$ 2.500,01</strong> y ahorro conserva <strong>$ 600,00</strong>.</p>
+          <details class="transcript"><summary>Necesito una pista</summary>
+            <p>El campo recibe pesos con punto decimal: <code>fill('0.01')</code>. El resultado visible usa formato
+              argentino. Comprobá primero el cierre del diálogo y el nuevo saldo; después, el ahorro intacto.</p>
+          </details>
+          <details class="transcript"><summary>Ya hice mi intento: ver solución</summary>
+            <p>Extraela en otra carpeta. Incluye siete tests anteriores, tres inválidos y el reto: <strong>11 passed</strong>.</p>
+            <a href="/lessons/invalid-deposit/clase-04-solucion.zip" download>Descargar solución de clase 04 ↓</a>
+            <p><a href="/lessons/invalid-deposit/invalid-deposit-challenge.spec.js" download>Descargar solo la solución del reto ↓</a></p>
+          </details>
+          <pre tabindex="0" aria-label="Guardar el avance de la clase 04"><code>npm test
+git status
+git add tests
+git commit -m "test: validar importes de depósitos"</code></pre>
+        </section>
+        <details class="transcript"><summary>Leer la transcripción completa</summary><div id="transcript"></div>
+          <a href="/lessons/invalid-deposit/subtitles.vtt" download>Descargar subtítulos (.vtt) ↓</a></details>
+        <section class="next-step"><div><p class="eyebrow">SEGUÍ CON LA CLASE 05</p>
+          <h2>Cotizar antes de confirmar.</h2>
+          <p>Prepará una transferencia y comprobá su cotización sin confundir una revisión con dinero ya enviado.</p></div>
+          <a class="primary" href="/lecciones/cotizar-transferencia/">Ir a la clase 05 ↗</a></section>
+        <p class="aside-note">Fuentes oficiales: <a href="https://playwright.dev/docs/test-parameterize">parametrización de pruebas</a>,
+          <a href="https://playwright.dev/docs/api/class-locatorassertions#locator-assertions-to-have-js-property">propiedades JavaScript del elemento</a> y
+          <a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/validationMessage">validación nativa del campo HTML</a>.</p>
+      </div>
+    </main>
+    <footer>Athena Bank Academy · Aprendé a comprobar.<br /><small id="voice-production">Voz clonada con IA y autorizada por Juan.</small></footer>
+  </body>
+</html>

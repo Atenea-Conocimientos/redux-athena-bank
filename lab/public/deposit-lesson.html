@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="color-scheme" content="dark" />
+    <title>Depositar en la cuenta correcta · Athena Bank Academy</title>
+    <link rel="stylesheet" href="/lesson.css" />
+    <script type="module" src="/lesson.js"></script>
+  </head>
+  <body data-lesson="account-deposit">
+    <a class="skip" href="#lesson">Saltar a la lección</a>
+    <header class="topbar">
+      <a class="brand" href="/">a<span>athena<span class="brand-sub">BANK / ACADEMY</span></span></a>
+      <a class="back" href="/lecciones/crear-practica/">Clase 02 · Crear una práctica ↗</a>
+    </header>
+    <main id="lesson">
+      <div class="intro">
+        <p class="eyebrow">CLASE 03 <span>/</span> LA CUENTA CORRECTA</p>
+        <h1>Mismo botón.<br /><em>Distinta cuenta.</em></h1>
+        <p class="description">Acotá un localizador a una cuenta, depositá fondos ficticios y comprobá qué cambió y qué no.</p>
+        <div class="meta"><span id="duration">2–3 min</span><span id="voice-label">Voz de Juan · clonada con IA</span><span>Nivel inicial</span></div>
+      </div>
+      <p class="setup-link"><span>ANTES DE EMPEZAR</span> Banco encendido + clase 02 terminada.
+        <a href="/lecciones/crear-practica/">Volver a la clase 02 ↗</a></p>
+      <p id="load-status" role="status">Preparando la lección…</p>
+      <noscript><p>Activá JavaScript para el reproductor o <a href="/lessons/account-deposit/subtitles.vtt">leé la transcripción</a>.</p></noscript>
+      <div id="experience" hidden>
+        <div class="lesson-layout">
+          <section class="player" aria-label="Reproductor de microlección">
+            <div class="scene-header"><span id="scene-counter" class="eyebrow">01 / 05</span>
+              <span class="recorded"><span aria-hidden="true">●</span> Código y resultados de una ejecución real</span></div>
+            <div id="stage" class="stage">
+              <h2 id="scene-title"></h2>
+              <div class="view-controls" role="group" aria-label="Vista de la escena">
+                <button id="view-screen" type="button" aria-pressed="true">Pantalla</button>
+                <button id="view-code" type="button" aria-pressed="false">Código Playwright</button>
+                <span>Sincronizado con la voz</span>
+              </div>
+              <div class="screen-frame">
+                <div class="window-bar"><span aria-hidden="true">● ● ●</span><span id="frame-label">athena bank / cuentas</span></div>
+                <div id="screen-view" class="screenshot-area"><img id="scene-image" alt="" /></div>
+                <pre id="output-view" class="run-output" tabindex="0" aria-label="Salida real de Playwright" hidden></pre>
+                <pre id="code-view" tabindex="0" aria-label="Código Playwright del capítulo" hidden><code id="code"></code></pre>
+              </div>
+              <p id="takeaway" class="takeaway"></p>
+            </div>
+            <div id="caption" class="caption" aria-label="Subtítulo actual"></div>
+            <div class="transport">
+              <label class="sr-only" for="seek">Posición de la lección</label>
+              <input id="seek" type="range" min="0" max="180" step="0.1" value="0" />
+              <div class="controls">
+                <button id="play" class="play" type="button">▶ Reproducir</button>
+                <button id="back-ten" type="button" aria-label="Retroceder 10 segundos">↶ 10 s</button>
+                <output id="time" aria-label="Tiempo de reproducción">0:00 / 0:00</output>
+                <label class="speed"><span class="sr-only">Velocidad de reproducción</span><select id="speed">
+                  <option value="0.75">0,75×</option><option value="1" selected>1×</option><option value="1.25">1,25×</option><option value="1.5">1,5×</option>
+                </select></label>
+                <button id="mute" type="button" aria-label="Silenciar narración" aria-pressed="false">Voz</button>
+                <button id="captions" type="button" aria-label="Mostrar subtítulos" aria-pressed="true">CC</button>
+              </div>
+            </div>
+            <audio id="narration" preload="metadata"></audio>
+          </section>
+          <aside class="chapters-panel" aria-labelledby="chapters-title">
+            <p class="eyebrow">TU RECORRIDO</p><h2 id="chapters-title">Elegí la cuenta.<br />Probá el resultado.</h2>
+            <ol id="chapters"></ol><p class="aside-note">Cinco capítulos para reconocer el contexto, actuar y comprobar los saldos.
+              Pausá para escribir cada parte. La lección no maneja tu navegador ni modifica tu práctica.</p>
+          </aside>
+        </div>
+        <section class="setup-step" aria-labelledby="manual-title">
+          <p class="eyebrow">01 / ANTES DEL CÓDIGO</p><h2 id="manual-title">Dos cuentas. Dos botones Depositar.</h2>
+          <p>En una ventana privada, abrí <code>http://127.0.0.1:4177</code>, elegí
+            <strong>Estable · comportamiento esperado</strong> y pulsá <strong>Crear mi práctica</strong>.
+            Iniciá sesión con <code>ana@demo.test</code> y <code>Practica2026!</code>, las credenciales ficticias y públicas del laboratorio.</p>
+          <p>En una práctica nueva, <strong>ana.diaria</strong> tiene <strong>$ 2.500,00</strong> y <strong>ana.ahorro</strong>
+            tiene <strong>$ 600,00</strong>. Ambas muestran un botón <strong>Depositar</strong>.
+            Pulsá el de <strong>ana.diaria</strong>: el diálogo debe abrir con esa cuenta seleccionada.</p>
+          <p>Ingresá <code>100</code> en <strong>Importe a depositar</strong> y pulsá <strong>Depositar fondos</strong>.
+            Esperás ver <strong>$ 2.600,00</strong> en la cuenta diaria y <strong>$ 600,00</strong> en ahorro.
+            Todo el dinero es ficticio: no hay pagos ni movimientos bancarios reales.</p>
+          <p>Playwright creará su propia práctica desde cero. Tu prueba manual no cambia los saldos iniciales del test.</p>
+          <a class="primary" href="/lessons/account-deposit/clase-03-inicio.zip" download>Descargar inicio de clase 03 ↓</a>
+          <p class="code-note">El inicio es acumulativo: incluye los cinco tests anteriores resueltos y la clase 03 con
+            <code>test.skip</code>. Sin cambios, esperá <strong>5 passed</strong> y <strong>1 skipped</strong>.</p>
+        </section>
+        <section class="setup-step" aria-labelledby="branch-title">
+          <p class="eyebrow">TU REPO DE TESTS</p><h2 id="branch-title">Continuá desde la clase 02.</h2>
+          <p>Desde tu repo de automatización, en la rama donde terminaste la clase 02, revisá el estado:</p>
+          <pre tabindex="0" aria-label="Revisar el trabajo anterior"><code>git status</code></pre>
+          <p>Si todavía tenés cambios de esa clase por guardar, revisalos y guardalos antes de crear la nueva rama:</p>
+          <pre tabindex="0" aria-label="Guardar los cambios de la clase 02"><code>git add tests
+git commit -m "test: completar la clase 02"</code></pre>
+          <p>Con el trabajo anterior guardado, creá la rama. Hereda los commits de la rama actual:</p>
+          <pre tabindex="0" aria-label="Crear la rama de la clase 03"><code>git switch -c clase/03-deposito-en-cuenta</code></pre>
+          <p>Agregá <code>tests/account-deposit.spec.js</code> desde el ZIP inicial a tu repo de tests.
+            Si preferís usar el ZIP completo, extraelo en otra carpeta: conserva las clases anteriores resueltas.</p>
+        </section>
+        <section class="code-panel" aria-labelledby="code-title">
+          <div class="code-heading"><div><p class="eyebrow">02 / ESCRIBÍ Y EJECUTÁ</p><h2 id="code-title">Primero la cuenta. Después el botón.</h2></div>
+            <a href="/lessons/account-deposit/account-deposit.spec.js" download>Descargar prueba completa ↓</a></div>
+          <p class="code-note">Abrí <code>tests/account-deposit.spec.js</code>, quitá <code>.skip</code> y completá el recorrido.
+            El banco debe estar encendido en otra terminal. Reutilizamos lo aprendido para crear una práctica e iniciar sesión por la interfaz.</p>
+          <p>Un <code>page.getByRole('button', { name: 'Depositar', exact: true })</code> encuentra más de un botón.
+            Al hacer <code>click()</code>, Playwright exige un único elemento y rechaza esa ambigüedad.
+            <code>exact: true</code> exige el nombre completo; no vuelve único un nombre que está repetido.</p>
+          <pre tabindex="0" aria-label="Localizar el botón dentro de la cuenta diaria"><code>const cuentaDiaria = page.getByRole('region', {
+  name: 'Cuenta ana.diaria', exact: true,
+});
+await cuentaDiaria.getByRole('button', {
+  name: 'Depositar', exact: true,
+}).click();</code></pre>
+          <p><code>cuentaDiaria</code> guarda un localizador, no una captura del elemento. La segunda búsqueda se hace
+            <strong>solo dentro de esa región</strong>. El botón queda identificado por su contexto, aunque cambie el orden de las cuentas.</p>
+          <p>No uses <code>.first()</code> ni <code>.nth(0)</code> para ocultar el problema: elegir una posición no expresa
+            en qué cuenta querés depositar. Dentro del diálogo <strong>Ingresar fondos ficticios</strong>, comprobá que
+            <strong>Cuenta para depósito</strong> tenga el valor técnico <code>ana-main</code>, correspondiente a
+            <strong>ana.diaria</strong>. No cambies el selector para hacer pasar el caso: queremos comprobar que el botón
+            abrió el depósito para la cuenta correcta.</p>
+          <details class="full-source"><summary>Ver el test completo, paso a paso</summary>
+            <p>Práctica nueva → acceso → saldos iniciales → botón dentro de la cuenta → diálogo y cuenta seleccionada → importe → saldos finales.
+              Los comentarios <code>@snippet</code> identifican fragmentos del material; no son una API de Playwright.</p>
+            <pre tabindex="0" aria-label="Prueba Playwright completa"><code id="full-source">Cargando código…</code></pre>
+          </details>
+        </section>
+        <section class="setup-step" aria-labelledby="run-title">
+          <p class="eyebrow">03 / LEÉ LA EVIDENCIA</p><h2 id="run-title">Cambió la cuenta correcta.</h2>
+          <p>Ejecutá el caso y abrí el reporte desde la terminal del repo de automatización:</p>
+          <pre tabindex="0" aria-label="Ejecutar la prueba del depósito"><code>npx playwright test account-deposit.spec.js --headed
+npm run report</code></pre>
+          <p>El importe que escribís es <code>100</code>; el saldo se presenta como moneda argentina:
+            <strong>$ 2.600,00</strong>. Comprobá ese texto <strong>dentro de ana.diaria</strong>, no en toda la página,
+            y que <strong>ana.ahorro</strong> conserve <strong>$ 600,00</strong>.</p>
+          <pre tabindex="0" aria-label="Comprobar el nuevo saldo de la cuenta diaria"><code>await expect(cuentaDiaria.getByText('$ 2.600,00', {
+  exact: true,
+})).toBeVisible();</code></pre>
+          <p>Un aviso de éxito o un clic completado no demuestran que el dinero llegó a la cuenta elegida.
+            Verificá primero el nuevo saldo de la cuenta destino y después el saldo de la otra:
+            una comprobación que no cambia podría aprobar antes de que termine la operación.</p>
+          <p>Usá aserciones de Playwright con <code>await expect(...)</code>. Reintentan la comprobación hasta que se cumple
+            o vence el timeout. No agregues <code>waitForTimeout()</code> ni una pausa fija para esperar el depósito.</p>
+          <p>Al completar este caso, la suite acumulada tendrá <strong>6 passed</strong>.
+            Con el reto resuelto, debería terminar con <strong>7 passed</strong>.</p>
+        </section>
+        <section class="challenge" aria-labelledby="challenge-title">
+          <div><p class="eyebrow">ANTES DEL RETO</p><h2 id="challenge-title">¿Qué demuestra que el depósito fue correcto?</h2>
+            <p>Depositaste 100 pesos ficticios en <strong>ana.diaria</strong>. ¿Qué evidencia necesitás?</p></div>
+          <form id="quiz" data-correct="outcome"
+            data-success="¡Exacto! El nuevo saldo de la cuenta destino y el saldo intacto de la otra comprueban el resultado esperado."
+            data-retry="Todavía falta evidencia. Un aviso o un clic no prueban qué cuenta recibió el depósito. Comprobá ambos saldos dentro de sus regiones.">
+            <fieldset><legend class="sr-only">Elegí la evidencia del depósito</legend>
+              <label><input type="radio" name="answer" value="notice" required /><span>Que aparece el aviso de depósito completado.</span></label>
+              <label><input type="radio" name="answer" value="outcome" /><span>Que ana.diaria pasa a $ 2.600,00 y ana.ahorro sigue en $ 600,00.</span></label>
+              <label><input type="radio" name="answer" value="position" /><span>Que el primer botón Depositar se pudo pulsar.</span></label>
+            </fieldset><button class="primary" type="submit">Comprobar respuesta ↗</button><p id="feedback" role="status"></p>
+          </form>
+        </section>
+        <section class="setup-step" aria-labelledby="exercise-title">
+          <p class="eyebrow">04 / TU PRÓXIMO CASO</p><h2 id="exercise-title">Ahora depositá en ahorro.</h2>
+          <p>Escribí un test independiente en <code>tests/account-deposit-challenge.spec.js</code>.
+            Creá una práctica estable nueva e iniciá sesión como Ana. Esta vez depositá <strong>50</strong> pesos ficticios
+            en <strong>ana.ahorro</strong>.</p>
+          <p>Comprobá los saldos iniciales, localizá el botón dentro de ahorro y verificá que el diálogo seleccione esa cuenta.
+            Después del depósito, ahorro debe mostrar <strong>$ 650,00</strong> y diaria debe conservar <strong>$ 2.500,00</strong>.
+            El reto debe poder ejecutarse solo: no comparte los saldos ni la sesión del caso anterior.</p>
+          <details class="transcript"><summary>Necesito una pista</summary>
+            <p>Usá <code>getByRole('region', { name: 'Cuenta ana.ahorro', exact: true })</code> y buscá su botón
+              <code>Depositar</code> dentro de esa región. El valor esperado de <strong>Cuenta para depósito</strong>
+              es <code>ana-save</code>. Comprobalo con <code>toHaveValue('ana-save')</code> antes de enviar.</p>
+            <p>Buscá el saldo dentro de cada región y usá una aserción que espere el resultado.
+              Verificá primero <strong>$ 650,00</strong> en ahorro; después <strong>$ 2.500,00</strong> en diaria.
+              No dependas del orden de las tarjetas ni del texto de un aviso temporal.</p>
+          </details>
+          <details class="transcript"><summary>Ya hice mi intento: ver solución</summary>
+            <p>Extraé la solución en otra carpeta y comparala con tu intento. Incluye los cinco tests anteriores,
+              el depósito en diaria y el reto en ahorro: la suite completa debería mostrar <strong>7 passed</strong>.</p>
+            <a href="/lessons/account-deposit/clase-03-solucion.zip" download>Descargar solución de clase 03 ↓</a>
+            <p><a href="/lessons/account-deposit/account-deposit-challenge.spec.js" download>Descargar solo la solución del reto ↓</a></p>
+          </details>
+          <pre tabindex="0" aria-label="Ejecutar los casos y guardar el avance"><code>npx playwright test
+git status
+git add tests
+git commit -m "test: depositar en la cuenta correcta"</code></pre>
+        </section>
+        <details class="transcript"><summary>Leer la transcripción completa</summary><div id="transcript"></div>
+          <a href="/lessons/account-deposit/subtitles.vtt" download>Descargar subtítulos (.vtt) ↓</a></details>
+        <section class="next-step"><div><p class="eyebrow">SEGUÍ CON LA CLASE 04</p>
+          <h2>¿Y si el importe no es válido?</h2>
+          <p>Probá importes vacíos, cero y negativos con tests parametrizados,
+            y comprobá que los saldos no cambien.</p></div>
+          <a class="primary" href="/lecciones/depositos-invalidos/">Ir a la clase 04 ↗</a></section>
+        <p class="aside-note">Fuentes oficiales: <a href="https://playwright.dev/docs/locators#filtering-locators">localizadores dentro de otros localizadores</a>,
+          <a href="https://playwright.dev/docs/locators#strictness">unicidad de localizadores</a> y
+          <a href="https://playwright.dev/docs/test-assertions">aserciones con reintento</a>.</p>
+      </div>
+    </main>
+    <footer>Athena Bank Academy · Aprendé a comprobar.<br /><small id="voice-production">Voz clonada con IA y autorizada por Juan.</small></footer>
+  </body>
+</html>

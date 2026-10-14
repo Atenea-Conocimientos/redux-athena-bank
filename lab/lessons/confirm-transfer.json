@@ -1,0 +1,62 @@
+{
+  "title": "Confirmar no es completar",
+  "codeFile": "confirm-transfer.spec.js",
+  "language": "es",
+  "scenes": [
+    {
+      "id": "objetivo", "title": "Una operación, dos estados", "image": "quote.png",
+      "alt": "Cotización real de 100 pesos a bruno.diaria, comisión de 1 peso y total a reservar de 101.",
+      "takeaway": "Confirmar crea una transferencia pendiente: todavía no es una operación completada.",
+      "code": "confirmar", "focus": [1, 2],
+      "cues": [
+        "Ya sabemos revisar una cotización. Ahora vamos a confirmarla. Ojo con esta diferencia: confirmar una transferencia no significa que esté completada.",
+        "Creamos otra práctica estable como Ana. Cotizamos cien pesos para Bruno: un peso de comisión y ciento uno en total. Todo es ficticio.",
+        "Esta vez comprobamos una operación pendiente y su reserva. Guardá el trabajo anterior y creá la rama de la clase seis."
+      ]
+    },
+    {
+      "id": "confirmar", "title": "Confirmá con el código de práctica", "image": "quote.png",
+      "alt": "Diálogo Confirmar transferencia con el código ficticio 246810 listo para enviar.",
+      "takeaway": "Actuá dentro del diálogo correcto; esperá su cierre con una aserción, no con una pausa.",
+      "code": "confirmar", "focus": [1, 2, 3, 4, 5], "codeFromCue": 1,
+      "cues": [
+        "Dentro de Confirmar transferencia, completamos el código ficticio: dos, cuatro, seis, ocho, uno, cero. Es un dato público del laboratorio, no un código recibido por mensaje.",
+        "Pulsamos Confirmar y reservar y esperamos que el diálogo se cierre. Usamos una aserción que reintenta; no una pausa fija ni un clic forzado.",
+        "El cierre del diálogo solo muestra que avanzó la interfaz. Falta comprobar la operación, su reserva y los saldos."
+      ]
+    },
+    {
+      "id": "operacion", "title": "Una sola operación pendiente", "image": "pending.png",
+      "alt": "Artículo de transferencia a bruno.diaria, 100 pesos, Pendiente, comisión 1 y total 101.",
+      "takeaway": "Cantidad, destinatario, importe y estado: varias comprobaciones dentro del mismo artículo.",
+      "code": "operacion", "focus": [1, 2, 3, 4, 5, 6], "codeFromCue": 1,
+      "cues": [
+        "Esperamos exactamente un artículo de transferencia. Después lo acotamos por su nombre accesible, que empieza con Transferencia y el alias de Bruno.",
+        "Dentro de ese artículo comprobamos cien pesos, estado Pendiente, un peso de comisión y ciento uno de total. Encontrar Pendiente en cualquier parte no sería suficiente.",
+        "No pulsamos Procesar. El contrato dice que todavía no se acredita al receptor, pero este test observa la sesión de Ana: no afirma haber comprobado la cuenta de Bruno."
+      ]
+    },
+    {
+      "id": "saldos", "title": "El dinero reservado sigue siendo contable", "image": "balances.png",
+      "alt": "Resumen: disponible total 2.999, contable 3.100, reservado 101; diaria disponible 2.399 y ahorro 600.",
+      "takeaway": "$2.500 − $101 = $2.399 disponibles en diaria. El contable total sigue en $3.100.",
+      "code": "saldos", "focus": [1, 2, 3, 4, 5, 6, 7, 8], "codeFromCue": 1,
+      "cues": [
+        "Volvemos al inicio. La diaria debe mostrar dos mil trescientos noventa y nueve disponibles y ciento uno reservados. El ahorro conserva sus seiscientos pesos.",
+        "También comprobamos el resumen: tres mil cien contables, ciento uno reservados y dos mil novecientos noventa y nueve disponibles. Reservar limita lo utilizable; no es todavía un débito definitivo.",
+        "Cada valor se busca en su contexto. El disponible total usa un identificador de prueba existente. Las aserciones esperan resultados concretos, no avisos temporales."
+      ]
+    },
+    {
+      "id": "reto", "title": "Tu reto: un código incorrecto", "image": "rejected.png",
+      "alt": "Código 000000 rechazado en el diálogo, con mensaje de error y sin nueva transferencia.",
+      "takeaway": "Reto independiente: código 000000 → error, ninguna transferencia y ningún saldo reservado.",
+      "code": "confirmar", "focus": [1, 2],
+      "cues": [
+        "Ahora escribí otro caso, desde una práctica nueva. Cotizá lo mismo, pero confirmá con seis ceros. Primero esperá el mensaje de código incorrecto dentro del diálogo.",
+        "Comprobá que siga abierto. Cerralo y verificá que no haya artículos de transferencia, que ambos saldos sigan iguales y que la reserva sea cero. Un error visible no demuestra todo eso.",
+        "Resolvé el reto antes de mirar la solución. Ejecutá ambos casos y guardá el commit. Distinguimos una acción, un estado intermedio y sus efectos."
+      ]
+    }
+  ]
+}

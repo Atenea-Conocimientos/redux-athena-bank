@@ -1,0 +1,11 @@
+{
+  "capturedAt": "2026-10-07T16:24:14.934Z",
+  "browser": "chromium",
+  "playwright": "1.63.0",
+  "sourceSha256": "394e3700607295a1d1886d2a2a85d283f81c7a18b4ae3e219e6def8b6284f7e0",
+  "challengeSha256": "179f3e115ac443b00a703ae07c0139578630c31ec2333b5115c6fa434b138a06",
+  "diagnosticSourceSha256": "0578bed57a58c016ef0e063f79aa7f4522c5877d33ed1eca49eb610cff70e9de",
+  "status": "passed",
+  "durationMs": 398,
+  "scope": "Fresh browser; read-only welcome screen; intentional assertion mismatch caught and verified by evidence harness."
+}

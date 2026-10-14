@@ -12,6 +12,11 @@ const readSource = (file) =>
 
 test('microlección: duración, subtítulos, capturas y código corresponden al guion probado', () => {
   assert.ok(lesson.duration >= 120 && lesson.duration <= 180);
+  if (lesson.audioSha256) {
+    assert.equal(lesson.audioSha256, createHash('sha256').update(fs.readFileSync(path.join(directory, lesson.audio))).digest('hex'));
+    assert.equal(lesson.sceneAudio.length, 7);
+    assert.ok(lesson.sceneAudio.every(scene => scene.alignmentCoverage >= 0.85));
+  }
   assert.equal(lesson.scenes.length, 7);
   assert.equal(
     lesson.sourceSha256,

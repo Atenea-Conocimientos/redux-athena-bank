@@ -1,0 +1,244 @@
+{
+  "title": "Depositar en la cuenta correcta",
+  "duration": 169.844,
+  "voice": "Juan Torres",
+  "language": "es",
+  "voiceDisclosure": "Voz de Juan · clonada con IA y autorizada",
+  "voiceProduction": "Generada con ElevenLabs; audio alojado localmente, sin llamadas a TTS al reproducir.",
+  "provider": "ElevenLabs",
+  "model": "Eleven v4",
+  "alignment": "Local Whisper word timestamps matched to prose; numeric spellings excluded from timing score (not an audio content audit)",
+  "sourceSha256": "786687458d5d260ade15ecb2ad6c3ccc6771fb6b6ec7f73844c458adbebcf0aa",
+  "audioSha256": "d34d6728af7f6a8c6bccf0e6c412f8b55cd1fc60774c9501a9064c998141ad49",
+  "audio": "narration.mp3",
+  "scenes": [
+    {
+      "id": "objetivo",
+      "title": "Dos botones, una intención",
+      "image": "before.png",
+      "alt": "Cuentas ficticias de Ana: diaria con 2.500 pesos y ahorro con 600 pesos; ambas tienen Depositar.",
+      "takeaway": "El objetivo no es hacer clic: es sumar $100 en ana.diaria sin cambiar ana.ahorro.",
+      "code": "localizar",
+      "focus": [
+        1,
+        2
+      ],
+      "start": 0,
+      "end": 33.321
+    },
+    {
+      "id": "localizar",
+      "title": "Primero la cuenta; después, el botón",
+      "image": "before.png",
+      "alt": "Dos regiones de cuenta con el mismo botón Depositar y distintos alias.",
+      "takeaway": "getByRole dentro de una región limita la búsqueda a esa cuenta; exact evita coincidencias parciales.",
+      "code": "localizar",
+      "focus": [
+        1,
+        2,
+        4,
+        5,
+        7,
+        9
+      ],
+      "codeFromCue": 1,
+      "start": 33.321,
+      "end": 67.138
+    },
+    {
+      "id": "depositar",
+      "title": "Comprobá el destino antes de enviar",
+      "image": "form.png",
+      "alt": "Diálogo real Ingresar fondos ficticios, con cuenta diaria seleccionada e importe 100.",
+      "takeaway": "El diálogo está fuera de la tarjeta: localizalo desde page y verificá su cuenta seleccionada.",
+      "code": "depositar",
+      "focus": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "codeFromCue": 1,
+      "start": 67.138,
+      "end": 101.896
+    },
+    {
+      "id": "comprobar",
+      "title": "Verificá el cambio y lo que no cambia",
+      "image": "after.png",
+      "alt": "Resultado real: cuenta diaria con 2.600 pesos disponibles y ahorro sin cambios en 600 pesos.",
+      "takeaway": "Antes $2.500 → después $2.600; ahorro $600 → $600. El mensaje de éxito no alcanza.",
+      "code": "comprobar",
+      "focus": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "codeFromCue": 1,
+      "start": 101.896,
+      "end": 134.59
+    },
+    {
+      "id": "reto",
+      "title": "Tu reto: ahora en el ahorro",
+      "image": "challenge.png",
+      "alt": "Reto ejecutado en una práctica independiente: ahorro con 650 pesos y diaria con 2.500 pesos.",
+      "takeaway": "En una práctica nueva: depositá $50 en ana.ahorro; esperá $650 y diaria sin cambios en $2.500.",
+      "code": "localizar",
+      "focus": [
+        4,
+        5
+      ],
+      "start": 134.59,
+      "end": 169.844
+    }
+  ],
+  "subtitles": [
+    {
+      "start": 0,
+      "end": 11.22,
+      "text": "Ya sabemos entrar como Ana. Ahora aparece un problema real: las dos cuentas tienen un botón Depositar. ¿Cómo elegimos el correcto sin depender de cuál aparece primero?",
+      "view": "screen"
+    },
+    {
+      "start": 11.22,
+      "end": 24.1,
+      "text": "En una práctica nueva, la cuenta diaria tiene dos mil quinientos pesos ficticios y el ahorro, seiscientos. Vamos a ingresar cien en la diaria: esperamos dos mil seiscientos, sin modificar el ahorro.",
+      "view": "screen"
+    },
+    {
+      "start": 24.1,
+      "end": 33.321,
+      "text": "Recorré el caso manualmente. Después guardá tu avance de la clase dos y creá la rama de la clase tres. Cada test crea su propia práctica estable.",
+      "view": "screen"
+    },
+    {
+      "start": 33.321,
+      "end": 44.761,
+      "text": "Buscar Depositar en toda la página encuentra dos botones. Playwright exige una coincidencia única para hacer clic. Hay que mejorar el localizador, no agregar una espera.",
+      "view": "screen"
+    },
+    {
+      "start": 44.761,
+      "end": 56.101,
+      "text": "Guardamos en una constante la región llamada Cuenta ana punto diaria, con exact en true. También localizamos el ahorro y comprobamos los saldos iniciales dentro de cada región.",
+      "view": "code"
+    },
+    {
+      "start": 56.101,
+      "end": 67.138,
+      "text": "Después buscamos el botón dentro de cuenta diaria. No usamos first ni un número de posición: si las tarjetas cambian de orden, seguimos expresando la misma intención de negocio.",
+      "view": "code"
+    },
+    {
+      "start": 67.138,
+      "end": 78.878,
+      "text": "Al pulsar Depositar se abre Ingresar fondos ficticios. Buscamos ese diálogo desde page, no dentro de la cuenta: el formulario está fuera de la tarjeta en la estructura de la página.",
+      "view": "screen"
+    },
+    {
+      "start": 78.878,
+      "end": 90.558,
+      "text": "Comprobamos que Cuenta para depósito tenga el valor ana guion main. Es el identificador técnico de la cuenta diaria. Así detectaríamos que el botón abrió el formulario con un destino equivocado.",
+      "view": "code"
+    },
+    {
+      "start": 90.558,
+      "end": 101.896,
+      "text": "Completamos Importe a depositar con cien y pulsamos Depositar fondos dentro del diálogo. No cambiamos la cuenta para esconder un error de selección. Falta comprobar el resultado.",
+      "view": "code"
+    },
+    {
+      "start": 101.896,
+      "end": 112.556,
+      "text": "Esperamos que el diálogo se cierre. Después buscamos el importe exacto de dos mil seiscientos dentro de la cuenta diaria, y comprobamos que el ahorro siga mostrando seiscientos.",
+      "view": "screen"
+    },
+    {
+      "start": 112.556,
+      "end": 122.276,
+      "text": "No alcanza con encontrar ese número en cualquier parte ni con ver un aviso de éxito. Queremos demostrar qué cuenta recibió el depósito y cuál permaneció igual.",
+      "view": "code"
+    },
+    {
+      "start": 122.276,
+      "end": 134.59,
+      "text": "Las aserciones reintentan el resultado, sin pausas fijas. La constante guarda un localizador, no una captura vieja del elemento: Playwright vuelve a buscarlo después de actualizarse la pantalla.",
+      "view": "code"
+    },
+    {
+      "start": 134.59,
+      "end": 145.47,
+      "text": "Te toca escribir otro test independiente. Creá una práctica nueva, entrá como Ana y depositá cincuenta pesos ficticios en el ahorro, usando el botón de esa cuenta.",
+      "view": "screen"
+    },
+    {
+      "start": 145.47,
+      "end": 156.93,
+      "text": "Comprobá el saldo inicial, la cuenta seleccionada y, al terminar, que el ahorro tenga seiscientos cincuenta y la diaria conserve dos mil quinientos. No reutilices el estado del test anterior.",
+      "view": "screen"
+    },
+    {
+      "start": 156.93,
+      "end": 169.844,
+      "text": "Intentá resolverlo antes de abrir la solución. Ejecutá ambos casos, revisá el reporte y guardá un commit. La idea que te llevás es simple: localizar con intención y comprobar las consecuencias.",
+      "view": "screen"
+    }
+  ],
+  "sceneAudio": [
+    {
+      "scene": "objetivo",
+      "audioSha256": "de8de0a156d2f37af3b22f8e90311c94fdc299ac2e49dce0aa278cb0a5345803",
+      "alignmentCoverage": 0.9444,
+      "cueStarts": [
+        0,
+        11.22,
+        24.1
+      ]
+    },
+    {
+      "scene": "localizar",
+      "audioSha256": "14c0d0d7ee79b67c23075dccabb7363ed6b019f640cdbf798980d1a8d0344270",
+      "alignmentCoverage": 0.9221,
+      "cueStarts": [
+        0,
+        11.44,
+        22.78
+      ]
+    },
+    {
+      "scene": "depositar",
+      "audioSha256": "6a47eb3535352fd27845c3eba5d2cb06aee0bd8bbddda0d4af00cdb6e66e54f4",
+      "alignmentCoverage": 0.9882,
+      "cueStarts": [
+        0,
+        11.74,
+        23.42
+      ]
+    },
+    {
+      "scene": "comprobar",
+      "audioSha256": "dfbaf87a686c0c1d0f4cfb0dbd9ccf5512efbe70bfd61a8770155e7161037550",
+      "alignmentCoverage": 0.9474,
+      "cueStarts": [
+        0,
+        10.66,
+        20.380000000000003
+      ]
+    },
+    {
+      "scene": "reto",
+      "audioSha256": "c76384ed0a7250c4788bde0979f87573dabb947b71330738fb216dd733f04faf",
+      "alignmentCoverage": 0.9487,
+      "cueStarts": [
+        0,
+        10.88,
+        22.340000000000003
+      ]
+    }
+  ],
+  "codeFile": "account-deposit.spec.js"
+}

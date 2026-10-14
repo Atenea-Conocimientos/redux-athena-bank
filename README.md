@@ -1,5 +1,7 @@
 # Redux Athena Bank
 
+**Piloto interno v0.1 — clases 01 a 06:** [instalación y checklist para Luis](docs/piloto-interno-luis.md).
+
 ## Nuevo: Athena Bank Lab v2 — laboratorio para el curso de Playwright
 
 Un banco **ficticio y exclusivamente local**, con reglas de negocio, errores controlados y pruebas de referencia. No procesa pagos ni se conecta a Atenea, QA, producción, MongoDB o servicios externos.
@@ -30,7 +32,14 @@ Variables opcionales: `LAB_PORT` y `LAB_DB`. No exponer el servidor a Internet: 
 ### Qué incluye
 
 - Registro y sesiones; cuentas con alias únicos, congelación, depósitos y cierre controlado.
-- **Laboratorio → Ver microlección**: [Cómo comprobar una transferencia pendiente](http://127.0.0.1:4177/lecciones/transferencia-pendiente/), piloto de 2:35 con voz local, pantalla/código sincronizados, subtítulos, capítulos y un quiz. No requiere instalar TTS para reproducirlo. [Guía y regeneración](docs/microleccion-transferencia.md).
+- **Laboratorio → Empezar la clase 01**: [Mi primera prueba con Playwright](http://127.0.0.1:4177/lecciones/primera-prueba/). Bienvenida, localizadores, aserciones, diagnóstico de un fallo intencional y reto. Incluye voz autorizada de Juan generada con IA, subtítulos y proyectos de inicio/solución. [Guía del instructor](docs/clase-01-primera-prueba.md).
+- **Clase 02**: [Crear una práctica e iniciar sesión](http://127.0.0.1:4177/lecciones/crear-practica/). Formularios con `getByLabel`, `selectOption`, `fill` y `click`; resultado observable y reto de contraseña incorrecta. Voz de Juan, capturas reales y ZIPs acumulativos sobre la clase 01. [Guía del instructor](docs/clase-02-crear-practica.md).
+- **Clase 03**: [Depositar en la cuenta correcta](http://127.0.0.1:4177/lecciones/deposito-en-cuenta/). Localizadores dentro de regiones, botones repetidos, cuenta seleccionada en un diálogo y comprobación de ambos saldos. Voz de Juan, reto independiente y ZIPs acumulativos. [Guía del instructor](docs/clase-03-deposito-en-cuenta.md).
+- **Clase 04**: [Depósitos inválidos](http://127.0.0.1:4177/lecciones/depositos-invalidos/). Parametrización, validación nativa y saldos intactos; reto del centavo mínimo. [Guía](docs/clase-04-depositos-invalidos.md).
+- **Clase 05**: [Cotizar antes de confirmar](http://127.0.0.1:4177/lecciones/cotizar-transferencia/). Origen/destino, desglose de comisión, `test.step` y cotización sin reserva. [Guía](docs/clase-05-cotizar-transferencia.md).
+- **Clase 06**: [Confirmar no es completar](http://127.0.0.1:4177/lecciones/confirmar-transferencia/). OTP ficticio, operación pendiente, reserva y disponible; reto de código incorrecto. [Guía](docs/clase-06-transferencia-pendiente.md).
+- **Caso avanzado**: [Cómo comprobar una transferencia pendiente](http://127.0.0.1:4177/lecciones/transferencia-pendiente/), piloto de menos de tres minutos con voz de Juan, pantalla/código sincronizados, subtítulos, capítulos y un quiz. El MP3 se sirve localmente: no requiere instalar TTS ni consume créditos al reproducirlo. [Guía y regeneración](docs/microleccion-transferencia.md).
+- **Paso 0 → [Prepará tu repositorio](http://127.0.0.1:4177/lecciones/preparar-repositorio/)**: guía para crear el repo de automatización del alumno, instalar Playwright y trabajar por clase. Descargas separadas **inicio** (ejercicio pendiente) y **solución** (test real completo). Los checkpoints se distribuyen como ZIPs acumulativos por clase.
 - Transferencias con comisión, límite diario, OTP de práctica, vencimiento de cotización, reservas, idempotencia y estados pendiente/completada/cancelada/rechazada.
 - Procesamiento transaccional: el fallo simulado después del débito revierte la operación completa.
 - Beneficiarios ordenables, CSV importable atómicamente, movimientos filtrables/paginados y descarga de extractos.
@@ -60,6 +69,7 @@ Comparación visual separada: `npm run test:visual`. Hay una baseline revisada d
 
 ### Material para preparar el curso
 
+- [Guía de la clase inicial](course/first-test/README.md), [clase 02 acumulativa](course/create-practice/README.md) y [plantilla del caso avanzado](course/automation/README.md). Regenerar ZIPs con `npm run course:build`; el test de integridad detecta material desactualizado. `lesson:capture`, `lesson:capture:first` y `lesson:capture:practice` también reconstruyen los ZIPs.
 - [Mapa de cobertura de Playwright y temas pendientes](docs/playwright-coverage.md).
 - [Reglas del banco y contrato de API](docs/lab-rules.md).
 - [Historias, casos y propuesta de curso](docs/course-plan.md).

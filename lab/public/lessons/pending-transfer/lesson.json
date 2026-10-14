@@ -1,9 +1,15 @@
 {
   "title": "Cómo comprobar una transferencia pendiente",
-  "duration": 155.096,
-  "voice": "ef_dora",
+  "duration": 166.165,
+  "voice": "Juan Torres",
   "language": "es",
+  "voiceDisclosure": "Voz de Juan · clonada con IA y autorizada",
+  "voiceProduction": "Generada con ElevenLabs; audio alojado localmente, sin llamadas a TTS al reproducir.",
+  "provider": "ElevenLabs",
+  "model": "Eleven v4",
+  "alignment": "Local Whisper word timestamps matched to prose; numeric spellings excluded from timing score (not an audio content audit)",
   "sourceSha256": "44b336ccfc7fe89e322f994c8badf2d823689e9680d4d0169bfa3b0a500f726b",
+  "audioSha256": "bcbcb136f14fc6a7e809cf80420d5b590bc109e0b4095db0236c51f1b9f270ea",
   "audio": "narration.mp3",
   "scenes": [
     {
@@ -18,8 +24,8 @@
         2,
         3
       ],
-      "start": 0.0,
-      "end": 25.169
+      "start": 0,
+      "end": 27.078
     },
     {
       "id": "preparar",
@@ -33,8 +39,8 @@
         2,
         3
       ],
-      "start": 25.169,
-      "end": 48.229
+      "start": 27.078,
+      "end": 51.439
     },
     {
       "id": "cotizar",
@@ -50,8 +56,8 @@
         4
       ],
       "codeFromCue": 2,
-      "start": 48.229,
-      "end": 70.937
+      "start": 51.439,
+      "end": 76.139
     },
     {
       "id": "confirmar",
@@ -66,8 +72,8 @@
         3
       ],
       "codeFromCue": 1,
-      "start": 70.937,
-      "end": 86.461
+      "start": 76.139,
+      "end": 92.35
     },
     {
       "id": "reserva",
@@ -84,8 +90,8 @@
         8
       ],
       "codeFromCue": 0,
-      "start": 86.461,
-      "end": 111.115
+      "start": 92.35,
+      "end": 119.846
     },
     {
       "id": "receptor",
@@ -103,8 +109,8 @@
         6
       ],
       "codeFromCue": 0,
-      "start": 111.115,
-      "end": 126.87
+      "start": 119.846,
+      "end": 136.449
     },
     {
       "id": "practicar",
@@ -120,124 +126,194 @@
         7,
         8
       ],
-      "start": 126.87,
-      "end": 155.096
+      "start": 136.449,
+      "end": 166.165
     }
   ],
   "subtitles": [
     {
-      "start": 0.0,
-      "end": 8.451,
+      "start": 0,
+      "end": 9.36,
       "text": "Una transferencia dice pendiente. ¿Eso significa que el dinero ya llegó? No. En esta microlección vamos a comprobarlo con Playwright.",
       "view": "screen"
     },
     {
-      "start": 8.451,
-      "end": 17.868,
+      "start": 9.36,
+      "end": 19.8,
       "text": "Estamos en Athena Bank, un laboratorio con dinero ficticio. Vamos a mirar tres cosas: el estado, la reserva del emisor y el saldo del receptor.",
       "view": "screen"
     },
     {
-      "start": 17.868,
-      "end": 25.169,
+      "start": 19.8,
+      "end": 27.078,
       "text": "El objetivo no es hacer clic y confiar en un mensaje. Es demostrar que la operación respeta las reglas del negocio.",
       "view": "screen"
     },
     {
-      "start": 25.169,
-      "end": 34.057,
+      "start": 27.078,
+      "end": 36.458,
       "text": "Primero, creamos una práctica nueva en modo estable. Ana tiene dos mil quinientos pesos en su cuenta diaria. Bruno tiene mil doscientos.",
       "view": "screen"
     },
     {
-      "start": 34.057,
-      "end": 42.181,
+      "start": 36.458,
+      "end": 44.798,
       "text": "La prueba prepara estos datos de forma aislada. Así no depende de una transferencia anterior ni de lo que haya hecho otro estudiante.",
       "view": "screen"
     },
     {
-      "start": 42.181,
-      "end": 48.229,
+      "start": 44.798,
+      "end": 51.439,
       "text": "Atención: estamos comprobando la cuenta diaria de Ana, no el saldo total que incluye sus ahorros.",
       "view": "screen"
     },
     {
-      "start": 48.229,
-      "end": 56.012,
+      "start": 51.439,
+      "end": 59.779,
       "text": "Abrimos una transferencia a la cuenta diaria de Bruno e ingresamos cien pesos. Antes de confirmar, revisamos la cotización.",
       "view": "screen"
     },
     {
-      "start": 56.012,
-      "end": 63.645,
+      "start": 59.779,
+      "end": 68.519,
       "text": "En este laboratorio, la comisión externa es del uno por ciento, con un mínimo de un peso. El total a reservar es ciento uno.",
       "view": "screen"
     },
     {
-      "start": 63.645,
-      "end": 70.937,
+      "start": 68.519,
+      "end": 76.139,
       "text": "En el código buscamos controles por su nombre accesible. La aserción del diálogo verifica el total antes de continuar.",
       "view": "code"
     },
     {
-      "start": 70.937,
-      "end": 78.647,
+      "start": 76.139,
+      "end": 84.279,
       "text": "Ingresamos el código ficticio y confirmamos. La operación debe aparecer como pendiente. No vamos a presionar Procesar.",
       "view": "screen"
     },
     {
-      "start": 78.647,
-      "end": 86.461,
+      "start": 84.279,
+      "end": 92.35,
       "text": "Usamos una aserción que espera el estado de la interfaz. No necesitamos una pausa fija ni adivinar cuánto tarda la pantalla.",
       "view": "code"
     },
     {
-      "start": 86.461,
-      "end": 93.753,
+      "start": 92.35,
+      "end": 100.47,
       "text": "Ahora consultamos la cuenta de Ana por la API, usando su misma sesión. El saldo contable sigue en dos mil quinientos.",
       "view": "code"
     },
     {
-      "start": 93.753,
-      "end": 101.788,
+      "start": 100.47,
+      "end": 109.27,
       "text": "Hay ciento un pesos reservados. Por eso, el disponible baja a dos mil trescientos noventa y nueve, aunque todavía no hubo un débito.",
       "view": "code"
     },
     {
-      "start": 101.788,
-      "end": 111.115,
+      "start": 109.27,
+      "end": 119.846,
       "text": "La API expresa los importes en centavos. Por eso el código compara números enteros: una reserva de ciento un pesos aparece como diez mil cien.",
       "view": "code"
     },
     {
-      "start": 111.115,
-      "end": 118.781,
+      "start": 119.846,
+      "end": 127.666,
       "text": "Por último, entramos como Bruno en un contexto separado, dentro de la misma práctica. No reutilizamos la sesión de Ana.",
       "view": "code"
     },
     {
-      "start": 118.781,
-      "end": 126.87,
+      "start": 127.666,
+      "end": 136.449,
       "text": "Su saldo continúa en mil doscientos pesos. Si ya recibió los cien, encontramos un defecto, aunque la pantalla de Ana diga pendiente.",
       "view": "code"
     },
     {
-      "start": 126.87,
-      "end": 137.085,
+      "start": 136.449,
+      "end": 147.709,
       "text": "Ya tenemos tres evidencias: estado pendiente, reserva correcta y receptor sin acreditar. Eso es comprobar el comportamiento, no solamente automatizar clics.",
       "view": "screen"
     },
     {
-      "start": 137.085,
-      "end": 145.769,
+      "start": 147.709,
+      "end": 156.909,
       "text": "Tu reto: en una práctica nueva, transferí doscientos pesos. Calculá la reserva y después cancelá. ¿El dinero vuelve a estar disponible?",
       "view": "screen"
     },
     {
-      "start": 145.769,
-      "end": 155.096,
+      "start": 156.909,
+      "end": 166.165,
       "text": "Podés pausar, recorrer los capítulos y descargar la prueba completa. Ahora respondé la pregunta debajo del reproductor y probalo en el laboratorio.",
       "view": "screen"
+    }
+  ],
+  "sceneAudio": [
+    {
+      "scene": "objetivo",
+      "audioSha256": "d9ea90d75e7643c2b68007a2ad41d29792eb34791230c7c05b3697ae419ad2f7",
+      "alignmentCoverage": 1.0,
+      "cueStarts": [
+        0,
+        9.36,
+        19.8
+      ]
+    },
+    {
+      "scene": "preparar",
+      "audioSha256": "99fd134c9c2c0dfd59a2ed89c09133d1f6b6fd3fb5f692011eb72bf346802dfd",
+      "alignmentCoverage": 1.0,
+      "cueStarts": [
+        0,
+        9.38,
+        17.720000000000002
+      ]
+    },
+    {
+      "scene": "cotizar",
+      "audioSha256": "949d9e93f43d66e561a42cb28b062de00889a2f4f727b0896852d290f1efb772",
+      "alignmentCoverage": 0.9808,
+      "cueStarts": [
+        0,
+        8.34,
+        17.080000000000002
+      ]
+    },
+    {
+      "scene": "confirmar",
+      "audioSha256": "e8bd290e0a9775d3256e4031b9431295dd189499e900274e1c7e575c6686d15e",
+      "alignmentCoverage": 0.9714,
+      "cueStarts": [
+        0,
+        8.14
+      ]
+    },
+    {
+      "scene": "reserva",
+      "audioSha256": "b8ac16c16c516ad80c8900f46c40144238be75d891a3f73d050a6080153d8905",
+      "alignmentCoverage": 0.9792,
+      "cueStarts": [
+        0,
+        8.12,
+        16.92
+      ]
+    },
+    {
+      "scene": "receptor",
+      "audioSha256": "e4ea4faad1153c59a7265ec4a7422ae508182d736bc95004d0bca2b08d5749b6",
+      "alignmentCoverage": 1.0,
+      "cueStarts": [
+        0,
+        7.82
+      ]
+    },
+    {
+      "scene": "practicar",
+      "audioSha256": "0e48f5aedef0fec5a4d96a2bcbd54720734a8500ec367e41244bf2c1e10e5abe",
+      "alignmentCoverage": 0.9298,
+      "cueStarts": [
+        0,
+        11.26,
+        20.46
+      ]
     }
   ]
 }

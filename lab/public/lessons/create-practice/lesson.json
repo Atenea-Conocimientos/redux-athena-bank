@@ -1,0 +1,242 @@
+{
+  "title": "Crear una práctica e iniciar sesión",
+  "duration": 169.792,
+  "voice": "Juan Torres",
+  "language": "es",
+  "voiceDisclosure": "Voz de Juan · clonada con IA y autorizada",
+  "voiceProduction": "Generada con ElevenLabs; audio alojado localmente, sin llamadas a TTS al reproducir.",
+  "provider": "ElevenLabs",
+  "model": "Eleven v4",
+  "alignment": "Local Whisper word timestamps matched to prose; numeric spellings excluded from timing score (not an audio content audit)",
+  "sourceSha256": "713fe180d057913f07462972ecf3dfea6a532b77d0d9ae9bec1dfda227fa992c",
+  "audioSha256": "00ea5e22d294c21ad01358375f4a40bd1106c0e00e7e39a7cf407d839426f64b",
+  "audio": "narration.mp3",
+  "scenes": [
+    {
+      "id": "objetivo",
+      "title": "Del botón al resultado",
+      "image": "welcome.png",
+      "alt": "Bienvenida real del banco, con el selector de perfil y Crear mi práctica.",
+      "takeaway": "Objetivo: crear una práctica estable y comprobar que entramos como Ana.",
+      "code": "completo",
+      "focus": [
+        3
+      ],
+      "start": 0,
+      "end": 32.459
+    },
+    {
+      "id": "preparar",
+      "title": "Elegí el perfil y creá la práctica",
+      "image": "login.png",
+      "alt": "Pantalla real Tu sesión de práctica después de crear el perfil stable.",
+      "takeaway": "selectOption usa el valor stable; la aserción espera el formulario de acceso.",
+      "code": "preparar",
+      "focus": [
+        2,
+        3,
+        4,
+        5
+      ],
+      "codeFromCue": 0,
+      "start": 32.459,
+      "end": 65.153
+    },
+    {
+      "id": "acceder",
+      "title": "Completá campos por su etiqueta",
+      "image": "login.png",
+      "alt": "Formulario con Email ficticio y Contraseña de práctica, antes de iniciar sesión.",
+      "takeaway": "getByLabel identifica el campo; fill reemplaza su contenido; click envía el formulario.",
+      "code": "acceder",
+      "focus": [
+        1,
+        2,
+        3
+      ],
+      "codeFromCue": 0,
+      "start": 65.153,
+      "end": 100.094
+    },
+    {
+      "id": "comprobar",
+      "title": "Comprobá quién entró",
+      "image": "dashboard.png",
+      "alt": "Resumen real de Ana con el saludo y su cuenta ana.diaria.",
+      "takeaway": "Un clic sin error no demuestra el login: comprobá el saludo y la cuenta esperados.",
+      "code": "comprobar",
+      "focus": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "codeFromCue": 1,
+      "start": 100.094,
+      "end": 134.851
+    },
+    {
+      "id": "reto",
+      "title": "Tu reto: que también sepa rechazar",
+      "image": "denied.png",
+      "alt": "Formulario de acceso con el mensaje real Email o contraseña incorrectos.",
+      "takeaway": "Contraseña incorrecta: mostrar el error, conservar el formulario y no mostrar la cuenta.",
+      "code": "rechazo",
+      "focus": [
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "start": 134.851,
+      "end": 169.792
+    }
+  ],
+  "subtitles": [
+    {
+      "start": 0,
+      "end": 10.74,
+      "text": "En la primera clase comprobamos la bienvenida. Ahora vamos a usar el formulario: crear una práctica estable, iniciar sesión como Ana y verificar que vemos su cuenta.",
+      "view": "screen"
+    },
+    {
+      "start": 10.74,
+      "end": 21.78,
+      "text": "Antes de escribir, recorré esos pasos manualmente en una ventana privada. Son datos ficticios del laboratorio. No uses tu correo, tus contraseñas ni información bancaria real.",
+      "view": "screen"
+    },
+    {
+      "start": 21.78,
+      "end": 32.459,
+      "text": "Seguimos en tu repositorio de pruebas. Guardá el avance anterior y creá la rama de la clase dos. El banco queda encendido en otra terminal; no estamos modificando Atenea.",
+      "view": "screen"
+    },
+    {
+      "start": 32.459,
+      "end": 43.979,
+      "text": "Abrimos la raíz del banco con goto. Después buscamos Perfil del ejercicio por su etiqueta. Select option elige stable, el valor técnico de la opción que muestra Estable.",
+      "view": "code"
+    },
+    {
+      "start": 43.979,
+      "end": 55.139,
+      "text": "Hacemos clic en Crear mi práctica usando el rol de botón y su nombre. A continuación comprobamos el encabezado Tu sesión de práctica: esa es la señal de que podemos continuar.",
+      "view": "code"
+    },
+    {
+      "start": 55.139,
+      "end": 65.153,
+      "text": "Cada prueba empieza en un contexto limpio y crea su propia práctica. No depende de que hayas iniciado sesión en Chrome ni de que otro test se haya ejecutado antes.",
+      "view": "code"
+    },
+    {
+      "start": 65.153,
+      "end": 77.553,
+      "text": "Para completar el acceso usamos get by label y fill. Las etiquetas son Email ficticio y Contraseña de práctica. Los valores de Ana están escritos en el ejemplo y son públicos.",
+      "view": "code"
+    },
+    {
+      "start": 77.553,
+      "end": 88.733,
+      "text": "Aunque el formulario ya trae datos, fill los reemplaza. Así el test declara qué usuario está probando, en lugar de depender silenciosamente de lo que viene cargado por defecto.",
+      "view": "code"
+    },
+    {
+      "start": 88.733,
+      "end": 100.094,
+      "text": "Después hacemos clic en Iniciar sesión. Playwright comprueba que el botón pueda recibir la acción. No agregamos pausas fijas, pero todavía falta demostrar el resultado del acceso.",
+      "view": "code"
+    },
+    {
+      "start": 100.094,
+      "end": 111.554,
+      "text": "El resultado esperado es el saludo Buen día, Ana, y su cuenta diaria visible. Una acción sin error no alcanza: podríamos haber enviado el formulario y recibido un rechazo.",
+      "view": "screen"
+    },
+    {
+      "start": 111.554,
+      "end": 123.574,
+      "text": "Usamos expect para el encabezado y para la región que identifica esa cuenta. Las aserciones reintentan hasta cumplir la condición o agotar el tiempo, sin dormir cinco segundos porque sí.",
+      "view": "code"
+    },
+    {
+      "start": 123.574,
+      "end": 134.851,
+      "text": "En este banco cambia la pantalla, pero la dirección sigue siendo la raíz. No inventamos una ruta de dashboard. Comprobamos el resultado observable que realmente define nuestro caso.",
+      "view": "code"
+    },
+    {
+      "start": 134.851,
+      "end": 146.631,
+      "text": "Ahora te toca el caso negativo. En otro test, creá una práctica nueva e intentá entrar como Ana con una contraseña incorrecta. No borres ni rompas la prueba que ya funciona.",
+      "view": "screen"
+    },
+    {
+      "start": 146.631,
+      "end": 158.331,
+      "text": "Comprobá tres cosas: aparece el error de credenciales, seguimos en el formulario y no se muestra la cuenta de Ana. Un rechazo esperado significa que este test debe pasar, no fallar.",
+      "view": "screen"
+    },
+    {
+      "start": 158.331,
+      "end": 169.792,
+      "text": "Ejecutá los dos casos, revisá el reporte y guardá un commit. Intentá resolver el reto antes de abrir la solución. Ya estás comprobando resultados, no solamente automatizando clics.",
+      "view": "screen"
+    }
+  ],
+  "sceneAudio": [
+    {
+      "scene": "objetivo",
+      "audioSha256": "cd0eccc034ba322650ac4b2fcae705a918d707c8dc2512086d875140b3e834cd",
+      "alignmentCoverage": 0.987,
+      "cueStarts": [
+        0,
+        10.74,
+        21.78
+      ]
+    },
+    {
+      "scene": "preparar",
+      "audioSha256": "3804bd1a7e684b225cbff4645bab0cf6a4b3a9bfcf592fe977fd80353881604b",
+      "alignmentCoverage": 1.0,
+      "cueStarts": [
+        0,
+        11.52,
+        22.680000000000003
+      ]
+    },
+    {
+      "scene": "acceder",
+      "audioSha256": "f68688a645af1211a481dca31c4146474e558eb128112fd6c799ac723b615b1c",
+      "alignmentCoverage": 0.9518,
+      "cueStarts": [
+        0,
+        12.4,
+        23.580000000000002
+      ]
+    },
+    {
+      "scene": "comprobar",
+      "audioSha256": "3133fad123e418f180261f2ee7304ce7531c283ec94ba5a187dc282ae0dd9734",
+      "alignmentCoverage": 0.9753,
+      "cueStarts": [
+        0,
+        11.459999999999999,
+        23.48
+      ]
+    },
+    {
+      "scene": "reto",
+      "audioSha256": "4c48c1aa52a55d266eb73c201812775240ca3fa14f1e8948d81b799ffcd17d9c",
+      "alignmentCoverage": 0.9878,
+      "cueStarts": [
+        0,
+        11.78,
+        23.48
+      ]
+    }
+  ],
+  "codeFile": "create-practice.spec.js"
+}

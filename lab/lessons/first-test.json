@@ -1,0 +1,62 @@
+{
+  "title": "Mi primera prueba con Playwright",
+  "codeFile": "first-test.spec.js",
+  "language": "es",
+  "scenes": [
+    {
+      "id": "objetivo", "title": "Primero, una pregunta concreta", "image": "welcome.png",
+      "alt": "Pantalla inicial real de Athena Bank Lab: título de bienvenida y botón Crear mi práctica.",
+      "takeaway": "¿La bienvenida muestra el título esperado y permite crear una práctica?",
+      "code": "completo", "focus": [3],
+      "cues": [
+        "Hoy vamos a escribir tu primera prueba con Playwright. La pregunta es sencilla: ¿la bienvenida del banco muestra el título esperado y permite iniciar una práctica?",
+        "Antes de automatizar, mirá esa pantalla manualmente. Buscá el encabezado y el botón Crear mi práctica. No vamos a pulsarlo ni a iniciar sesión todavía.",
+        "Necesitás el banco funcionando y el proyecto inicial descargado desde el Paso cero. Abrí ese proyecto en tu editor: ahí vas a guardar tus propias pruebas."
+      ]
+    },
+    {
+      "id": "estructura", "title": "Abrí la página desde un test", "image": "welcome.png",
+      "alt": "Bienvenida del banco que abre la prueba con page.goto.",
+      "takeaway": "test define el caso; page es la pestaña; await espera la operación.",
+      "code": "completo", "focus": [1, 3, 5], "codeFromCue": 0,
+      "cues": [
+        "Creamos el archivo de la primera prueba dentro de tests. Importamos test y expect: uno define el caso y el otro nos permite comprobar resultados.",
+        "El nombre del test describe el comportamiento. Playwright nos entrega una página nueva y aislada. La función es async porque las operaciones del navegador son asíncronas.",
+        "Con page punto goto abrimos la raíz del banco. La dirección base ya está en la configuración. Await espera esta operación antes de seguir; no es una pausa de varios segundos."
+      ]
+    },
+    {
+      "id": "comprobar", "title": "Localizar no es comprobar", "image": "welcome.png",
+      "alt": "El encabezado principal y el botón de inicio son los elementos que comprueba el test.",
+      "takeaway": "getByRole encuentra; expect comprueba. El resultado esperado viene del requisito.",
+      "code": "completo", "focus": [9, 10, 14, 15, 16], "codeFromCue": 0,
+      "cues": [
+        "Buscamos el encabezado principal por su rol y nivel. Ese localizador no comprueba nada por sí solo. La aserción compara el texto con Aprendé a probar lo que importa.",
+        "Después buscamos Crear mi práctica por su rol de botón y su nombre accesible. Comprobamos que esté visible y habilitado. No alcanza con que exista escondido en la página.",
+        "Estas aserciones esperan y vuelven a comprobar hasta que se cumple la condición o vence el tiempo configurado. No necesitamos agregar una espera fija."
+      ]
+    },
+    {
+      "id": "fallo", "title": "Un fallo también es evidencia", "image": "welcome.png", "output": "fallo-real",
+      "alt": "Diagnóstico real de Playwright al esperar un título incorrecto.",
+      "takeaway": "Expected = lo que pediste. Received = lo observado. Primero investigá la diferencia.",
+      "code": "incorrecto", "focus": [1],
+      "cues": [
+        "Ahora provocamos un fallo: cambiamos el título esperado por Bienvenido al banco. Ejecutamos la prueba y leemos el diagnóstico real que aparece en pantalla.",
+        "Expected muestra nuestra expectativa y Received muestra el texto encontrado. En este ejercicio cambiamos el test a propósito: restauramos el requisito correcto y volvemos a ejecutar.",
+        "En un proyecto real, no cambies la expectativa solo para poner todo en verde. Revisá si está mal el test o si encontraste un defecto en la aplicación."
+      ]
+    },
+    {
+      "id": "reto", "title": "Tu primer cambio, tu primer commit", "image": "welcome.png", "output": "ejecucion-real",
+      "alt": "Resumen generado desde la ejecución real del test correcto en Chromium.",
+      "takeaway": "Reto: comprobá la opción estable sin crear una práctica. Guardá tu intento antes de ver la solución.",
+      "code": "completo", "focus": [14, 15, 16],
+      "cues": [
+        "La versión correcta pasa. Para verla en tu máquina usá el comando que está debajo del reproductor. El modo headed muestra el navegador; el reporte permite revisar el resultado.",
+        "Tu reto es comprobar que el perfil seleccionado sea Estable, sin cambiarlo ni crear una práctica. Tenés una pista y la solución separadas, para intentar resolverlo primero.",
+        "Guardá el avance en tu rama y hacé un commit. Ya tenés una prueba pequeña con una intención clara, un resultado esperado y evidencia para explicar qué pasó."
+      ]
+    }
+  ]
+}

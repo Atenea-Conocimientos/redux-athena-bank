@@ -1,0 +1,13 @@
+expect(locator).toHaveText(expected) failed
+
+Locator:  getByRole('heading', { level: 1 })
+Expected: "Bienvenido al banco"
+Received: "Aprendé a probar lo que importa."
+Timeout:  1000ms
+
+Call log:
+  - Expect "toHaveText" getByRole('heading', { level: 1 }) with timeout 1000ms
+  - waiting for getByRole('heading', { level: 1 })
+    11 × locator resolved to <h1>…</h1>
+       - unexpected value "Aprendé a probar lo que importa."
+

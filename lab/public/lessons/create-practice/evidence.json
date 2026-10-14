@@ -1,0 +1,53 @@
+{
+  "capturedAt": "2026-10-07T20:51:10.941Z",
+  "browser": "chromium",
+  "playwright": "1.63.0",
+  "sourceSha256": "3f6a80a357eaf5bffb854ef3d070830e1255697f01555ef5b54daf4588a6e208",
+  "challengeSha256": "3fefbf86a97aa8034a4b9906bb3f5a01d57b2cf57254800715e8ce8be41d0108",
+  "diagnosticSourceSha256": "a87f74008b8173327904480ceab49f116597578b076e0b20205cfaf96f9616b0",
+  "status": "passed",
+  "durationMs": 957,
+  "challengeStatus": "passed",
+  "challengeDurationMs": 736,
+  "scope": "Fresh browser context and independent UI-created stable practice per test; isolated server on 4178 with SQLite :memory:; public fictional credentials only.",
+  "tests": [
+    {
+      "title": "crear una práctica permite iniciar sesión como Ana",
+      "status": "passed",
+      "durationMs": 957
+    },
+    {
+      "title": "una contraseña incorrecta mantiene cerrada la cuenta de Ana",
+      "status": "passed",
+      "durationMs": 736
+    },
+    {
+      "title": "crear práctica: evidencia de bienvenida, acceso y cuenta visible",
+      "status": "passed",
+      "durationMs": 1445
+    },
+    {
+      "title": "crear práctica: evidencia de acceso rechazado en una práctica independiente",
+      "status": "passed",
+      "durationMs": 981
+    }
+  ],
+  "screenshots": [
+    {
+      "name": "welcome.png",
+      "sha256": "8c54f9f9af467b9a6d5e3b952653995d9ffce335913ba3e9c5c2da5cae8947ff"
+    },
+    {
+      "name": "login.png",
+      "sha256": "b48595197f9c8cd48257bb0a94950460936588a7c3c1c0b44e8d866273bbc3f6"
+    },
+    {
+      "name": "dashboard.png",
+      "sha256": "60cc2534b22ec5782613e66b6a8e1ac5709fec0e4c643707db78ed3c026e0572"
+    },
+    {
+      "name": "denied.png",
+      "sha256": "050655e867d3b55990c923103d99653cefd1ba4026e88f4daf41bf953dabcfd7"
+    }
+  ]
+}

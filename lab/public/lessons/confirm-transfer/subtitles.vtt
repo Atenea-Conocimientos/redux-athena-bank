@@ -1,0 +1,46 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:10.560
+Ya sabemos revisar una cotización. Ahora vamos a confirmarla. Ojo con esta diferencia: confirmar una transferencia no significa que esté completada.
+
+00:00:10.560 --> 00:00:20.080
+Creamos otra práctica estable como Ana. Cotizamos cien pesos para Bruno: un peso de comisión y ciento uno en total. Todo es ficticio.
+
+00:00:20.080 --> 00:00:27.809
+Esta vez comprobamos una operación pendiente y su reserva. Guardá el trabajo anterior y creá la rama de la clase seis.
+
+00:00:27.809 --> 00:00:39.669
+Dentro de Confirmar transferencia, completamos el código ficticio: dos, cuatro, seis, ocho, uno, cero. Es un dato público del laboratorio, no un código recibido por mensaje.
+
+00:00:39.669 --> 00:00:48.829
+Pulsamos Confirmar y reservar y esperamos que el diálogo se cierre. Usamos una aserción que reintenta; no una pausa fija ni un clic forzado.
+
+00:00:48.829 --> 00:00:55.932
+El cierre del diálogo solo muestra que avanzó la interfaz. Falta comprobar la operación, su reserva y los saldos.
+
+00:00:55.932 --> 00:01:05.272
+Esperamos exactamente un artículo de transferencia. Después lo acotamos por su nombre accesible, que empieza con Transferencia y el alias de Bruno.
+
+00:01:05.272 --> 00:01:16.812
+Dentro de ese artículo comprobamos cien pesos, estado Pendiente, un peso de comisión y ciento uno de total. Encontrar Pendiente en cualquier parte no sería suficiente.
+
+00:01:16.812 --> 00:01:27.973
+No pulsamos Procesar. El contrato dice que todavía no se acredita al receptor, pero este test observa la sesión de Ana: no afirma haber comprobado la cuenta de Bruno.
+
+00:01:27.973 --> 00:01:38.713
+Volvemos al inicio. La diaria debe mostrar dos mil trescientos noventa y nueve disponibles y ciento uno reservados. El ahorro conserva sus seiscientos pesos.
+
+00:01:38.713 --> 00:01:52.033
+También comprobamos el resumen: tres mil cien contables, ciento uno reservados y dos mil novecientos noventa y nueve disponibles. Reservar limita lo utilizable; no es todavía un débito definitivo.
+
+00:01:52.033 --> 00:02:03.149
+Cada valor se busca en su contexto. El disponible total usa un identificador de prueba existente. Las aserciones esperan resultados concretos, no avisos temporales.
+
+00:02:03.149 --> 00:02:14.429
+Ahora escribí otro caso, desde una práctica nueva. Cotizá lo mismo, pero confirmá con seis ceros. Primero esperá el mensaje de código incorrecto dentro del diálogo.
+
+00:02:14.429 --> 00:02:25.969
+Comprobá que siga abierto. Cerralo y verificá que no haya artículos de transferencia, que ambos saldos sigan iguales y que la reserva sea cero. Un error visible no demuestra todo eso.
+
+00:02:25.969 --> 00:02:36.078
+Resolvé el reto antes de mirar la solución. Ejecutá ambos casos y guardá el commit. Distinguimos una acción, un estado intermedio y sus efectos.

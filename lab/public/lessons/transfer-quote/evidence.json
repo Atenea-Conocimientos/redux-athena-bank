@@ -1,0 +1,57 @@
+{
+  "capturedAt": "2026-10-08T14:10:16.530Z",
+  "browser": "chromium",
+  "playwright": "1.63.0",
+  "sourceSha256": "43c3083d39a32e8bb67e9f0bfdbcb737bf7bde2da7cf8ef2aeda56f3a6e56f65",
+  "challengeSha256": "f2e2d2dffcd481f2f3df617b7df85f46c0b63a1585ba2f565af2eb5e5561e716",
+  "diagnosticSourceSha256": "8f41f9a3d2fd2e6e512cdd759a06fa458fadb5788128523d39bda40da01c7519",
+  "status": "passed",
+  "durationMs": 789,
+  "challengeStatus": "passed",
+  "challengeDurationMs": 842,
+  "scope": "Independent UI-created stable practice per case; isolated local server on 4185 with SQLite :memory:. Fictional data only. External/own quote costs and unchanged balances/no transfers verified after closing and reloading. No confirmation is submitted.",
+  "tests": [
+    {
+      "title": "cotizar hacia Bruno muestra los costos sin reservar ni transferir",
+      "status": "passed",
+      "durationMs": 789
+    },
+    {
+      "title": "cotizar entre cuentas propias no cobra comisión ni modifica saldos",
+      "status": "passed",
+      "durationMs": 842
+    },
+    {
+      "title": "cotización: evidencia externa sin transferencia",
+      "status": "passed",
+      "durationMs": 1779
+    },
+    {
+      "title": "cotización: evidencia propia sin transferencia",
+      "status": "passed",
+      "durationMs": 1285
+    }
+  ],
+  "screenshots": [
+    {
+      "name": "before.png",
+      "sha256": "44aa033a514c09e95c46761ec593038a42d47ec674dda5009b9214e0a4167697"
+    },
+    {
+      "name": "form.png",
+      "sha256": "bf286e29da7576b0ad9b645d75a7bc664eb24095c3064b323f31ecabe3dab0d4"
+    },
+    {
+      "name": "quote.png",
+      "sha256": "bacb5639b3d91aa9a8c5c4404d3b2422e679eb4ba28e3a80eb311306c15e762a"
+    },
+    {
+      "name": "after.png",
+      "sha256": "44aa033a514c09e95c46761ec593038a42d47ec674dda5009b9214e0a4167697"
+    },
+    {
+      "name": "challenge.png",
+      "sha256": "b189637a1a282c2327e07d653dd8320db8272dfeb70049ffc4d7eb9d241d7b88"
+    }
+  ]
+}

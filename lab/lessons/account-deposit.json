@@ -1,0 +1,62 @@
+{
+  "title": "Depositar en la cuenta correcta",
+  "codeFile": "account-deposit.spec.js",
+  "language": "es",
+  "scenes": [
+    {
+      "id": "objetivo", "title": "Dos botones, una intención", "image": "before.png",
+      "alt": "Cuentas ficticias de Ana: diaria con 2.500 pesos y ahorro con 600 pesos; ambas tienen Depositar.",
+      "takeaway": "El objetivo no es hacer clic: es sumar $100 en ana.diaria sin cambiar ana.ahorro.",
+      "code": "localizar", "focus": [1, 2],
+      "cues": [
+        "Ya sabemos entrar como Ana. Ahora aparece un problema real: las dos cuentas tienen un botón Depositar. ¿Cómo elegimos el correcto sin depender de cuál aparece primero?",
+        "En una práctica nueva, la cuenta diaria tiene dos mil quinientos pesos ficticios y el ahorro, seiscientos. Vamos a ingresar cien en la diaria: esperamos dos mil seiscientos, sin modificar el ahorro.",
+        "Recorré el caso manualmente. Después guardá tu avance de la clase dos y creá la rama de la clase tres. Cada test crea su propia práctica estable."
+      ]
+    },
+    {
+      "id": "localizar", "title": "Primero la cuenta; después, el botón", "image": "before.png",
+      "alt": "Dos regiones de cuenta con el mismo botón Depositar y distintos alias.",
+      "takeaway": "getByRole dentro de una región limita la búsqueda a esa cuenta; exact evita coincidencias parciales.",
+      "code": "localizar", "focus": [1, 2, 4, 5, 7, 9], "codeFromCue": 1,
+      "cues": [
+        "Buscar Depositar en toda la página encuentra dos botones. Playwright exige una coincidencia única para hacer clic. Hay que mejorar el localizador, no agregar una espera.",
+        "Guardamos en una constante la región llamada Cuenta ana punto diaria, con exact en true. También localizamos el ahorro y comprobamos los saldos iniciales dentro de cada región.",
+        "Después buscamos el botón dentro de cuenta diaria. No usamos first ni un número de posición: si las tarjetas cambian de orden, seguimos expresando la misma intención de negocio."
+      ]
+    },
+    {
+      "id": "depositar", "title": "Comprobá el destino antes de enviar", "image": "form.png",
+      "alt": "Diálogo real Ingresar fondos ficticios, con cuenta diaria seleccionada e importe 100.",
+      "takeaway": "El diálogo está fuera de la tarjeta: localizalo desde page y verificá su cuenta seleccionada.",
+      "code": "depositar", "focus": [1, 2, 3, 4, 5], "codeFromCue": 1,
+      "cues": [
+        "Al pulsar Depositar se abre Ingresar fondos ficticios. Buscamos ese diálogo desde page, no dentro de la cuenta: el formulario está fuera de la tarjeta en la estructura de la página.",
+        "Comprobamos que Cuenta para depósito tenga el valor ana guion main. Es el identificador técnico de la cuenta diaria. Así detectaríamos que el botón abrió el formulario con un destino equivocado.",
+        "Completamos Importe a depositar con cien y pulsamos Depositar fondos dentro del diálogo. No cambiamos la cuenta para esconder un error de selección. Falta comprobar el resultado."
+      ]
+    },
+    {
+      "id": "comprobar", "title": "Verificá el cambio y lo que no cambia", "image": "after.png",
+      "alt": "Resultado real: cuenta diaria con 2.600 pesos disponibles y ahorro sin cambios en 600 pesos.",
+      "takeaway": "Antes $2.500 → después $2.600; ahorro $600 → $600. El mensaje de éxito no alcanza.",
+      "code": "comprobar", "focus": [1, 2, 3, 4, 5], "codeFromCue": 1,
+      "cues": [
+        "Esperamos que el diálogo se cierre. Después buscamos el importe exacto de dos mil seiscientos dentro de la cuenta diaria, y comprobamos que el ahorro siga mostrando seiscientos.",
+        "No alcanza con encontrar ese número en cualquier parte ni con ver un aviso de éxito. Queremos demostrar qué cuenta recibió el depósito y cuál permaneció igual.",
+        "Las aserciones reintentan el resultado, sin pausas fijas. La constante guarda un localizador, no una captura vieja del elemento: Playwright vuelve a buscarlo después de actualizarse la pantalla."
+      ]
+    },
+    {
+      "id": "reto", "title": "Tu reto: ahora en el ahorro", "image": "challenge.png",
+      "alt": "Reto ejecutado en una práctica independiente: ahorro con 650 pesos y diaria con 2.500 pesos.",
+      "takeaway": "En una práctica nueva: depositá $50 en ana.ahorro; esperá $650 y diaria sin cambios en $2.500.",
+      "code": "localizar", "focus": [4, 5],
+      "cues": [
+        "Te toca escribir otro test independiente. Creá una práctica nueva, entrá como Ana y depositá cincuenta pesos ficticios en el ahorro, usando el botón de esa cuenta.",
+        "Comprobá el saldo inicial, la cuenta seleccionada y, al terminar, que el ahorro tenga seiscientos cincuenta y la diaria conserve dos mil quinientos. No reutilices el estado del test anterior.",
+        "Intentá resolverlo antes de abrir la solución. Ejecutá ambos casos, revisá el reporte y guardá un commit. La idea que te llevás es simple: localizar con intención y comprobar las consecuencias."
+      ]
+    }
+  ]
+}

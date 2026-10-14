@@ -19,7 +19,7 @@
     <main id="lesson">
       <div class="intro">
         <p class="eyebrow">
-          MICROLECCIÓN 01 <span>/</span> PLAYWRIGHT + CRITERIO DE QA
+          CASO AVANZADO <span>/</span> PLAYWRIGHT + CRITERIO DE QA
         </p>
         <h1>
           Cómo comprobar una<br class="wide-only" />
@@ -31,10 +31,14 @@
         </p>
         <div class="meta">
           <span id="duration">2–3 min</span
-          ><span>Voz en español · generada localmente</span
+          ><span id="voice-label">Voz sintética en español</span
           ><span>Datos 100% ficticios</span>
         </div>
       </div>
+      <p class="setup-link"><span>PASO 0</span> ¿Primera vez con Playwright?
+        <a href="/lecciones/preparar-repositorio/">Prepará tu repo y descargá el proyecto inicial ↗</a>
+        <span>Para este caso avanzado, usá <a href="/lessons/pending-transfer/athena-automation-inicio.zip" download>su proyecto inicial de transferencias</a>.</span>
+      </p>
       <p id="load-status" role="status">Preparando la lección…</p>
       <noscript
         ><p>
@@ -164,9 +168,21 @@
             >
           </div>
           <p class="code-note">
-            Fragmento de <code>pending-lesson.spec.js</code>. La prueba completa
-            incluye las sesiones, la preparación y la limpieza de datos.
+            Los fragmentos de la pantalla salen de <code>pending-lesson.spec.js</code>.
+            El archivo completo incluye las sesiones, la preparación y la limpieza de datos.
           </p>
+          <details class="full-source">
+            <summary>Ver el test completo, paso a paso</summary>
+            <p>Preparación por API → sesión de Ana → cotización → confirmación →
+              aserciones de saldos → sesión independiente de Bruno → limpieza.</p>
+            <pre tabindex="0" aria-label="Prueba Playwright completa"><code id="full-source">Cargando código…</code></pre>
+          </details>
+          <details class="full-source solution-download">
+            <summary>Ya hice mi intento: comparar con la solución</summary>
+            <p>Guardá tu intento en Git y extraé la solución en otra carpeta.
+              Incluye configuración, dependencias y el mismo test que ves aquí.</p>
+            <a href="/lessons/pending-transfer/athena-automation-solucion.zip" download>Descargar proyecto solución (.zip) ↓</a>
+          </details>
         </section>
         <section class="challenge" aria-labelledby="challenge-title">
           <div>
@@ -234,8 +250,7 @@
     <footer>
       Athena Bank Lab <span>·</span> Aprendé a comprobar, no solamente a hacer
       clic.<br /><small
-        >Piloto local · Voz sintética Kokoro / Dora · Sin servicios de voz en la
-        nube.</small
+        id="voice-production">Piloto local · Narración sintética. Consultá el reproductor para ver la voz utilizada.</small
       >
     </footer>
   </body>

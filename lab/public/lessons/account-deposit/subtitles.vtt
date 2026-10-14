@@ -1,0 +1,46 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:11.220
+Ya sabemos entrar como Ana. Ahora aparece un problema real: las dos cuentas tienen un botón Depositar. ¿Cómo elegimos el correcto sin depender de cuál aparece primero?
+
+00:00:11.220 --> 00:00:24.100
+En una práctica nueva, la cuenta diaria tiene dos mil quinientos pesos ficticios y el ahorro, seiscientos. Vamos a ingresar cien en la diaria: esperamos dos mil seiscientos, sin modificar el ahorro.
+
+00:00:24.100 --> 00:00:33.321
+Recorré el caso manualmente. Después guardá tu avance de la clase dos y creá la rama de la clase tres. Cada test crea su propia práctica estable.
+
+00:00:33.321 --> 00:00:44.761
+Buscar Depositar en toda la página encuentra dos botones. Playwright exige una coincidencia única para hacer clic. Hay que mejorar el localizador, no agregar una espera.
+
+00:00:44.761 --> 00:00:56.101
+Guardamos en una constante la región llamada Cuenta ana punto diaria, con exact en true. También localizamos el ahorro y comprobamos los saldos iniciales dentro de cada región.
+
+00:00:56.101 --> 00:01:07.138
+Después buscamos el botón dentro de cuenta diaria. No usamos first ni un número de posición: si las tarjetas cambian de orden, seguimos expresando la misma intención de negocio.
+
+00:01:07.138 --> 00:01:18.878
+Al pulsar Depositar se abre Ingresar fondos ficticios. Buscamos ese diálogo desde page, no dentro de la cuenta: el formulario está fuera de la tarjeta en la estructura de la página.
+
+00:01:18.878 --> 00:01:30.558
+Comprobamos que Cuenta para depósito tenga el valor ana guion main. Es el identificador técnico de la cuenta diaria. Así detectaríamos que el botón abrió el formulario con un destino equivocado.
+
+00:01:30.558 --> 00:01:41.896
+Completamos Importe a depositar con cien y pulsamos Depositar fondos dentro del diálogo. No cambiamos la cuenta para esconder un error de selección. Falta comprobar el resultado.
+
+00:01:41.896 --> 00:01:52.556
+Esperamos que el diálogo se cierre. Después buscamos el importe exacto de dos mil seiscientos dentro de la cuenta diaria, y comprobamos que el ahorro siga mostrando seiscientos.
+
+00:01:52.556 --> 00:02:02.276
+No alcanza con encontrar ese número en cualquier parte ni con ver un aviso de éxito. Queremos demostrar qué cuenta recibió el depósito y cuál permaneció igual.
+
+00:02:02.276 --> 00:02:14.590
+Las aserciones reintentan el resultado, sin pausas fijas. La constante guarda un localizador, no una captura vieja del elemento: Playwright vuelve a buscarlo después de actualizarse la pantalla.
+
+00:02:14.590 --> 00:02:25.470
+Te toca escribir otro test independiente. Creá una práctica nueva, entrá como Ana y depositá cincuenta pesos ficticios en el ahorro, usando el botón de esa cuenta.
+
+00:02:25.470 --> 00:02:36.930
+Comprobá el saldo inicial, la cuenta seleccionada y, al terminar, que el ahorro tenga seiscientos cincuenta y la diaria conserve dos mil quinientos. No reutilices el estado del test anterior.
+
+00:02:36.930 --> 00:02:49.844
+Intentá resolverlo antes de abrir la solución. Ejecutá ambos casos, revisá el reporte y guardá un commit. La idea que te llevás es simple: localizar con intención y comprobar las consecuencias.

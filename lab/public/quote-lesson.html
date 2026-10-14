@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="color-scheme" content="dark" />
+    <title>Cotizar antes de confirmar · Athena Bank Academy</title>
+    <link rel="stylesheet" href="/lesson.css" />
+    <script type="module" src="/lesson.js"></script>
+  </head>
+  <body data-lesson="transfer-quote">
+    <a class="skip" href="#lesson">Saltar a la lección</a>
+    <header class="topbar">
+      <a class="brand" href="/">a<span>athena<span class="brand-sub">BANK / ACADEMY</span></span></a>
+      <a class="back" href="/lecciones/depositos-invalidos/">Clase 04 · Importes inválidos ↗</a>
+    </header>
+    <main id="lesson">
+      <div class="intro">
+        <p class="eyebrow">CLASE 05 <span>/</span> ANTES DE CONFIRMAR</p>
+        <h1>Revisá el costo.<br /><em>Todavía no envíes.</em></h1>
+        <p class="description">Cotizá una transferencia, comprobá cada concepto y demostrá que consultar no mueve dinero.</p>
+        <div class="meta"><span id="duration">2–3 min</span><span id="voice-label">Voz de Juan · clonada con IA</span><span>Nivel inicial</span></div>
+      </div>
+      <p class="setup-link"><span>ANTES DE EMPEZAR</span> Banco encendido + clase 04 terminada.
+        <a href="/lecciones/depositos-invalidos/">Volver a la clase 04 ↗</a></p>
+      <p id="load-status" role="status">Preparando la lección…</p>
+      <noscript><p>Activá JavaScript para el reproductor o <a href="/lessons/transfer-quote/subtitles.vtt">leé la transcripción</a>.</p></noscript>
+      <div id="experience" hidden>
+        <div class="lesson-layout">
+          <section class="player" aria-label="Reproductor de microlección">
+            <div class="scene-header"><span id="scene-counter" class="eyebrow">01 / 05</span>
+              <span class="recorded"><span aria-hidden="true">●</span> Código y resultados de una ejecución real</span></div>
+            <div id="stage" class="stage">
+              <h2 id="scene-title"></h2>
+              <div class="view-controls" role="group" aria-label="Vista de la escena">
+                <button id="view-screen" type="button" aria-pressed="true">Pantalla</button>
+                <button id="view-code" type="button" aria-pressed="false">Código Playwright</button>
+                <span>Sincronizado con la voz</span>
+              </div>
+              <div class="screen-frame">
+                <div class="window-bar"><span aria-hidden="true">● ● ●</span><span id="frame-label">athena bank / cotización</span></div>
+                <div id="screen-view" class="screenshot-area"><img id="scene-image" alt="" /></div>
+                <pre id="output-view" class="run-output" tabindex="0" aria-label="Salida real de Playwright" hidden></pre>
+                <pre id="code-view" tabindex="0" aria-label="Código Playwright del capítulo" hidden><code id="code"></code></pre>
+              </div>
+              <p id="takeaway" class="takeaway"></p>
+            </div>
+            <div id="caption" class="caption" aria-label="Subtítulo actual"></div>
+            <div class="transport">
+              <label class="sr-only" for="seek">Posición de la lección</label>
+              <input id="seek" type="range" min="0" max="180" step="0.1" value="0" />
+              <div class="controls">
+                <button id="play" class="play" type="button">▶ Reproducir</button>
+                <button id="back-ten" type="button" aria-label="Retroceder 10 segundos">↶ 10 s</button>
+                <output id="time" aria-label="Tiempo de reproducción">0:00 / 0:00</output>
+                <label class="speed"><span class="sr-only">Velocidad de reproducción</span><select id="speed">
+                  <option value="0.75">0,75×</option><option value="1" selected>1×</option><option value="1.25">1,25×</option><option value="1.5">1,5×</option>
+                </select></label>
+                <button id="mute" type="button" aria-label="Silenciar narración" aria-pressed="false">Voz</button>
+                <button id="captions" type="button" aria-label="Mostrar subtítulos" aria-pressed="true">CC</button>
+              </div>
+            </div>
+            <audio id="narration" preload="metadata"></audio>
+          </section>
+          <aside class="chapters-panel" aria-labelledby="chapters-title">
+            <p class="eyebrow">TU RECORRIDO</p><h2 id="chapters-title">Cotizá.<br />Comprobá. Cerrá.</h2>
+            <ol id="chapters"></ol><p class="aside-note">Cinco capítulos para distinguir el costo propuesto del dinero reservado.
+              Pausá para escribir cada paso. Reproducir la lección no maneja tu navegador ni modifica tu práctica.</p>
+          </aside>
+        </div>
+        <section class="setup-step" aria-labelledby="manual-title">
+          <p class="eyebrow">01 / ANTES DEL CÓDIGO</p><h2 id="manual-title">Revisar no es confirmar.</h2>
+          <p>En una ventana privada, abrí <code>http://127.0.0.1:4177</code>, elegí
+            <strong>Estable · comportamiento esperado</strong> y pulsá <strong>Crear mi práctica</strong>.
+            Iniciá sesión con <code>ana@demo.test</code> y <code>Practica2026!</code>, credenciales ficticias públicas.</p>
+          <p>La cuenta <strong>ana.diaria</strong> comienza con <strong>$ 2.500,00</strong> y <strong>ana.ahorro</strong>
+            con <strong>$ 600,00</strong>. Abrí <strong>Transferir ↗</strong>, elegí diaria como origen,
+            <code>bruno.diaria</code> como destino y <code>100</code> como importe. Pulsá <strong>Revisar transferencia</strong>.</p>
+          <p>El diálogo de confirmación debe mostrar destino Bruno y este desglose: importe <strong>$ 100,00</strong>,
+            comisión <strong>$ 1,00</strong> y total a reservar <strong>$ 101,00</strong>.
+            No completes el código ni pulses <strong>Confirmar y reservar</strong>.</p>
+          <p>Cerrá el diálogo y recargá. Esperás los saldos originales y <strong>Todavía no hay transferencias</strong>.
+            No se reserva, debita ni acredita dinero. Todo el laboratorio usa fondos ficticios.</p>
+          <a class="primary" href="/lessons/transfer-quote/clase-05-inicio.zip" download>Descargar inicio de clase 05 ↓</a>
+          <p class="code-note">El ZIP acumula las clases anteriores resueltas: sin modificar el ejercicio,
+            esperá <strong>11 passed</strong> y <strong>1 skipped</strong>.</p>
+        </section>
+        <section class="setup-step" aria-labelledby="branch-title">
+          <p class="eyebrow">TU REPO DE TESTS</p><h2 id="branch-title">Continuá desde la clase 04.</h2>
+          <p>En tu repo de automatización, revisá y guardá los cambios de la clase anterior antes de crear la rama nueva:</p>
+          <pre tabindex="0" aria-label="Guardar el trabajo anterior y crear la rama"><code>git status
+# Si hay cambios de clase 04 que todavía no guardaste:
+git add tests
+git commit -m "test: completar la clase 04"
+# Desde la rama donde terminaste clase 04:
+git switch -c clase/05-cotizar-transferencia</code></pre>
+          <p>Agregá <code>tests/transfer-quote.spec.js</code> del ZIP inicial. Quitá <code>.skip</code> y completá el caso.
+            No reemplaces tus ejercicios anteriores. Si preferís el ZIP completo, extraelo en otra carpeta.</p>
+        </section>
+        <section class="code-panel" aria-labelledby="code-title">
+          <div class="code-heading"><div><p class="eyebrow">02 / ESCRIBÍ Y EJECUTÁ</p><h2 id="code-title">Agrupá por intención.</h2></div>
+            <a href="/lessons/transfer-quote/transfer-quote.spec.js" download>Descargar prueba completa ↓</a></div>
+          <p>Reutilizamos la creación de práctica y el inicio de sesión por la interfaz. Cada test tiene sus propios datos.
+            <code>test.step</code> da un nombre a un grupo de acciones y aserciones en el reporte.
+            No crea otro test, no agrega aislamiento y no sustituye ninguna comprobación.</p>
+          <pre tabindex="0" aria-label="Paso de Playwright para solicitar la cotización"><code>await test.step('Solicitar la cotización a Bruno', async () => {
+  await page.getByRole('button', {
+    name: 'Transferir ↗', exact: true,
+  }).click();
+  const formulario = page.getByRole('dialog', {
+    name: 'Nueva transferencia',
+  });
+  await formulario.getByLabel('Cuenta de origen').selectOption('ana-main');
+  await formulario.getByLabel('Alias de destino').fill('bruno.diaria');
+  await formulario.getByLabel('Importe a transferir').fill('100');
+  await formulario.getByRole('button', {
+    name: 'Revisar transferencia',
+  }).click();
+});</code></pre>
+          <p>Acá sí elegimos explícitamente el origen: forma parte de preparar la transferencia.
+            El formulario inicial y la cotización son diálogos distintos; localizá cada uno por su nombre.</p>
+          <details class="full-source"><summary>Ver el test completo, paso a paso</summary>
+            <p>Práctica independiente → saldos iniciales → formulario → conceptos y valores → cerrar → recargar → estado sin cambios.
+              Los comentarios <code>@snippet</code> extraen material didáctico; no son una API de Playwright.</p>
+            <pre tabindex="0" aria-label="Prueba Playwright completa"><code id="full-source">Cargando código…</code></pre>
+          </details>
+        </section>
+        <section class="setup-step" aria-labelledby="run-title">
+          <p class="eyebrow">03 / LEÉ LA EVIDENCIA</p><h2 id="run-title">Cada concepto con su valor.</h2>
+          <p>La cotización usa una lista de definiciones: los conceptos tienen rol <code>term</code> y sus valores,
+            <code>definition</code>. Comprobá ambas listas ordenadas dentro del diálogo. La cantidad también debe coincidir.</p>
+          <pre tabindex="0" aria-label="Comprobar conceptos e importes de la cotización"><code>const cotizacion = page.getByRole('dialog', {
+  name: 'Confirmar transferencia',
+});
+await expect(cotizacion.getByRole('term')).toHaveText([
+  'Importe', 'Comisión', 'Total a reservar',
+]);
+await expect(cotizacion.getByRole('definition')).toHaveText([
+  '$ 100,00', '$ 1,00', '$ 101,00',
+]);</code></pre>
+          <p><code>toHaveText([...])</code> reintenta hasta encontrar la lista esperada. Un valor presente en cualquier lugar
+            o un aviso genérico no comprueban el desglose. La interfaz presenta ARS; <code>fill('100')</code> recibe pesos.</p>
+          <p>Después de cerrar el diálogo, <code>await page.reload()</code> vuelve a leer el estado desde el servidor.
+            Comprobá diaria <strong>$ 2.500,00</strong>, ahorro <strong>$ 600,00</strong> y que todavía no haya transferencias.
+            Cerrar una cotización no es cancelar una transferencia pendiente.</p>
+          <pre tabindex="0" aria-label="Ejecutar la prueba de cotización y abrir el reporte"><code>npx playwright test transfer-quote.spec.js --headed
+npm run report</code></pre>
+          <p>Con el caso principal, la suite acumulada tendrá <strong>12 passed</strong>.
+            Al completar el reto independiente, tendrá <strong>13 passed</strong>.</p>
+        </section>
+        <section class="challenge" aria-labelledby="challenge-title">
+          <div><p class="eyebrow">ANTES DEL RETO</p><h2 id="challenge-title">¿Ya se reservaron $101?</h2>
+            <p>La cotización hacia Bruno muestra <strong>Total a reservar $ 101,00</strong>, pero no la confirmaste.</p></div>
+          <form id="quiz" data-correct="outcome"
+            data-success="¡Exacto! Cotizar solo muestra el costo. Sin confirmar, cerrar y recargar debe conservar los saldos y la ausencia de transferencias."
+            data-retry="Revisá la diferencia entre revisar y confirmar. Total a reservar es una propuesta, no evidencia de una reserva realizada.">
+            <fieldset><legend class="sr-only">Elegí el resultado esperado de cotizar sin confirmar</legend>
+              <label><input type="radio" name="answer" value="reserve" required /><span>Sí: la cuenta diaria ya tiene $ 2.399,00 disponibles.</span></label>
+              <label><input type="radio" name="answer" value="outcome" /><span>No: conserva $ 2.500,00 y no hay ninguna transferencia nueva.</span></label>
+              <label><input type="radio" name="answer" value="fee" /><span>Solo se descontó la comisión de $ 1,00.</span></label>
+            </fieldset><button class="primary" type="submit">Comprobar respuesta ↗</button><p id="feedback" role="status"></p>
+          </form>
+        </section>
+        <section class="setup-step" aria-labelledby="exercise-title">
+          <p class="eyebrow">04 / TU PRÓXIMO CASO</p><h2 id="exercise-title">Cotizá entre cuentas propias.</h2>
+          <p>Agregá <code>tests/transfer-quote-challenge.spec.js</code> con un test independiente.
+            En una práctica estable nueva, cotizá <strong>100</strong> desde <strong>ana.diaria</strong> hacia <strong>ana.ahorro</strong>.</p>
+          <p>Comprobá destino ahorro, importe <strong>$ 100,00</strong>, comisión <strong>$ 0,00</strong> y total
+            <strong>$ 100,00</strong>. Cerrá sin confirmar y recargá: diaria debe conservar <strong>$ 2.500,00</strong>,
+            ahorro <strong>$ 600,00</strong> y no debe haber transferencias.</p>
+          <details class="transcript"><summary>Necesito una pista</summary>
+            <p>El origen sigue siendo <code>ana-main</code>, pero el alias de destino cambia a <code>ana.ahorro</code>.
+              No cambies solo el total esperado: comprobá también que la comisión sea cero.
+              Agrupá las intenciones con <code>test.step</code> y mantené las aserciones dentro de cada grupo.</p>
+          </details>
+          <details class="transcript"><summary>Ya hice mi intento: ver solución</summary>
+            <p>Extraé la solución aparte para compararla. Incluye los once tests previos y ambos casos de cotización:
+              <strong>13 passed</strong> en total.</p>
+            <a href="/lessons/transfer-quote/clase-05-solucion.zip" download>Descargar solución de clase 05 ↓</a>
+            <p><a href="/lessons/transfer-quote/transfer-quote-challenge.spec.js" download>Descargar solo la solución del reto ↓</a></p>
+          </details>
+          <pre tabindex="0" aria-label="Ejecutar los casos y guardar el avance"><code>npx playwright test
+git status
+git add tests
+git commit -m "test: cotizar sin reservar fondos"</code></pre>
+        </section>
+        <details class="transcript"><summary>Leer la transcripción completa</summary><div id="transcript"></div>
+          <a href="/lessons/transfer-quote/subtitles.vtt" download>Descargar subtítulos (.vtt) ↓</a></details>
+        <section class="next-step"><div><p class="eyebrow">SIGUIENTE · CLASE 06</p>
+          <h2>Ahora sí: confirmar y reservar.</h2>
+          <p>Comprobá la reserva de una transferencia pendiente y qué ocurre al ingresar un código de confirmación incorrecto.</p></div>
+          <a class="primary" href="/lecciones/confirmar-transferencia/">Ir a la clase 06 ↗</a></section>
+        <p class="aside-note">Fuentes oficiales:
+          <a href="https://playwright.dev/docs/api/class-test#test-step">test.step</a>,
+          <a href="https://playwright.dev/docs/locators#locate-by-role">localizadores por rol</a> y
+          <a href="https://playwright.dev/docs/api/class-locatorassertions#locator-assertions-to-have-text">aserciones sobre listas de texto</a>.</p>
+      </div>
+    </main>
+    <footer>Athena Bank Academy · Aprendé a comprobar.<br /><small id="voice-production">Voz clonada con IA y autorizada por Juan.</small></footer>
+  </body>
+</html>
