@@ -1,0 +1,6 @@
+# Keep lesson source, captions and downloaded examples reproducible on every OS.
+* text=auto eol=lf
+*.png binary
+*.jpg binary
+*.mp3 binary
+*.zip binary
