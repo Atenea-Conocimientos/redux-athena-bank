@@ -36,4 +36,4 @@ Las omisiones en los ZIPs de inicio son ejercicios deliberadamente pendientes, n
 
 Luis debe ejecutar el checklist de piloto-interno-luis.md desde su PC y reportar claridad, dificultad, tiempos y problemas. Juan conserva la escucha final de sus narraciones; la decodificación y sincronización automática no certifican pronunciación ni calidad pedagógica. La revisión manual con lector de pantalla no se realizó. El arrastre HTML5 móvil y Service Worker Firefox/WebKit permanecen fuera de la cobertura indicada; no bloquean las seis clases.
 
-No se enviaron invitaciones ni mensajes a testers. Isaac no participa de este piloto. No se hicieron merges, despliegues, cambios de credenciales ni compras. El workflow disponible es de pruebas, con pull_request y ejecución manual; subir esta rama no despliega servicios.
+No se enviaron invitaciones ni mensajes a testers. Luis es el tester previsto para este piloto. No se hicieron merges, despliegues, cambios de credenciales ni compras. El workflow disponible es de pruebas, con pull_request y ejecución manual; subir esta rama no despliega servicios.
