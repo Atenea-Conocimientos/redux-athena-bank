@@ -32,7 +32,7 @@ npm test
 ```
 
 En **inicio** verás 1 prueba aprobada y 1 omitida (`skipped`): esa última es tu
-ejercicio pendiente, no una solución. En **solución** deben aprobarse las tres pruebas (smoke y dos casos de transferencia).
+ejercicio pendiente, no una solución. En **solución** deben aprobarse ambas pruebas (smoke y transferencia).
 Si `npm ci` falla porque falta el lockfile, descargá de nuevo el ZIP completo.
 
 ## 3. Crear tu repositorio GitHub

@@ -30,9 +30,9 @@ Descargá el ZIP **inicio** de cada clase en una carpeta independiente del banco
 | 01 Primera prueba | primera-prueba/ | 1 / 1 | 3 |
 | 02 Crear práctica y acceder | crear-practica/ | 3 / 1 | 5 |
 | 03 Depósito correcto | deposito-en-cuenta/ | 5 / 1 | 7 |
-| 04 Depósitos inválidos | depositos-invalidos/ | verificar con reporte | verificar con reporte |
-| 05 Cotización | cotizar-transferencia/ | verificar con reporte | verificar con reporte |
-| 06 Transferencia pendiente | confirmar-transferencia/ | verificar con reporte | verificar con reporte |
+| 04 Depósitos inválidos | depositos-invalidos/ | 7 / 3 | 11 |
+| 05 Cotización | cotizar-transferencia/ | 11 / 1 | 13 |
+| 06 Transferencia pendiente | confirmar-transferencia/ | 13 / 1 | 15 |
 
 Un ejercicio omitido en inicio es intencional: implementalo y quitá .skip. No cuenta como aprobado. Leé la guía incluida en cada ZIP para los resultados exactos; la clase 04 incluye parametrización. El caso avanzado de transferencia-pendiente/ no sustituye la clase 06.
 
